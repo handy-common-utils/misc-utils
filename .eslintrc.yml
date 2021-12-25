@@ -1,0 +1,4 @@
+extends:
+  - ./node_modules/@handy-common-utils/dev-utils/.eslintrc.yml
+
+

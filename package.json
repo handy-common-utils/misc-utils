@@ -1,0 +1,38 @@
+{
+  "name": "@handy-common-utils/misc-utils",
+  "version": "1.0.0",
+  "description": "Miscellaneous utilities",
+  "scripts": {
+    "pretest": "eslint . --ext .ts",
+    "test": "nyc mocha",
+    "prepare": "shx rm -rf dist && tsc && es-check",
+    "preversion": "generate-api-docs-and-update-readme && git add README.md"
+  },
+  "files": [
+    "package.json",
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "devDependencies": {
+    "@handy-common-utils/dev-dependencies": "^1.0.30",
+    "@types/node": "^16.11.12"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/handy-common-utils/misc-utils#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/handy-common-utils/misc-utils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/handy-common-utils/misc-utils/issues"
+  },
+  "keywords": [
+    "misc",
+    "utils"
+  ],
+  "author": "James Hu",
+  "license": "Apache-2.0"
+}
