@@ -16,8 +16,9 @@ export function urlSafe<T extends string|undefined|null>(base64Input: T, replace
 
 /**
  * Encode an unsigned 32-bit integer into BASE64 string.
- * @param ui32 A number which could also be null or undefined.
+ * @param ui32 A 32-bit integer number which could also be null or undefined.
  * It must be a valid unsigned 32-bit integer. Behavior is undefined when valueis anything other than an unsigned 32-bit integer.
+ * If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32)
  * @returns BASE64 string representing the integer input, or the original input if it is null or undefined.
  */
 export function base64FromUInt32<T extends number|undefined|null>(ui32: T): Exclude<T, number> | string {
@@ -31,8 +32,9 @@ export function base64FromUInt32<T extends number|undefined|null>(ui32: T): Excl
 
 /**
  * Encode an unsigned 32-bit integer into BASE64 string without trailing '='.
- * @param ui32 A number which could also be null or undefined.
+ * @param ui32 A 32-bit integer number which could also be null or undefined.
  * It must be a valid unsigned 32-bit integer. Behavior is undefined when valueis anything other than an unsigned 32-bit integer.
+ * If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32)
  * @returns BASE64 string without trailing '=' representing the integer input, or the original input if it is null or undefined.
  */
 export function shortBase64FromUInt32<T extends number|undefined|null>(ui32: T): Exclude<T, number> | string {
@@ -44,8 +46,9 @@ export function shortBase64FromUInt32<T extends number|undefined|null>(ui32: T):
 
 /**
  * Encode an unsigned 32-bit integer into URL/path safe BASE64 string.
- * @param ui32 A number which could also be null or undefined.
+ * @param ui32 A 32-bit integer number which could also be null or undefined.
  * It must be a valid unsigned 32-bit integer. Behavior is undefined when valueis anything other than an unsigned 32-bit integer.
+ * If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32)
  * @param replacements A string containing replacement characters for "/", "+", and "=".
  * If omitted, default value of '_-=' would be used.
  * @returns URL/path safe BASE64 string representing the integer input, or the original input if it is null or undefined.
@@ -56,8 +59,9 @@ export function base64UrlFromUInt32<T extends number|undefined|null>(ui32: T, re
 
 /**
  * Encode an unsigned 32-bit integer into URL/path safe BASE64 string without trailling '='.
- * @param ui32 A number which could also be null or undefined.
+ * @param ui32 A 32-bit integer number which could also be null or undefined.
  * It must be a valid unsigned 32-bit integer. Behavior is undefined when valueis anything other than an unsigned 32-bit integer.
+ * If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32)
  * @param replacements A string containing replacement characters for "/" and "+".
  * If omitted, default value of '_-' would be used.
  * @returns URL/path safe BASE64 string without trailing '=' representing the integer input, or the original input if it is null or undefined.
