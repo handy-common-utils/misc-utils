@@ -15,7 +15,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "devDependencies": {
-    "@handy-common-utils/dev-dependencies": "^1.0.30",
+    "@handy-common-utils/dev-dependencies": "^1.1.2",
     "@types/node": "^16.11.12"
   },
   "publishConfig": {
