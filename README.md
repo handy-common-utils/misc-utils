@@ -23,6 +23,16 @@ import { shortBase64UrlFromUInt32 } from '@handy-common-utils/misc-utils';
 const urlSafeBase64 = shortBase64UrlFromUInt32(12345);
 ```
 
+```javascript
+ // use chalk (chalk is not a dependency of this package, you need to add chalk as a dependency separately)
+ import chalk from 'chalk';
+ import { LineLogger } from '@handy-common-utils/misc-utils';
+
+ // this.flags is an object with properties "debug" and "quiet"
+ this.output = LineLogger.consoleWithColour(this.flags, chalk);
+ this.output.warn('Configuration file not found, default configuration would be used.');  // it would be printed out in yellow
+```
+
 # API
 
 <!-- API start -->

@@ -30,6 +30,7 @@
  * import chalk from 'chalk';
  * // this.flags is an object with properties "debug" and "quiet"
  * this.output = LineLogger.consoleWithColour(this.flags, chalk);
+ * this.output.warn('Configuration file not found, default configuration would be used.');  // it would be printed out in yellow
  */
 export class LineLogger<DEBUG_FUNC extends Function, INFO_FUNC extends Function, WARN_FUNC extends Function, ERROR_FUNC extends Function> {
   protected static NO_OP_FUNC = function () {};
