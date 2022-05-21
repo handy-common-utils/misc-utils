@@ -16,7 +16,11 @@
   "types": "dist/index.d.ts",
   "devDependencies": {
     "@handy-common-utils/dev-dependencies": "^1.1.2",
-    "@types/node": "^16.11.12"
+    "@types/node": "^16.11.12",
+    "@types/sinon": "^10.0.11",
+    "@types/sinon-chai": "^3.2.8",
+    "sinon": "^14.0.0",
+    "sinon-chai": "^3.7.0"
   },
   "publishConfig": {
     "access": "public"

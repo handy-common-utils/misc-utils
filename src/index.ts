@@ -69,3 +69,5 @@ export function base64UrlFromUInt32<T extends number|undefined|null>(ui32: T, re
 export function shortBase64UrlFromUInt32<T extends number|undefined|null>(ui32: T, replacements = '_-'): Exclude<T, number> | string {
   return urlSafe(shortBase64FromUInt32(ui32), replacements);
 }
+
+export * from './line-logger';
