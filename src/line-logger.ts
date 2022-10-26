@@ -3,6 +3,8 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
+import medikooLog from 'log';
+
 // eslint-disable-next-line valid-jsdoc
 /**
  * A LineLogger logs/prints one entire line of text before advancing to another line.
@@ -92,6 +94,33 @@ export class LineLogger<DEBUG_FUNC extends Function, INFO_FUNC extends Function,
     );
   }
 
+  /**
+   * Build an instance from 'log' (https://github.com/medikoo/log).
+   * `info` of the LineLogger is mapped to `notice` of the medikoo log.
+   * @param log instance of the logger
+   * @returns instance of LineLogger that is actually ConsoleLineLogger type
+   */
+  static consoleLike(log: typeof medikooLog) {
+    return new LineLogger(
+      // debug
+      (message?: any, ...optionalParams: any[]) => {
+        log.debug(message, ...optionalParams);
+      },
+      // info
+      (message?: any, ...optionalParams: any[]) => {
+        log.notice(message, ...optionalParams);
+      },
+      // warn
+      (message?: any, ...optionalParams: any[]) => {
+        log.warning(message, ...optionalParams);
+      },
+      // error
+      (message?: any, ...optionalParams: any[]) => {
+        log.error(message, ...optionalParams);
+      },
+    );
+  }
+
   info: INFO_FUNC = LineLogger.NO_OP_FUNC as any;
   debug: DEBUG_FUNC = LineLogger.NO_OP_FUNC as any;
   warn: WARN_FUNC = LineLogger.NO_OP_FUNC as any;
@@ -152,3 +181,11 @@ export const consoleWithoutColour = LineLogger.console;
  * @returns An LineLogger instance that uses console.log/info/warn/error and also adds colour to the messages using chalk/colors/cli-color.
 */
 export const consoleWithColour = LineLogger.consoleWithColour;
+
+/**
+ * Build an instance from 'log' (https://github.com/medikoo/log).
+ * `info` of the LineLogger is mapped to `notice` of the medikoo log.
+ * @param log instance of the logger
+ * @returns instance of LineLogger that is actually ConsoleLineLogger type
+ */
+export const consoleLike = LineLogger.consoleLike;
