@@ -118,6 +118,8 @@ export class LineLogger<DEBUG_FUNC extends Function, INFO_FUNC extends Function,
       (message?: any, ...optionalParams: any[]) => {
         log.error(message, ...optionalParams);
       },
+      true,
+      false,
     );
   }
 
