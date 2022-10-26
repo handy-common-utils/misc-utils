@@ -164,6 +164,27 @@ An instance that uses console.log/info/warn/error.
 
 ___
 
+##### consoleLike
+
+▸ `Static` **consoleLike**(`log`): [`LineLogger`](#classesline_loggerlineloggermd)<(`message?`: `any`, ...`optionalParams`: `any`[]) => `void`, (`message?`: `any`, ...`optionalParams`: `any`[]) => `void`, (`message?`: `any`, ...`optionalParams`: `any`[]) => `void`, (`message?`: `any`, ...`optionalParams`: `any`[]) => `void`\>
+
+Build an instance from 'log' (https://github.com/medikoo/log).
+`info` of the LineLogger is mapped to `notice` of the medikoo log.
+
+###### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `log` | `Logger` | instance of the logger |
+
+###### Returns
+
+[`LineLogger`](#classesline_loggerlineloggermd)<(`message?`: `any`, ...`optionalParams`: `any`[]) => `void`, (`message?`: `any`, ...`optionalParams`: `any`[]) => `void`, (`message?`: `any`, ...`optionalParams`: `any`[]) => `void`, (`message?`: `any`, ...`optionalParams`: `any`[]) => `void`\>
+
+instance of LineLogger that is actually ConsoleLineLogger type
+
+___
+
 ##### consoleWithColour
 
 ▸ `Static` **consoleWithColour**<`FLAGS`, `COLOURER`\>(`flags`, `colourer`, `debugColourFuncName?`, `infoColourFuncName?`, `warnColourFuncName?`, `errorColourFuncName?`, `debugFlagName?`, `quietFlagName?`): [`LineLogger`](#classesline_loggerlineloggermd)<(`message?`: `any`, ...`optionalParams`: `any`[]) => `void`, (`message?`: `any`, ...`optionalParams`: `any`[]) => `void`, (`message?`: `any`, ...`optionalParams`: `any`[]) => `void`, (`message?`: `any`, ...`optionalParams`: `any`[]) => `void`\>
@@ -216,6 +237,12 @@ ___
 ##### LineLogger
 
 Re-exports [LineLogger](#classesline_loggerlineloggermd)
+
+___
+
+##### consoleLike
+
+Re-exports [consoleLike](#consolelike)
 
 ___
 
@@ -381,6 +408,27 @@ Type of the object returned by `LineLogger.console()` or `LineLogger.consoleWith
 It has the same function signatures as console.log/info/warn/error.
 
 #### Functions
+
+##### consoleLike
+
+▸ **consoleLike**(`log`): [`LineLogger`](#classesline_loggerlineloggermd)<(`message?`: `any`, ...`optionalParams`: `any`[]) => `void`, (`message?`: `any`, ...`optionalParams`: `any`[]) => `void`, (`message?`: `any`, ...`optionalParams`: `any`[]) => `void`, (`message?`: `any`, ...`optionalParams`: `any`[]) => `void`\>
+
+Build an instance from 'log' (https://github.com/medikoo/log).
+`info` of the LineLogger is mapped to `notice` of the medikoo log.
+
+###### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `log` | `Logger` | instance of the logger |
+
+###### Returns
+
+[`LineLogger`](#classesline_loggerlineloggermd)<(`message?`: `any`, ...`optionalParams`: `any`[]) => `void`, (`message?`: `any`, ...`optionalParams`: `any`[]) => `void`, (`message?`: `any`, ...`optionalParams`: `any`[]) => `void`, (`message?`: `any`, ...`optionalParams`: `any`[]) => `void`\>
+
+instance of LineLogger that is actually ConsoleLineLogger type
+
+___
 
 ##### consoleWithColour
 
