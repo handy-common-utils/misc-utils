@@ -175,7 +175,7 @@ Build an instance from 'log' (https://github.com/medikoo/log).
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `log` | `Logger` | instance of the logger |
+| `log` | `MedikooLogger` | instance of the logger |
 
 ###### Returns
 
@@ -420,7 +420,7 @@ Build an instance from 'log' (https://github.com/medikoo/log).
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `log` | `Logger` | instance of the logger |
+| `log` | `MedikooLogger` | instance of the logger |
 
 ###### Returns
 
