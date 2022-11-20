@@ -3,7 +3,16 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
-import medikooLog from 'log';
+// These types are copied from @types/log, see: https://github.com/medikoo/log
+interface MedikooLogFunction {
+  (...args: any[]): void;
+}
+interface MedikooLogger {
+  debug: MedikooLogFunction;
+  notice: MedikooLogFunction;
+  warning: MedikooLogFunction;
+  error: MedikooLogFunction;
+}
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -100,7 +109,7 @@ export class LineLogger<DEBUG_FUNC extends Function, INFO_FUNC extends Function,
    * @param log instance of the logger
    * @returns instance of LineLogger that is actually ConsoleLineLogger type
    */
-  static consoleLike(log: typeof medikooLog) {
+  static consoleLike(log: MedikooLogger) {
     return new LineLogger(
       // debug
       (message?: any, ...optionalParams: any[]) => {

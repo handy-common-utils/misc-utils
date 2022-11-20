@@ -2,10 +2,12 @@ import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import { LineLogger } from '../src/line-logger';
+import medikooLog from 'log';
+
 chai.use(sinonChai);
 
 describe('LineLogger', () => {
-  describe('ConsoleLineLogger', () => {
+  describe('LineLogger.console', () => {
     beforeEach(() => {
       sinon.stub(console, 'log');
       sinon.stub(console, 'info');
@@ -38,6 +40,13 @@ describe('LineLogger', () => {
       logger.info('text');
       expect(console.log).to.not.be.called;
       expect(console.info).to.not.be.called;
+    });
+  });
+
+  describe('LineLogger.consoleLike', () => {
+    it('can initialise with a https://github.com/medikoo/log instance', () => {
+      const logger = LineLogger.consoleLike(medikooLog);
+      logger.debug('test');
     });
   });
 });
