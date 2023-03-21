@@ -72,3 +72,4 @@ export function shortBase64UrlFromUInt32<T extends number|undefined|null>(ui32: 
 
 export * from './line-logger';
 export * from './stringify-replacer';
+export * from './mask';
