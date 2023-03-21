@@ -2,13 +2,10 @@ type Parent = Record<string|number|symbol, unknown>|Array<unknown>;
 /**
  * The original replacer expected by JSON.stringify(...)
  */
-type JsonStringifyReplacer<I = string> = (this: any, key: I, value: any) => any;
+type JsonStringifyReplacer = (this: any, key: string, value: any) => any;
 
 /**
  * The replacer that can potentially utilise the full path of the property in the object.
- * @param I type of the property names.
- *          It is `string` by default, which makes it aligned with JSON.stringify(...)
- *          It could be specified as `string|number` which Is a workaround to this issue: https://github.com/BridgeAR/safe-stable-stringify/issues/42
  * @param key Name of the property, or the index in the parent array.
  * @param value Value of the property or the object in the parent array.
  * @param path The full path of the property in the object, such like "access.visitor.location" or "request.x-forwarded-for.0".
@@ -19,7 +16,7 @@ type JsonStringifyReplacer<I = string> = (this: any, key: I, value: any) => any;
  * @param ancestors All the ancestor objects/arrays of the property.
  *                  When this replacer function is called the first time, ancestors array would have a zero length.
  */
-export type PathAwareReplacer<I = string> = (key: I, value: any, path: string, parent: Parent, pathArray: Array<I>, ancestors: Array<Parent>) => any;
+export type PathAwareReplacer = (key: string, value: any, path: string, parent: Parent, pathArray: Array<string>, ancestors: Array<Parent>) => any;
 
 const currentPath: any[] = [];
 const ancestors: any[] = [];
@@ -32,8 +29,8 @@ const ancestors: any[] = [];
  *                There is no need to specify options unless you are extremely concerned about performance, for example if you need to frequently stringify 500MB objects.
  * @returns The replacer function that can be passed to JSON.stringify(...).
  */
-export function pathAwareReplacer<I = string>(replacer: PathAwareReplacer<I>, options?: {pathArray?: boolean, ancestors?: boolean}): JsonStringifyReplacer<I> {
-  return function (this: any, key: I, value: any): any {
+export function pathAwareReplacer(replacer: PathAwareReplacer, options?: {pathArray?: boolean, ancestors?: boolean}): JsonStringifyReplacer {
+  return function (this: any, key: string, value: any): any {
     if (typeof key === 'string' && key === '') {   // root object
       currentPath.length = 0;
       ancestors.length = 0;
