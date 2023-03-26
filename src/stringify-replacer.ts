@@ -58,3 +58,33 @@ export function pathAwareReplacer(replacer: PathAwareReplacer, options?: {pathAr
     );
   };
 }
+
+/**
+ * Create a replacer function for JSON.stringify(...) from an array of path based rules.
+ * This function is useful for creating masking replacers which can apply masking based on the path of the property.
+ * @example
+ * import { mask, maskAll, maskEmail, maskFullName, pathBasedReplacer } from '@handy-common-utils/misc-utils';
+ * console.log(JSON.stringify(obj, pathBasedReplacer([
+ *  [/.*\.x-api-key$/, maskAll],
+ *  [/.*customer\.name$/, maskFullName],
+ *  [/.*customer\..*[eE]mail$/, maskEmail],
+ *  [/.*\.zip$/, (value: string) => value.slice(0, 3) + 'XX'],
+ *  [/.*\.cc$/, () => undefined],
+ *  [/.*\.ssn$/, mask],
+ * ])));
+ * @param rules Array of rules: if the regular expression tests true with the property path, the replacer function will be applied on the value
+ * @returns the replacer function built from those path based rules
+ */
+export function pathBasedReplacer(rules: Array<[RegExp, (input: any) => any]>): JsonStringifyReplacer {
+  return pathAwareReplacer(function (_key: string, value: any, path: string): any {
+    for (const [regexp, replace] of rules) {
+      if (regexp.test(path)) {
+        return replace(value);
+      }
+    }
+    return value;
+  }, {
+    pathArray: false,
+    ancestors: false,
+  });
+}

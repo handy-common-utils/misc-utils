@@ -1,8 +1,10 @@
+/* eslint-disable unicorn/no-useless-undefined */
 /* eslint-disable unicorn/no-for-loop */
 /* eslint-disable @typescript-eslint/ban-types */
 import { expect } from 'chai';
 import stringify from 'safe-stable-stringify';
-import { pathAwareReplacer } from '../src/stringify-replacer';
+import { mask, maskAll, maskEmail, maskFullName } from '../src/mask';
+import { pathAwareReplacer, pathBasedReplacer } from '../src/stringify-replacer';
 
 const o2 = {
   name: 'o2',
@@ -191,5 +193,67 @@ describe('stringifyReplacer(...)', () => {
 
     expect(keys).to.deep.equal(expectedParamKeys);
     expect(paths).to.deep.equal(expectedParamPaths);
+  });
+});
+
+describe('pathBasedReplacer(...)', () => {
+  it('can be used to mask sensitive information in a complex object', () => {
+    const obj = {
+      id: '23345232356',
+      customer: {
+        cc: '1234123412341234',
+        ssn: '123-45-6789',
+        email: 'john.doe@example.com',
+        name: 'John Doe',
+      },
+      billingAddress: {
+        street: '33 High St',
+        city: 'New Port',
+        state: 'NY',
+        zip: '34564',
+      },
+      shippingAddress: {
+        street: '123 Main St',
+        city: 'Anytown',
+        state: 'CA',
+        zip: '12345',
+        recipient: 'Bruce Li',
+        email: 'bruce.li@example.com',
+      },
+    };
+    const replacer = pathBasedReplacer([
+      [/.*\.email$/, maskEmail],
+      [/.*[Aa]ddress\.street$/, maskAll],
+      [/.*customer\.name$/, maskFullName],
+      [/.*[Aa]ddress\.recipient$/, maskFullName],
+      [/.*\.zip$/, (value: string) => value.slice(0, 3) + 'XX'],
+      [/.*\.cc$/, () => undefined],
+      [/.*\.ssn$/, mask],
+    ]);
+    const json = JSON.stringify(obj, replacer, 2);
+    const replacedObj = JSON.parse(json);
+    expect(replacedObj).to.deep.equal({
+      id: '23345232356',
+      customer: {
+        ssn: '1**********',
+        // cc has been removed
+        email: 'j***.d**@example.com',
+        name: 'J*** D**',
+      },
+      billingAddress: {
+        street: '**********',
+        city: 'New Port',
+        state: 'NY',
+        zip: '345XX',
+      },
+      shippingAddress: {
+        street: '***********',
+        city: 'Anytown',
+        state: 'CA',
+        zip: '123XX',
+        recipient: 'B**** **',
+        email: 'b****.**@example.com',
+      },
+    });
   });
 });
