@@ -81,3 +81,12 @@ export function maskFullName<T extends string|undefined|null>(name: T): T {
   const segments = name.split(' ');
   return segments.map(s => mask(s, 1)).join(' ') as T;
 }
+
+/**
+ * Replace each character of the input with '*'
+ * @param input a string or null or undefined
+ * @returns masked string or null or undefined
+ */
+export function maskAll<T extends string|undefined|null>(input: T): T {
+  return mask(input, 0);
+}

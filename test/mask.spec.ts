@@ -1,6 +1,6 @@
 /* eslint-disable unicorn/no-useless-undefined */
 import { expect } from 'chai';
-import { mask, maskEmail, maskFullName } from '../src/mask';
+import { mask, maskAll, maskEmail, maskFullName } from '../src/mask';
 
 describe('mask(...)', () => {
   it('should handle null/undefined/empty correctly', () => {
@@ -88,5 +88,18 @@ describe('maskFullName(...)', () => {
     expect(maskFullName('Two  Spaces')).to.equal('T**  S*****');
     expect(maskFullName('张三丰')).to.equal('张**');
     expect(maskFullName('张三')).to.equal('**');
+  });
+});
+
+describe('maskAll(...)', () => {
+  it('should handle null/undefined/empty correctly', () => {
+    expect(maskAll(undefined)).to.be.undefined;
+    expect(maskAll(null)).to.be.null;
+    expect(maskAll('')).to.equal('');
+  });
+  it('should replace each character with asterisk', () => {
+    expect(maskAll('a')).to.equal('*');
+    expect(maskAll('aaaaaaaa')).to.equal('********');
+    expect(maskAll('a a a c')).to.equal('*******');
   });
 });
