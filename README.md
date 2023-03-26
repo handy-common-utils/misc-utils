@@ -44,6 +44,8 @@ const urlSafeBase64 = shortBase64UrlFromUInt32(12345);
 
 - [index](#modulesindexmd)
 - [line-logger](#modulesline_loggermd)
+- [mask](#modulesmaskmd)
+- [stringify-replacer](#modulesstringify_replacermd)
 
 ## Classes
 
@@ -240,6 +242,12 @@ Re-exports [LineLogger](#classesline_loggerlineloggermd)
 
 ___
 
+##### PathAwareReplacer
+
+Re-exports [PathAwareReplacer](#pathawarereplacer)
+
+___
+
 ##### consoleLike
 
 Re-exports [consoleLike](#consolelike)
@@ -255,6 +263,42 @@ ___
 ##### consoleWithoutColour
 
 Re-exports [consoleWithoutColour](#consolewithoutcolour)
+
+___
+
+##### mask
+
+Re-exports [mask](#mask)
+
+___
+
+##### maskAll
+
+Re-exports [maskAll](#maskall)
+
+___
+
+##### maskEmail
+
+Re-exports [maskEmail](#maskemail)
+
+___
+
+##### maskFullName
+
+Re-exports [maskFullName](#maskfullname)
+
+___
+
+##### pathAwareReplacer
+
+Re-exports [pathAwareReplacer](#pathawarereplacer-1)
+
+___
+
+##### pathBasedReplacer
+
+Re-exports [pathBasedReplacer](#pathbasedreplacer)
 
 #### Functions
 
@@ -489,4 +533,208 @@ Build an encapsulation of console output functions with console.log/info/warn/er
 [`LineLogger`](#classesline_loggerlineloggermd)<(`message?`: `any`, ...`optionalParams`: `any`[]) => `void`, (`message?`: `any`, ...`optionalParams`: `any`[]) => `void`, (`message?`: `any`, ...`optionalParams`: `any`[]) => `void`, (`message?`: `any`, ...`optionalParams`: `any`[]) => `void`\>
 
 An LineLogger instance that uses console.log/info/warn/error.
+
+
+<a name="modulesmaskmd"></a>
+
+### Module: mask
+
+#### Functions
+
+##### mask
+
+▸ **mask**<`T`\>(`input`, `keepLeft?`, `keepRight?`, `minLength?`, `maskLengthOrMaskString?`, `maskPattern?`): `T`
+
+Mask the content of a string
+
+###### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `undefined` \| ``null`` \| `string` |
+
+###### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `input` | `T` | `undefined` | The input which could also be null or undefined |
+| `keepLeft` | `number` | `1` | Number of characters on the left to be kept in the output without masking.                 Default value is 1. |
+| `keepRight` | `number` | `0` | Number of characters on the right to be kept in the output without masking.                  Default value is 0. |
+| `minLength` | `number` | `3` | Minimal length of the string for keepLeft and keepRight to be effective.                  If the input string is shorter than this length, the whole string would be masked.                  Default value is 3. |
+| `maskLengthOrMaskString` | `undefined` \| ``null`` \| `string` \| `number` | `null` | The string to be used for replacing the part in the input that needs to be masked,                               or the length of the mask string if a fixed length is desired,                               or null/undefined if the mask string should have the same length as the part to be masked.                               Default value is null. |
+| `maskPattern` | `string` | `'*'` | The pattern to be repeated as the mask.                    Default value is '*'. |
+
+###### Returns
+
+`T`
+
+String with masked content
+
+___
+
+##### maskAll
+
+▸ **maskAll**<`T`\>(`input`): `T`
+
+Replace each character of the input with '*'
+
+###### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `undefined` \| ``null`` \| `string` |
+
+###### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `input` | `T` | a string or null or undefined |
+
+###### Returns
+
+`T`
+
+masked string or null or undefined
+
+___
+
+##### maskEmail
+
+▸ **maskEmail**<`T`\>(`email`): `T`
+
+Mask sensitive information in an email address while keeping some information for troubleshooting
+
+###### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `undefined` \| ``null`` \| `string` |
+
+###### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `email` | `T` | the email address which could also be null or undefined |
+
+###### Returns
+
+`T`
+
+masked email address
+
+___
+
+##### maskFullName
+
+▸ **maskFullName**<`T`\>(`name`): `T`
+
+Mask sensitive information in the full name while keeping useful information for troubleshooting
+
+###### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `undefined` \| ``null`` \| `string` |
+
+###### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `T` | the full name which could also be null or undefined |
+
+###### Returns
+
+`T`
+
+masked full name
+
+
+<a name="modulesstringify_replacermd"></a>
+
+### Module: stringify-replacer
+
+#### Type aliases
+
+##### PathAwareReplacer
+
+Ƭ **PathAwareReplacer**: (`key`: `string`, `value`: `any`, `path`: `string`, `parent`: `Parent`, `pathArray`: `string`[], `ancestors`: `Parent`[]) => `any`
+
+###### Type declaration
+
+▸ (`key`, `value`, `path`, `parent`, `pathArray`, `ancestors`): `any`
+
+The replacer that can potentially utilise the full path of the property in the object.
+
+####### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `key` | `string` | Name of the property, or the index in the parent array. |
+| `value` | `any` | Value of the property or the object in the parent array. |
+| `path` | `string` | The full path of the property in the object, such like "access.visitor.location" or "request.x-forwarded-for.0".             Please note that the special characters (including ".") in property names are not escaped, for example, "order.billing address.first line". |
+| `parent` | `Parent` | The object that the property or the element belongs to. It could be `{ '': <the original object> }` when this replacer function is called the first time. |
+| `pathArray` | `string`[] | The full path as an array. It is more useful than `path` in case special characters exist in property names.                  When this replacer function is called the first time, pathArray array would have a zero length. |
+| `ancestors` | `Parent`[] | All the ancestor objects/arrays of the property.                  When this replacer function is called the first time, ancestors array would have a zero length. |
+
+####### Returns
+
+`any`
+
+#### Functions
+
+##### pathAwareReplacer
+
+▸ **pathAwareReplacer**(`replacer`, `options?`): `JsonStringifyReplacer`
+
+Build a replacer function that can be passed to JSON.stringify(...).
+
+###### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `replacer` | [`PathAwareReplacer`](#pathawarereplacer) | The actual replacer function which could utilise additional information. |
+| `options?` | `Object` | Options to control whether the pathArray and ancestors parameters would have values populated.                By default all information available would be populated.                There is no need to specify options unless you are extremely concerned about performance, for example if you need to frequently stringify 500MB objects. |
+| `options.ancestors?` | `boolean` | - |
+| `options.pathArray?` | `boolean` | - |
+
+###### Returns
+
+`JsonStringifyReplacer`
+
+The replacer function that can be passed to JSON.stringify(...).
+
+___
+
+##### pathBasedReplacer
+
+▸ **pathBasedReplacer**(`rules`): `JsonStringifyReplacer`
+
+Create a replacer function for JSON.stringify(...) from an array of path based rules.
+This function is useful for creating masking replacers which can apply masking based on the path of the property.
+
+**`example`**
+```javascript
+
+import { mask, maskAll, maskEmail, maskFullName, pathBasedReplacer } from '@handy-common-utils/misc-utils';
+console.log(JSON.stringify(obj, pathBasedReplacer([
+ [/.*\.x-api-key$/, maskAll],
+ [/.*customer\.name$/, maskFullName],
+ [/.*customer\..*[eE]mail$/, maskEmail],
+ [/.*\.zip$/, (value: string) => value.slice(0, 3) + 'XX'],
+ [/.*\.cc$/, () => undefined],
+ [/.*\.ssn$/, mask],
+])));
+
+```
+###### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `rules` | [`RegExp`, (`input`: `any`) => `any`][] | Array of rules: if the regular expression tests true with the property path, the replacer function will be applied on the value |
+
+###### Returns
+
+`JsonStringifyReplacer`
+
+the replacer function built from those path based rules
 <!-- API end -->
