@@ -33,6 +33,108 @@ const urlSafeBase64 = shortBase64UrlFromUInt32(12345);
  this.output.warn('Configuration file not found, default configuration would be used.');  // it would be printed out in yellow
 ```
 
+```typescript
+import { mask, maskAll, maskEmail, maskFullName, pathBasedReplacer } from '@handy-common-utils/misc-utils';
+
+const masked = JSON.stringify(obj, pathBasedReplacer([
+  [/.*\.x-api-key$/, maskAll],
+  [/.*customer\.name$/, maskFullName],
+  [/.*customer\..*[eE]mail$/, maskEmail],
+  [/.*\.zip$/, (value: string) => value.slice(0, 3) + 'XX'],
+  [/.*\.cc$/, () => undefined],
+  [/.*\.ssn$/, mask],
+]));
+```
+
+## Masking
+
+In software development, it's often necessary to hide sensitive information
+to protect user privacy or comply with regulations.
+Masking is a common technique used to replace part of a sensitive value with a different,
+non-sensitive value.
+For example, you might mask credit card numbers, passwords, or email addresses. 
+
+The `mask(input, keepLeft = 1, keepRight = 0, minLength = 3, maskLengthOrMaskString = null, maskPattern = '*')` function
+can be used to mask the content of a string, replacing a part of the input string with a mask string.
+It takes several optional parameters, including the number of characters to keep on the left and right sides of the string,
+a minimum length for the input string to have unmask characters kept, and the mask pattern to use.
+The `maskEmail(input)` and `maskFullName(input)` functions are specific variations of the mask function
+that target email addresses and full names, respectively.
+The `maskAll(input)` function masks all characters.
+
+```typescript
+expect(mask(undefined)).to.be.undefined;
+expect(mask(null)).to.be.null;
+expect(mask('')).to.equal('');
+
+expect(mask('abcde')).to.equal('a****');
+expect(mask('abc')).to.equal('a**');
+expect(mask('ab')).to.equal('**');
+
+expect(maskEmail('james.hu@address.com')).to.equal('j****.**@address.com');
+expect(maskEmail('her@here.com')).to.equal('h**@here.com');
+expect(maskEmail('me@here.com')).to.equal('**@here.com');
+expect(maskEmail('my.new.email.address@example.com')).to.equal('**.n**.e****.a******@example.com');
+
+expect(maskFullName('James Hu')).to.equal('J**** **');
+expect(maskFullName('John Smith')).to.equal('J*** S****');
+expect(maskFullName('Mike')).to.equal('M***');
+expect(maskFullName('Mia')).to.equal('M**');
+expect(maskFullName('Me')).to.equal('**');
+expect(maskFullName('John von Neumann')).to.equal('J*** v** N******');
+expect(maskFullName('Two  Spaces')).to.equal('T**  S*****');
+expect(maskFullName('张三丰')).to.equal('张**');
+expect(maskFullName('张三')).to.equal('**');
+```
+
+## Replacers for JSON.stringify(input, replacer, space)
+
+The `pathAwareReplacer(replacer, options)` function allows you to build a replacer function that can be passed to `JSON.stringify(input, replacer, space)`.
+Besides the key, value, and owning object, it also exposes more information to your callback function,
+such like the full property path as both a dot (`.`) separated string and as an array, and an array of ancestor objects.
+This can be useful when you need to replace specific values in an object, but you also want to know where those values were located in the object.
+
+`pathBasedReplacer` is a function that takes an array of path-based masking rules and returns a function
+that can be used as the second parameter in the `JSON.stringify` function.
+This function allows you to mask sensitive information during `JSON.stringify` in a very flexible way.
+
+Each element in the rules array contains two parts:
+a regular expression that matches the full paths to the values you want to mask or replace,
+and a masking or replacing function that takes the original value as input and returns the masked or replaced value.
+
+For example, you could use `pathBasedReplacer` to replace all credit card numbers in an object with masked versions of the numbers:
+
+```typescript
+const maskCreditCard = (value: any) => "****-****-****-" + value.slice(-4);
+
+const replacer = pathBasedReplacer([
+  [/.*billing\.cc$/, maskCreditCard]
+]);
+
+const json = JSON.stringify({
+  to: 'auditor@example.com',
+  cc: 'auditing-trail@example.com',
+  year: 2023,
+  month: 2,
+  orders: [
+    {
+      id: 123,
+      billing: {
+        address: '19 High Street',
+        cc: '1234-5678-2222-3333',
+      },
+    },
+    {
+      id: 124,
+      billing: {
+        address: '88 Main Street',
+        cc: '3435-8933-0009-2241',
+      },
+    },
+  ],
+}, replacer, 2);
+```
+
 # API
 
 <!-- API start -->
