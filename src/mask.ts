@@ -57,7 +57,7 @@ export function maskEmail<T extends string|undefined|null>(email: T): T {
   }
 
   const segments = email.split('@');
-  if (segments.length === 2 && segments[0].length >= 3) {
+  if (segments.length === 2 && segments[0].length > 0) {
     const parts = segments[0].split('.');
     segments[0] = parts.map(s => mask(s, 1)).join('.');
     return segments.join('@') as T;

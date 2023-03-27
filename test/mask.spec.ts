@@ -52,14 +52,14 @@ describe('maskEmail(...)', () => {
   it('should mask normal email addresses correctly', () => {
     expect(maskEmail('james.hu@address.com')).to.equal('j****.**@address.com');
     expect(maskEmail('her@here.com')).to.equal('h**@here.com');
-    expect(maskEmail('me@here.com')).to.equal('m**********');
+    expect(maskEmail('me@here.com')).to.equal('**@here.com');
     expect(maskEmail('my.new.email.address@example.com')).to.equal('**.n**.e****.a******@example.com');
   });
   it('should invalid email addresses correctly', () => {
     expect(maskEmail('ok')).to.equal('**');
     expect(maskEmail('.com')).to.equal('.***');
     expect(maskEmail('@here.com')).to.equal('@********');
-    expect(maskEmail('me@')).to.equal('m**');
+    expect(maskEmail('me@')).to.equal('**@');
     expect(maskEmail('me@@@@')).to.equal('m*****');
     expect(maskEmail('her@')).to.equal('h**@');
     expect(maskEmail('her@@@@')).to.equal('h******');
