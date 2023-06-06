@@ -18,7 +18,8 @@
     "@types/log": "^6.3.0",
     "@types/node": "^16.11.12",
     "log": "^6.3.1",
-    "safe-stable-stringify": "^2.4.3"
+    "safe-stable-stringify": "^2.4.3",
+    "semantic-release": "^21.0.3"
   },
   "publishConfig": {
     "access": "public"
