@@ -1,7 +1,6 @@
 /* eslint-disable max-params */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/ban-types */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 // These types are copied from @types/log, see: https://github.com/medikoo/log
 interface MedikooLogFunction {
