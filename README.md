@@ -144,6 +144,9 @@ const json = JSON.stringify({
 
 ### Modules
 
+- [array](#modulesarraymd)
+- [codec](#modulescodecmd)
+- [http-status](#moduleshttp_statusmd)
 - [index](#modulesindexmd)
 - [line-logger](#modulesline_loggermd)
 - [mask](#modulesmaskmd)
@@ -168,10 +171,9 @@ It is intended for "logging for humans to read" scenario.
 `LineLogger.console()` and `LineLogger.consoleWithColour()` are ready to use convenient functions.
 Or you can use the constructor to build your own wrappers.
 
-**`example`**
-```javascript
+**`Example`**
 
-
+```ts
 // Just a wrapper of console.log/info/warn/error
 const consoleLogger = LineLogger.console();
 
@@ -186,8 +188,8 @@ import chalk from 'chalk';
 // this.flags is an object with properties "debug" and "quiet"
 this.output = LineLogger.consoleWithColour(this.flags, chalk);
 this.output.warn('Configuration file not found, default configuration would be used.');  // it would be printed out in yellow
-
 ```
+
 #### Type parameters
 
 | Name | Type |
@@ -229,13 +231,13 @@ Constructor
 
 | Property | Description |
 | --- | --- |
-| • **debug**: `DEBUG_FUNC` |  |
-| • **error**: `ERROR_FUNC` |  |
-| • **info**: `INFO_FUNC` |  |
-| • **isDebug**: `boolean` = `false` |  |
-| • **isQuiet**: `boolean` = `false` |  |
-| • **warn**: `WARN_FUNC` |  |
-| ▪ `Static` `Protected` **NO\_OP\_FUNC**: () => `void` | **Type declaration:**<br>▸ (): `void`<br><br>**Returns:**<br>`void` |
+| **debug**: `DEBUG_FUNC` |  |
+| **error**: `ERROR_FUNC` |  |
+| **info**: `INFO_FUNC` |  |
+| **isDebug**: `boolean` = `false` | is debug output enabled or not, it could be overriden by isQuiet |
+| **isQuiet**: `boolean` = `false` | is quiet mode enabled or not. When quiet mode is enabled, both debug and info output would be discarded. |
+| **warn**: `WARN_FUNC` |  |
+| `Static` `Protected` **NO\_OP\_FUNC**: () => `void` |  |
 
 
 #### Methods
@@ -323,84 +325,236 @@ you need to add them as dependencies separately.
 
 An instance that uses console.log/info/warn/error and also adds colour to the messages using chalk/colors/cli-color.
 
+## Enums
+
+
+<a name="enumshttp_statushttpstatuscodemd"></a>
+
+### Enumeration: HttpStatusCode
+
+[http-status](#moduleshttp_statusmd).HttpStatusCode
+
+Some (not all) well known HTTP status codes
+
+#### Enumeration Members
+
+##### ACCEPTED202
+
+• **ACCEPTED202** = ``202``
+
+The request has been received but not yet acted upon. It is non-committal, meaning that there is no way in HTTP to later send an asynchronous response indicating the outcome of processing the request. It is intended for cases where another process or server handles the request, or for batch processing.
+
+___
+
+##### BAD\_GATEWAY502
+
+• **BAD\_GATEWAY502** = ``502``
+
+This error response means that the server, while working as a gateway to get a response needed to handle the request, got an invalid response.
+
+___
+
+##### BAD\_REQUEST400
+
+• **BAD\_REQUEST400** = ``400``
+
+This response means that server could not understand the request due to invalid syntax.
+
+___
+
+##### CONFLICT409
+
+• **CONFLICT409** = ``409``
+
+This response is sent when a request conflicts with the current state of the server.
+
+___
+
+##### CREATED201
+
+• **CREATED201** = ``201``
+
+The request has succeeded and a new resource has been created as a result of it. This is typically the response sent after a PUT request.
+
+___
+
+##### FORBIDDEN403
+
+• **FORBIDDEN403** = ``403``
+
+The client does not have access rights to the content, i.e. they are unauthorized, so server is rejecting to give proper response. Unlike 401, the client's identity is known to the server.
+
+___
+
+##### GATEWAY\_TIMEOUT504
+
+• **GATEWAY\_TIMEOUT504** = ``504``
+
+This error response is given when the server is acting as a gateway and cannot get a response in time.
+
+___
+
+##### INTERNAL\_SERVER\_ERROR500
+
+• **INTERNAL\_SERVER\_ERROR500** = ``500``
+
+The server encountered an unexpected condition that prevented it from fulfilling the request.
+
+___
+
+##### METHOD\_NOT\_ALLOWED405
+
+• **METHOD\_NOT\_ALLOWED405** = ``405``
+
+The request method is known by the server but has been disabled and cannot be used. For example, an API may forbid DELETE-ing a resource. The two mandatory methods, GET and HEAD, must never be disabled and should not return this error code.
+
+___
+
+##### MOVED\_PERMANENTLY301
+
+• **MOVED\_PERMANENTLY301** = ``301``
+
+This response code means that URI of requested resource has been changed. Probably, new URI would be given in the response.
+
+___
+
+##### MOVED\_TEMPORARILY302
+
+• **MOVED\_TEMPORARILY302** = ``302``
+
+This response code means that URI of requested resource has been changed temporarily. New changes in the URI might be made in the future. Therefore, this same URI should be used by the client in future requests.
+
+___
+
+##### NOT\_FOUND404
+
+• **NOT\_FOUND404** = ``404``
+
+The server can not find requested resource. In the browser, this means the URL is not recognized. In an API, this can also mean that the endpoint is valid but the resource itself does not exist. Servers may also send this response instead of 403 to hide the existence of a resource from an unauthorized client. This response code is probably the most famous one due to its frequent occurence on the web.
+
+___
+
+##### NOT\_IMPLEMENTED501
+
+• **NOT\_IMPLEMENTED501** = ``501``
+
+The request method is not supported by the server and cannot be handled. The only methods that servers are required to support (and therefore that must not return this code) are GET and HEAD.
+
+___
+
+##### NO\_CONTENT204
+
+• **NO\_CONTENT204** = ``204``
+
+There is no content to send for this request, but the headers may be useful. The user-agent may update its cached headers for this resource with the new ones.
+
+___
+
+##### OK200
+
+• **OK200** = ``200``
+
+The request has succeeded. The meaning of a success varies depending on the HTTP method:
+GET: The resource has been fetched and is transmitted in the message body.
+HEAD: The entity headers are in the message body.
+POST: The resource describing the result of the action is transmitted in the message body.
+TRACE: The message body contains the request message as received by the server
+
+___
+
+##### PERMANENT\_REDIRECT308
+
+• **PERMANENT\_REDIRECT308** = ``308``
+
+This means that the resource is now permanently located at another URI, specified by the Location: HTTP Response header. This has the same semantics as the 301 Moved Permanently HTTP response code, with the exception that the user agent must not change the HTTP method used: if a POST was used in the first request, a POST must be used in the second request.
+
+___
+
+##### REQUEST\_TIMEOUT408
+
+• **REQUEST\_TIMEOUT408** = ``408``
+
+This response is sent on an idle connection by some servers, even without any previous request by the client. It means that the server would like to shut down this unused connection. This response is used much more since some browsers, like Chrome, Firefox 27+, or IE9, use HTTP pre-connection mechanisms to speed up surfing. Also note that some servers merely shut down the connection without sending this message.
+
+___
+
+##### SEE\_OTHER303
+
+• **SEE\_OTHER303** = ``303``
+
+Server sent this response to directing client to get requested resource to another URI with an GET request.
+
+___
+
+##### SERVICE\_UNAVAILABLE503
+
+• **SERVICE\_UNAVAILABLE503** = ``503``
+
+The server is not ready to handle the request. Common causes are a server that is down for maintenance or that is overloaded. Note that together with this response, a user-friendly page explaining the problem should be sent. This responses should be used for temporary conditions and the Retry-After: HTTP header should, if possible, contain the estimated time before the recovery of the service. The webmaster must also take care about the caching-related headers that are sent along with this response, as these temporary condition responses should usually not be cached.
+
+___
+
+##### TEMPORARY\_REDIRECT307
+
+• **TEMPORARY\_REDIRECT307** = ``307``
+
+Server sent this response to directing client to get requested resource to another URI with same method that used prior request. This has the same semantic than the 302 Found HTTP response code, with the exception that the user agent must not change the HTTP method used: if a POST was used in the first request, a POST must be used in the second request.
+
+___
+
+##### TOO\_MANY\_REQUESTS429
+
+• **TOO\_MANY\_REQUESTS429** = ``429``
+
+The user has sent too many requests in a given amount of time ("rate limiting").
+
+___
+
+##### UNAUTHORIZED401
+
+• **UNAUTHORIZED401** = ``401``
+
+Although the HTTP standard specifies "unauthorized", semantically this response means "unauthenticated". That is, the client must authenticate itself to get the requested response.
+
 ## Modules
 
 
-<a name="modulesindexmd"></a>
+<a name="modulesarraymd"></a>
 
-### Module: index
+### Module: array
 
-#### References
+#### Functions
 
-##### ConsoleLineLogger
+##### distributeRoundRobin
 
-Re-exports [ConsoleLineLogger](#consolelinelogger)
+▸ **distributeRoundRobin**<`T`\>(`array`, `groups`): `T`[][]
 
-___
+Distributes an array into a number of groups in a round robin fashion.
+This function has been tuned for performance.
 
-##### LineLogger
+###### Type parameters
 
-Re-exports [LineLogger](#classesline_loggerlineloggermd)
+| Name |
+| :------ |
+| `T` |
 
-___
+###### Parameters
 
-##### PathAwareReplacer
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `array` | `T`[] | The input array |
+| `groups` | `number` | Number of groups the elements in the input array need to be distributed into. |
 
-Re-exports [PathAwareReplacer](#pathawarereplacer)
+###### Returns
 
-___
+`T`[][]
 
-##### consoleLike
+The result as an array of arrays which each represents a group
 
-Re-exports [consoleLike](#consolelike)
 
-___
+<a name="modulescodecmd"></a>
 
-##### consoleWithColour
-
-Re-exports [consoleWithColour](#consolewithcolour)
-
-___
-
-##### consoleWithoutColour
-
-Re-exports [consoleWithoutColour](#consolewithoutcolour)
-
-___
-
-##### mask
-
-Re-exports [mask](#mask)
-
-___
-
-##### maskAll
-
-Re-exports [maskAll](#maskall)
-
-___
-
-##### maskEmail
-
-Re-exports [maskEmail](#maskemail)
-
-___
-
-##### maskFullName
-
-Re-exports [maskFullName](#maskfullname)
-
-___
-
-##### pathAwareReplacer
-
-Re-exports [pathAwareReplacer](#pathawarereplacer-1)
-
-___
-
-##### pathBasedReplacer
-
-Re-exports [pathBasedReplacer](#pathbasedreplacer)
+### Module: codec
 
 #### Functions
 
@@ -536,6 +690,175 @@ Make a "normal" (BASE64) string URL/path safe.
 URL/path safe version of the (BASE64) input string, or the original input if it is null or undefined.
 
 
+<a name="moduleshttp_statusmd"></a>
+
+### Module: http-status
+
+#### Enumerations
+
+- [HttpStatusCode](#enumshttp_statushttpstatuscodemd)
+
+#### Variables
+
+##### HttpStatusMessage
+
+• `Const` **HttpStatusMessage**: `Object`
+
+Some (not all) HTTP status messages matching their codes
+
+###### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `200` | `string` |
+| `201` | `string` |
+| `202` | `string` |
+| `204` | `string` |
+| `301` | `string` |
+| `302` | `string` |
+| `303` | `string` |
+| `307` | `string` |
+| `308` | `string` |
+| `400` | `string` |
+| `401` | `string` |
+| `403` | `string` |
+| `404` | `string` |
+| `405` | `string` |
+| `408` | `string` |
+| `409` | `string` |
+| `429` | `string` |
+| `500` | `string` |
+| `501` | `string` |
+| `502` | `string` |
+| `503` | `string` |
+| `504` | `string` |
+
+
+<a name="modulesindexmd"></a>
+
+### Module: index
+
+#### References
+
+##### ConsoleLineLogger
+
+Re-exports [ConsoleLineLogger](#consolelinelogger)
+
+___
+
+##### HttpStatusCode
+
+Re-exports [HttpStatusCode](#enumshttp_statushttpstatuscodemd)
+
+___
+
+##### HttpStatusMessage
+
+Re-exports [HttpStatusMessage](http_status.md#httpstatusmessage)
+
+___
+
+##### LineLogger
+
+Re-exports [LineLogger](#classesline_loggerlineloggermd)
+
+___
+
+##### PathAwareReplacer
+
+Re-exports [PathAwareReplacer](#pathawarereplacer)
+
+___
+
+##### base64FromUInt32
+
+Re-exports [base64FromUInt32](#base64fromuint32)
+
+___
+
+##### base64UrlFromUInt32
+
+Re-exports [base64UrlFromUInt32](#base64urlfromuint32)
+
+___
+
+##### consoleLike
+
+Re-exports [consoleLike](#consolelike)
+
+___
+
+##### consoleWithColour
+
+Re-exports [consoleWithColour](#consolewithcolour)
+
+___
+
+##### consoleWithoutColour
+
+Re-exports [consoleWithoutColour](#consolewithoutcolour)
+
+___
+
+##### distributeRoundRobin
+
+Re-exports [distributeRoundRobin](#distributeroundrobin)
+
+___
+
+##### mask
+
+Re-exports [mask](#mask)
+
+___
+
+##### maskAll
+
+Re-exports [maskAll](#maskall)
+
+___
+
+##### maskEmail
+
+Re-exports [maskEmail](#maskemail)
+
+___
+
+##### maskFullName
+
+Re-exports [maskFullName](#maskfullname)
+
+___
+
+##### pathAwareReplacer
+
+Re-exports [pathAwareReplacer](#pathawarereplacer-1)
+
+___
+
+##### pathBasedReplacer
+
+Re-exports [pathBasedReplacer](#pathbasedreplacer)
+
+___
+
+##### shortBase64FromUInt32
+
+Re-exports [shortBase64FromUInt32](#shortbase64fromuint32)
+
+___
+
+##### shortBase64UrlFromUInt32
+
+Re-exports [shortBase64UrlFromUInt32](#shortbase64urlfromuint32)
+
+___
+
+##### urlSafe
+
+Re-exports [urlSafe](#urlsafe)
+
+
 <a name="modulesline_loggermd"></a>
 
 ### Module: line-logger
@@ -544,7 +867,7 @@ URL/path safe version of the (BASE64) input string, or the original input if it 
 
 - [LineLogger](#classesline_loggerlineloggermd)
 
-#### Type aliases
+#### Type Aliases
 
 ##### ConsoleLineLogger
 
@@ -660,11 +983,11 @@ Mask the content of a string
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
 | `input` | `T` | `undefined` | The input which could also be null or undefined |
-| `keepLeft` | `number` | `1` | Number of characters on the left to be kept in the output without masking.                 Default value is 1. |
-| `keepRight` | `number` | `0` | Number of characters on the right to be kept in the output without masking.                  Default value is 0. |
-| `minLength` | `number` | `3` | Minimal length of the string for keepLeft and keepRight to be effective.                  If the input string is shorter than this length, the whole string would be masked.                  Default value is 3. |
-| `maskLengthOrMaskString` | `undefined` \| ``null`` \| `string` \| `number` | `null` | The string to be used for replacing the part in the input that needs to be masked,                               or the length of the mask string if a fixed length is desired,                               or null/undefined if the mask string should have the same length as the part to be masked.                               Default value is null. |
-| `maskPattern` | `string` | `'*'` | The pattern to be repeated as the mask.                    Default value is '*'. |
+| `keepLeft` | `number` | `1` | Number of characters on the left to be kept in the output without masking. Default value is 1. |
+| `keepRight` | `number` | `0` | Number of characters on the right to be kept in the output without masking. Default value is 0. |
+| `minLength` | `number` | `3` | Minimal length of the string for keepLeft and keepRight to be effective. If the input string is shorter than this length, the whole string would be masked. Default value is 3. |
+| `maskLengthOrMaskString` | `undefined` \| ``null`` \| `string` \| `number` | `null` | The string to be used for replacing the part in the input that needs to be masked, or the length of the mask string if a fixed length is desired, or null/undefined if the mask string should have the same length as the part to be masked. Default value is null. |
+| `maskPattern` | `string` | `'*'` | The pattern to be repeated as the mask. Default value is '*'. |
 
 ###### Returns
 
@@ -755,7 +1078,7 @@ masked full name
 
 ### Module: stringify-replacer
 
-#### Type aliases
+#### Type Aliases
 
 ##### PathAwareReplacer
 
@@ -773,10 +1096,10 @@ The replacer that can potentially utilise the full path of the property in the o
 | :------ | :------ | :------ |
 | `key` | `string` | Name of the property, or the index in the parent array. |
 | `value` | `any` | Value of the property or the object in the parent array. |
-| `path` | `string` | The full path of the property in the object, such like "access.visitor.location" or "request.x-forwarded-for.0".             Please note that the special characters (including ".") in property names are not escaped, for example, "order.billing address.first line". |
+| `path` | `string` | The full path of the property in the object, such like "access.visitor.location" or "request.x-forwarded-for.0". Please note that the special characters (including ".") in property names are not escaped, for example, "order.billing address.first line". |
 | `parent` | `Parent` | The object that the property or the element belongs to. It could be `{ '': <the original object> }` when this replacer function is called the first time. |
-| `pathArray` | `string`[] | The full path as an array. It is more useful than `path` in case special characters exist in property names.                  When this replacer function is called the first time, pathArray array would have a zero length. |
-| `ancestors` | `Parent`[] | All the ancestor objects/arrays of the property.                  When this replacer function is called the first time, ancestors array would have a zero length. |
+| `pathArray` | `string`[] | The full path as an array. It is more useful than `path` in case special characters exist in property names. When this replacer function is called the first time, pathArray array would have a zero length. |
+| `ancestors` | `Parent`[] | All the ancestor objects/arrays of the property. When this replacer function is called the first time, ancestors array would have a zero length. |
 
 ####### Returns
 
@@ -795,7 +1118,7 @@ Build a replacer function that can be passed to JSON.stringify(...).
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `replacer` | [`PathAwareReplacer`](#pathawarereplacer) | The actual replacer function which could utilise additional information. |
-| `options?` | `Object` | Options to control whether the pathArray and ancestors parameters would have values populated.                By default all information available would be populated.                There is no need to specify options unless you are extremely concerned about performance, for example if you need to frequently stringify 500MB objects. |
+| `options?` | `Object` | Options to control whether the pathArray and ancestors parameters would have values populated. By default all information available would be populated. There is no need to specify options unless you are extremely concerned about performance, for example if you need to frequently stringify 500MB objects. |
 | `options.ancestors?` | `boolean` | - |
 | `options.pathArray?` | `boolean` | - |
 
@@ -814,9 +1137,9 @@ ___
 Create a replacer function for JSON.stringify(...) from an array of path based rules.
 This function is useful for creating masking replacers which can apply masking based on the path of the property.
 
-**`example`**
-```javascript
+**`Example`**
 
+```ts
 import { mask, maskAll, maskEmail, maskFullName, pathBasedReplacer } from '@handy-common-utils/misc-utils';
 console.log(JSON.stringify(obj, pathBasedReplacer([
  [/.*\.x-api-key$/, maskAll],
@@ -826,8 +1149,8 @@ console.log(JSON.stringify(obj, pathBasedReplacer([
  [/.*\.cc$/, () => undefined],
  [/.*\.ssn$/, mask],
 ])));
-
 ```
+
 ###### Parameters
 
 | Name | Type | Description |
