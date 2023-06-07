@@ -1,6 +1,5 @@
 /* eslint-disable unicorn/no-useless-undefined */
 /* eslint-disable unicorn/no-for-loop */
-/* eslint-disable @typescript-eslint/ban-types */
 import { expect } from 'chai';
 import stringify from 'safe-stable-stringify';
 import { mask, maskAll, maskEmail, maskFullName } from '../src/mask';
