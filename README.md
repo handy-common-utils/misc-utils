@@ -135,6 +135,46 @@ const json = JSON.stringify({
 }, replacer, 2);
 ```
 
+## substituteAll
+
+The `substituteAll(input, searchPattern, substitute)` function allows you to perform substitutions on an input string
+by matching a specified pattern and replacing the matches with substitution strings built by a function.
+It provides flexibility in handling complex substitution scenarios through the `substitute` callback function.
+
+### Example Usage Scenarios:
+
+- __Templating__: Replace placeholder variables in a template string with dynamic values. For example, transforming the template "Hello, {name}! How are you, {name}? I am {me}." into "Hello, John! How are you, John? I am James." by substituting `{name}` with the value "John" and `{me}` with value "James".
+
+```typescript
+const input = 'Hello, {name}! How are you, {name}? I am {me}.';
+const searchPattern = /{([^{}]+)}/g;
+const dict: Record<string, string> = {
+  name: 'John',
+  me: 'James',
+};
+const substitute: Parameters<typeof substituteAll>[2] = (_match, result) => {
+  const key = result[1];
+  return dict[key] ?? `{NOT FOUND: ${key}}`;
+};
+const result = substituteAll(input, searchPattern, substitute);
+
+```
+
+- __Text Transformation__: Modify specific segments of a string based on predefined patterns. For instance, converting dates written in a non-standard format, such as "MM/DD/YY", to a standardized format, like "YYYY-MM-DD", using a suitable regular expression pattern and substitution logic.
+
+```typescript
+const input = 'Event date: 12/31/21';
+const searchPattern = / ((\d{2})\/(\d{2})\/(\d{2}))/g;
+const substitute = (_: string, result: any) => {
+  const [match, date, month, day, year] = result;
+  const formattedDate = `20${year}-${month}-${day}`;
+  return match.replace(date, formattedDate);
+};
+
+const result = substituteAll(input, searchPattern, substitute);
+
+```
+
 # API
 
 <!-- API start -->
