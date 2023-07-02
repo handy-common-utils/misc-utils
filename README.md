@@ -191,6 +191,7 @@ const result = substituteAll(input, searchPattern, substitute);
 - [line-logger](#modulesline_loggermd)
 - [mask](#modulesmaskmd)
 - [stringify-replacer](#modulesstringify_replacermd)
+- [substitute](#modulessubstitutemd)
 
 ## Classes
 
@@ -894,6 +895,12 @@ Re-exports [shortBase64UrlFromUInt32](#shortbase64urlfromuint32)
 
 ___
 
+##### substituteAll
+
+Re-exports [substituteAll](#substituteall)
+
+___
+
 ##### urlSafe
 
 Re-exports [urlSafe](#urlsafe)
@@ -1202,4 +1209,37 @@ console.log(JSON.stringify(obj, pathBasedReplacer([
 `JsonStringifyReplacer`
 
 the replacer function built from those path based rules
+
+
+<a name="modulessubstitutemd"></a>
+
+### Module: substitute
+
+#### Functions
+
+##### substituteAll
+
+▸ **substituteAll**<`T`\>(`input`, `searchPattern`, `substitute`): `T`
+
+Substitute all occurrences of a pattern in a string.
+
+###### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `undefined` \| ``null`` \| `string` |
+
+###### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `input` | `T` | The input string on which the substitutions will be performed. |
+| `searchPattern` | `RegExp` | The regular expression pattern used to search for segments that should be substituted. It must have the `g` flag set. If the beginning part of the `input` should be skipped, set the `lastIndex` of the `searchPattern` before calling this function. After all the substitution are done, the `lastIndex` of the `searchPattern` will be reset to zero. See [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/lastIndex](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/lastIndex) |
+| `substitute` | (`match`: `string`, `matchResult`: `RegExpExecArray`) => ``null`` \| `string` | TThe function that builds the substitution string. It is called with the matched substring and the result of `RegExp.exec()`. See [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec#examples](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec#examples). The function can return null to indicate that no further substitution is desired. In such case, the `lastIndex` of the `searchPattern` will not be reset to zero. |
+
+###### Returns
+
+`T`
+
+The resulting string after performing all substitutions.
 <!-- API end -->
