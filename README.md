@@ -615,7 +615,7 @@ Encode an unsigned 32-bit integer into BASE64 string.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `ui32` | `T` | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when valueis anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
+| `ui32` | `T` | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when the value is anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
 
 ###### Returns
 
@@ -641,7 +641,7 @@ Encode an unsigned 32-bit integer into URL/path safe BASE64 string.
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `ui32` | `T` | `undefined` | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when valueis anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
+| `ui32` | `T` | `undefined` | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when the value is anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
 | `replacements` | `string` | `'_-='` | A string containing replacement characters for "/", "+", and "=". If omitted, default value of '_-=' would be used. |
 
 ###### Returns
@@ -649,6 +649,50 @@ Encode an unsigned 32-bit integer into URL/path safe BASE64 string.
 `Exclude`<`T`, `number`\> \| `string`
 
 URL/path safe BASE64 string representing the integer input, or the original input if it is null or undefined.
+
+___
+
+##### generateRandomString
+
+▸ **generateRandomString**(`len`): `string`
+
+Generate a strong (using crypto.randomFillSync(...)) random string that is URL/path safe.
+In the generated string, approximately every 6 characters represent randomly generated 32 bits.
+For example, if you need 128 bits of randomness, you just need to generate a string containing 24 characters.
+
+###### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `len` | `number` | length of the string to be generated |
+
+###### Returns
+
+`string`
+
+the random string
+
+___
+
+##### generateRandomStringQuickly
+
+▸ **generateRandomStringQuickly**(`len`): `string`
+
+Generate a weak (using Math.random()) random string that is URL/path safe.
+In the generated string, approximately every 6 characters represent randomly generated 32 bits.
+For example, if you need 128 bits of randomness, you just need to generate a string containing 24 characters.
+
+###### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `len` | `number` | length of the string to be generated |
+
+###### Returns
+
+`string`
+
+the random string
 
 ___
 
@@ -668,7 +712,7 @@ Encode an unsigned 32-bit integer into BASE64 string without trailing '='.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `ui32` | `T` | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when valueis anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
+| `ui32` | `T` | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when the value is anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
 
 ###### Returns
 
@@ -682,7 +726,7 @@ ___
 
 ▸ **shortBase64UrlFromUInt32**<`T`\>(`ui32`, `replacements?`): `Exclude`<`T`, `number`\> \| `string`
 
-Encode an unsigned 32-bit integer into URL/path safe BASE64 string without trailling '='.
+Encode an unsigned 32-bit integer into URL/path safe BASE64 string without trailing '='.
 
 ###### Type parameters
 
@@ -694,7 +738,7 @@ Encode an unsigned 32-bit integer into URL/path safe BASE64 string without trail
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `ui32` | `T` | `undefined` | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when valueis anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
+| `ui32` | `T` | `undefined` | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when the value is anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
 | `replacements` | `string` | `'_-'` | A string containing replacement characters for "/" and "+". If omitted, default value of '_-' would be used. |
 
 ###### Returns
@@ -844,6 +888,18 @@ ___
 ##### distributeRoundRobin
 
 Re-exports [distributeRoundRobin](#distributeroundrobin)
+
+___
+
+##### generateRandomString
+
+Re-exports [generateRandomString](#generaterandomstring)
+
+___
+
+##### generateRandomStringQuickly
+
+Re-exports [generateRandomStringQuickly](#generaterandomstringquickly)
 
 ___
 
