@@ -1,3 +1,6 @@
+// eslint-disable-next-line unicorn/prefer-node-protocol
+import * as crypto from 'crypto';
+
 /**
  * Make a "normal" (BASE64) string URL/path safe.
  * @param base64Input A (BASE64) string which could be null or undefined.
@@ -68,4 +71,38 @@ export function base64UrlFromUInt32<T extends number | undefined | null>(ui32: T
  */
 export function shortBase64UrlFromUInt32<T extends number | undefined | null>(ui32: T, replacements = '_-'): Exclude<T, number> | string {
   return urlSafe(shortBase64FromUInt32(ui32), replacements);
+}
+
+/**
+ * Generate a strong (using crypto.randomFillSync(...)) random string that is URL/path safe.
+ * In the generated string, approximately every 6 characters represent randomly generated 32 bits.
+ * For example, if you need 128 bits of randomness, you just need to generate a string containing 24 characters.
+ * @param len length of the string to be generated
+ * @returns the random string
+ */
+export function generateRandomString(len: number): string {
+  // 32 bits => 6 characters
+  const numbers = new Uint32Array(Math.ceil((len + 1) / 6));
+  crypto.randomFillSync(numbers);
+  const strings: string[] = [];
+  for (const i of numbers) {
+    strings.push(shortBase64UrlFromUInt32(i));
+  }
+  return strings.join('').slice(0, len);
+}
+
+/**
+ * Generate a weak (using Math.random()) random string that is URL/path safe.
+ * In the generated string, approximately every 6 characters represent randomly generated 32 bits.
+ * For example, if you need 128 bits of randomness, you just need to generate a string containing 24 characters.
+ * @param len length of the string to be generated
+ * @returns the random string
+ */
+export function generateRandomStringQuickly(len: number): string {
+  // 32 bits => 6 characters
+  const strings: string[] = [];
+  for (let i = 0; i < Math.ceil((len + 1) / 6); i++) {
+    strings.push(shortBase64UrlFromUInt32((Math.random() * 4294967295) >>> 0));
+  }
+  return strings.join('').slice(0, len);
 }
