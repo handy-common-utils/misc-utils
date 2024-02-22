@@ -66,7 +66,7 @@ export function mask<T extends string|undefined|null>(input: T, keepLeft = 1, ke
  *                    Default value is '*'.
  * @returns A mask function that has specified parameters as pre-set
  */
-export function masker<T extends string|undefined|null = string>(keepLeft = 1, keepRight = 0, minLength = 3, maskLengthOrMaskString: number|string|undefined|null = null, maskPattern = '*'): (input: T) => T {
+export function masker<T extends string|undefined|null = string>(keepLeft?: number, keepRight?: number, minLength?: number, maskLengthOrMaskString?: number|string|undefined|null, maskPattern?: string): (input: T) => T {
   return input => mask(input, keepLeft, keepRight, minLength, maskLengthOrMaskString, maskPattern);
 }
 

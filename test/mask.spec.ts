@@ -45,6 +45,7 @@ describe('mask(...)', () => {
 
 describe('masker(...)', () => {
   it('should be able to create the correct mask function', () => {
+    expect(masker()('abcde')).to.equal('a****');
     const maskFunc = masker(2, 2, 5);
     expect(maskFunc('abcde')).to.equal('ab*de');
   });
