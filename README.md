@@ -1237,13 +1237,13 @@ const maskApiKey = masker(2, 2, 10);
 
 ###### Parameters
 
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `keepLeft` | `number` | `1` | Number of characters on the left to be kept in the output without masking. Default value is 1. |
-| `keepRight` | `number` | `0` | Number of characters on the right to be kept in the output without masking. Default value is 0. |
-| `minLength` | `number` | `3` | Minimal length of the string for keepLeft and keepRight to be effective. If the input string is shorter than this length, the whole string would be masked. Default value is 3. |
-| `maskLengthOrMaskString` | `undefined` \| ``null`` \| `string` \| `number` | `null` | The string to be used for replacing the part in the input that needs to be masked, or the length of the mask string if a fixed length is desired, or null/undefined if the mask string should have the same length as the part to be masked. Default value is null. |
-| `maskPattern` | `string` | `'*'` | The pattern to be repeated as the mask. Default value is '*'. |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `keepLeft?` | `number` | Number of characters on the left to be kept in the output without masking. Default value is 1. |
+| `keepRight?` | `number` | Number of characters on the right to be kept in the output without masking. Default value is 0. |
+| `minLength?` | `number` | Minimal length of the string for keepLeft and keepRight to be effective. If the input string is shorter than this length, the whole string would be masked. Default value is 3. |
+| `maskLengthOrMaskString?` | ``null`` \| `string` \| `number` | The string to be used for replacing the part in the input that needs to be masked, or the length of the mask string if a fixed length is desired, or null/undefined if the mask string should have the same length as the part to be masked. Default value is null. |
+| `maskPattern?` | `string` | The pattern to be repeated as the mask. Default value is '*'. |
 
 ###### Returns
 
