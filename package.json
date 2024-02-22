@@ -18,6 +18,7 @@
     "@semantic-release/git": "^10.0.1",
     "@types/log": "^6.3.0",
     "@types/node": "^16.11.12",
+    "fast-safe-stringify": "^2.1.1",
     "log": "^6.3.1",
     "safe-stable-stringify": "^2.4.3",
     "semantic-release": "^21.0.3"

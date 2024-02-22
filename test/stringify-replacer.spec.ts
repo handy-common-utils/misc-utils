@@ -2,6 +2,7 @@
 /* eslint-disable unicorn/no-for-loop */
 import { expect } from 'chai';
 import stringify from 'safe-stable-stringify';
+import fastStringify from 'fast-safe-stringify';
 import { mask, maskAll, maskEmail, maskFullName } from '../src/mask';
 import { pathAwareReplacer, pathBasedReplacer } from '../src/stringify-replacer';
 
@@ -196,63 +197,96 @@ describe('stringifyReplacer(...)', () => {
 });
 
 describe('pathBasedReplacer(...)', () => {
-  it('can be used to mask sensitive information in a complex object', () => {
-    const obj = {
-      id: '23345232356',
-      customer: {
-        cc: '1234123412341234',
-        ssn: '123-45-6789',
-        email: 'john.doe@example.com',
-        name: 'John Doe',
-      },
-      billingAddress: {
-        street: '33 High St',
-        city: 'New Port',
-        state: 'NY',
-        zip: '34564',
-      },
-      shippingAddress: {
-        street: '123 Main St',
-        city: 'Anytown',
-        state: 'CA',
-        zip: '12345',
-        recipient: 'Bruce Li',
-        email: 'bruce.li@example.com',
-      },
-    };
-    const replacer = pathBasedReplacer([
-      [/.*\.email$/, maskEmail],
-      [/.*[Aa]ddress\.street$/, maskAll],
-      [/.*customer\.name$/, maskFullName],
-      [/.*[Aa]ddress\.recipient$/, maskFullName],
-      [/.*\.zip$/, (value: string) => value.slice(0, 3) + 'XX'],
-      [/.*\.cc$/, () => undefined],
-      [/.*\.ssn$/, mask],
-    ]);
+  const sameString = 'some.body@somewhere.com';
+
+  const obj = {
+    id: '23345232356',
+    customer: {
+      cc: '1234123412341234',
+      ssn: '123-45-6789',
+      email: 'john.doe@example.com',
+      name: 'John Doe',
+    },
+    recipients: [
+      'john.doe@example.com',
+      'alice.spring@example.com',
+      sameString,
+      sameString,
+      sameString,
+      sameString,
+    ],
+    billingAddress: {
+      street: '33 High St',
+      city: 'New Port',
+      state: 'NY',
+      zip: '34564',
+    },
+    shippingAddress: {
+      street: '123 Main St',
+      city: 'Anytown',
+      state: 'CA',
+      zip: '12345',
+      recipient: 'Bruce Li',
+      email: 'bruce.li@example.com',
+    },
+  };
+
+  const replacer = pathBasedReplacer([
+    [/.*\.email$/, maskEmail],
+    [/.*recipients\.\d+$/, maskEmail],
+    [/.*[Aa]ddress\.street$/, maskAll],
+    [/.*customer\.name$/, maskFullName],
+    [/.*[Aa]ddress\.recipient$/, maskFullName],
+    [/.*\.zip$/, (value: string) => value.slice(0, 3) + 'XX'],
+    [/.*\.cc$/, () => undefined],
+    [/.*\.ssn$/, mask],
+  ]);
+
+  const expectedObj = {
+    id: '23345232356',
+    customer: {
+      ssn: '1**********',
+      // cc has been removed
+      email: 'j***.d**@example.com',
+      name: 'J*** D**',
+    },
+    recipients: [
+      'j***.d**@example.com',
+      'a****.s*****@example.com',
+      's***.b***@somewhere.com',
+      's***.b***@somewhere.com',
+      's***.b***@somewhere.com',
+      's***.b***@somewhere.com',
+    ],
+    billingAddress: {
+      street: '**********',
+      city: 'New Port',
+      state: 'NY',
+      zip: '345XX',
+    },
+    shippingAddress: {
+      street: '***********',
+      city: 'Anytown',
+      state: 'CA',
+      zip: '123XX',
+      recipient: 'B**** **',
+      email: 'b****.**@example.com',
+    },
+  };
+
+  it('can be used to mask sensitive information in a complex object with JSON.stringify', () => {
     const json = JSON.stringify(obj, replacer, 2);
     const replacedObj = JSON.parse(json);
-    expect(replacedObj).to.deep.equal({
-      id: '23345232356',
-      customer: {
-        ssn: '1**********',
-        // cc has been removed
-        email: 'j***.d**@example.com',
-        name: 'J*** D**',
-      },
-      billingAddress: {
-        street: '**********',
-        city: 'New Port',
-        state: 'NY',
-        zip: '345XX',
-      },
-      shippingAddress: {
-        street: '***********',
-        city: 'Anytown',
-        state: 'CA',
-        zip: '123XX',
-        recipient: 'B**** **',
-        email: 'b****.**@example.com',
-      },
-    });
+    expect(replacedObj).to.deep.equal(expectedObj);
+  });
+  it('can be used to mask sensitive information in a complex object with safe-stable-stringify', () => {
+    const json = stringify(obj, replacer, 2);
+    const replacedObj = JSON.parse(json!);
+    expect(replacedObj).to.deep.equal(expectedObj);
+  });
+  it('can be used to mask sensitive information in a complex object with fast-safe-stringify', () => {
+    const json = fastStringify(obj, replacer, 2);
+    const replacedObj = JSON.parse(json!);
+    expect(replacedObj).to.deep.equal(expectedObj);
   });
 });
