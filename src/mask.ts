@@ -46,6 +46,31 @@ export function mask<T extends string|undefined|null>(input: T, keepLeft = 1, ke
 }
 
 /**
+ * Create a mask function with pre-set parameters.
+ * @example
+ *   const maskApiKey = masker(2, 2, 10);
+ *   const maskedString = maskApiKey(myApiKey);
+ *
+ * @param keepLeft Number of characters on the left to be kept in the output without masking.
+ *                 Default value is 1.
+ * @param keepRight Number of characters on the right to be kept in the output without masking.
+ *                  Default value is 0.
+ * @param minLength Minimal length of the string for keepLeft and keepRight to be effective.
+ *                  If the input string is shorter than this length, the whole string would be masked.
+ *                  Default value is 3.
+ * @param maskLengthOrMaskString The string to be used for replacing the part in the input that needs to be masked,
+ *                               or the length of the mask string if a fixed length is desired,
+ *                               or null/undefined if the mask string should have the same length as the part to be masked.
+ *                               Default value is null.
+ * @param maskPattern The pattern to be repeated as the mask.
+ *                    Default value is '*'.
+ * @returns A mask function that has specified parameters as pre-set
+ */
+export function masker<T extends string|undefined|null = string>(keepLeft = 1, keepRight = 0, minLength = 3, maskLengthOrMaskString: number|string|undefined|null = null, maskPattern = '*'): (input: T) => T {
+  return input => mask(input, keepLeft, keepRight, minLength, maskLengthOrMaskString, maskPattern);
+}
+
+/**
  * Mask sensitive information in an email address while keeping some information for troubleshooting
  * @param email the email address which could also be null or undefined
  * @returns masked email address
@@ -89,4 +114,17 @@ export function maskFullName<T extends string|undefined|null>(name: T): T {
  */
 export function maskAll<T extends string|undefined|null>(input: T): T {
   return mask(input, 0);
+}
+
+/**
+ * Mask credit card number string
+ * @param input credit card number string which could also be null or undefined
+ * @returns Something like ****-****-****-1234, or null/undefined if the input is null/undefined
+ */
+export function maskCreditCard<T extends string|undefined|null>(input: T): T {
+  if (input == null) {
+    return input;
+  }
+
+  return '****-****-****-' + input.padStart(4, '*').slice(-4) as T;
 }

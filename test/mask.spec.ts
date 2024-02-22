@@ -1,6 +1,6 @@
 /* eslint-disable unicorn/no-useless-undefined */
 import { expect } from 'chai';
-import { mask, maskAll, maskEmail, maskFullName } from '../src/mask';
+import { mask, maskAll, maskCreditCard, maskEmail, maskFullName, masker } from '../src/mask';
 
 describe('mask(...)', () => {
   it('should handle null/undefined/empty correctly', () => {
@@ -40,6 +40,13 @@ describe('mask(...)', () => {
     expect(mask('abcde', 0, 2, 3, 10, 'xyz')).to.equal('xyzxyzxyzxde');
     expect(mask('abcde', 0, 0, 3, 1, 'xyz')).to.equal('x');
     expect(mask('abcde', 2, 2, 5, 0, '!')).to.equal('abde');
+  });
+});
+
+describe('masker(...)', () => {
+  it('should be able to create the correct mask function', () => {
+    const maskFunc = masker(2, 2, 5);
+    expect(maskFunc('abcde')).to.equal('ab*de');
   });
 });
 
@@ -101,5 +108,18 @@ describe('maskAll(...)', () => {
     expect(maskAll('a')).to.equal('*');
     expect(maskAll('aaaaaaaa')).to.equal('********');
     expect(maskAll('a a a c')).to.equal('*******');
+  });
+});
+
+describe('maskCreditCard(...)', () => {
+  it('should handle null/undefined/empty correctly', () => {
+    expect(maskCreditCard(undefined)).to.be.undefined;
+    expect(maskCreditCard(null)).to.be.null;
+    expect(maskCreditCard('')).to.equal('****-****-****-****');
+  });
+  it('should replace each character with asterisk', () => {
+    expect(maskCreditCard('1')).to.equal('****-****-****-***1');
+    expect(maskCreditCard('12345678')).to.equal('****-****-****-5678');
+    expect(maskCreditCard('3333333333333333333333333333333333312345678')).to.equal('****-****-****-5678');
   });
 });
