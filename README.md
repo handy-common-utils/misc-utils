@@ -915,6 +915,12 @@ Re-exports [maskAll](#maskall)
 
 ___
 
+##### maskCreditCard
+
+Re-exports [maskCreditCard](#maskcreditcard)
+
+___
+
 ##### maskEmail
 
 Re-exports [maskEmail](#maskemail)
@@ -924,6 +930,12 @@ ___
 ##### maskFullName
 
 Re-exports [maskFullName](#maskfullname)
+
+___
+
+##### masker
+
+Re-exports [masker](#masker)
 
 ___
 
@@ -1126,6 +1138,32 @@ masked string or null or undefined
 
 ___
 
+##### maskCreditCard
+
+▸ **maskCreditCard**<`T`\>(`input`): `T`
+
+Mask credit card number string
+
+###### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `undefined` \| ``null`` \| `string` |
+
+###### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `input` | `T` | credit card number string which could also be null or undefined |
+
+###### Returns
+
+`T`
+
+Something like ****-****-****-1234, or null/undefined if the input is null/undefined
+
+___
+
 ##### maskEmail
 
 ▸ **maskEmail**<`T`\>(`email`): `T`
@@ -1175,6 +1213,55 @@ Mask sensitive information in the full name while keeping useful information for
 `T`
 
 masked full name
+
+___
+
+##### masker
+
+▸ **masker**<`T`\>(`keepLeft?`, `keepRight?`, `minLength?`, `maskLengthOrMaskString?`, `maskPattern?`): (`input`: `T`) => `T`
+
+Create a mask function with pre-set parameters.
+
+**`Example`**
+
+```ts
+const maskApiKey = masker(2, 2, 10);
+  const maskedString = maskApiKey(myApiKey);
+```
+
+###### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `undefined` \| ``null`` \| `string` = `string` |
+
+###### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `keepLeft` | `number` | `1` | Number of characters on the left to be kept in the output without masking. Default value is 1. |
+| `keepRight` | `number` | `0` | Number of characters on the right to be kept in the output without masking. Default value is 0. |
+| `minLength` | `number` | `3` | Minimal length of the string for keepLeft and keepRight to be effective. If the input string is shorter than this length, the whole string would be masked. Default value is 3. |
+| `maskLengthOrMaskString` | `undefined` \| ``null`` \| `string` \| `number` | `null` | The string to be used for replacing the part in the input that needs to be masked, or the length of the mask string if a fixed length is desired, or null/undefined if the mask string should have the same length as the part to be masked. Default value is null. |
+| `maskPattern` | `string` | `'*'` | The pattern to be repeated as the mask. Default value is '*'. |
+
+###### Returns
+
+`fn`
+
+A mask function that has specified parameters as pre-set
+
+▸ (`input`): `T`
+
+####### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `input` | `T` |
+
+####### Returns
+
+`T`
 
 
 <a name="modulesstringify_replacermd"></a>
