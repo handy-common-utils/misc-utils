@@ -37,12 +37,12 @@ const urlSafeBase64 = shortBase64UrlFromUInt32(12345);
 import { mask, maskAll, maskEmail, maskFullName, pathBasedReplacer } from '@handy-common-utils/misc-utils';
 
 const masked = JSON.stringify(obj, pathBasedReplacer([
-  [/.*\.x-api-key$/, maskAll],
-  [/.*customer\.name$/, maskFullName],
-  [/.*customer\..*[eE]mail$/, maskEmail],
-  [/.*\.zip$/, (value: string) => value.slice(0, 3) + 'XX'],
-  [/.*\.cc$/, () => undefined],
-  [/.*\.ssn$/, mask],
+  [/(^|\.)x-api-key$/i, maskAll],
+  [/(^|\.)customer\.name$/i, maskFullName],
+  [/(^|\.)customer\..*[eE]mail$/i, maskEmail],
+  [/(^|\.)zip$/i, (value: string) => value.slice(0, 3) + 'XX'],
+  [/(^|\.)cc$/i, () => undefined],
+  [/(^|\.)ssn$/i, mask],
 ]));
 ```
 
@@ -108,7 +108,7 @@ For example, you could use `pathBasedReplacer` to replace all credit card number
 const maskCreditCard = (value: any) => "****-****-****-" + value.slice(-4);
 
 const replacer = pathBasedReplacer([
-  [/.*billing\.cc$/, maskCreditCard]
+  [/(^|\.)billing\.cc$/i, maskCreditCard]
 ]);
 
 const json = JSON.stringify({
