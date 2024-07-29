@@ -2,7 +2,7 @@ type Parent = Record<string|number|symbol, unknown>|Array<unknown>;
 /**
  * The original replacer expected by JSON.stringify(...)
  */
-type JsonStringifyReplacer = (this: any, key: string, value: any) => any;
+export type JsonStringifyReplacer = (this: any, key: string, value: any) => any;
 
 /**
  * The replacer that can potentially utilise the full path of the property in the object.
@@ -60,6 +60,12 @@ export function pathAwareReplacer(replacer: PathAwareReplacer, options?: {pathAr
 }
 
 /**
+ * A JsonStringifyReplacer that was created from path based rules.
+ * Those rules are stored in the `rules` property in case of need.
+ */
+export type JsonStringifyReplacerFromPathBasedRules = JsonStringifyReplacer & { rules: Array<[RegExp, (input: any) => any]> };
+
+/**
  * Create a replacer function for JSON.stringify(...) from an array of path based rules.
  * This function is useful for creating masking replacers which can apply masking based on the path of the property.
  * @example
@@ -75,8 +81,8 @@ export function pathAwareReplacer(replacer: PathAwareReplacer, options?: {pathAr
  * @param rules Array of rules: if the regular expression tests true with the property path, the replacer function will be applied on the value
  * @returns the replacer function built from those path based rules
  */
-export function pathBasedReplacer(rules: Array<[RegExp, (input: any) => any]>): JsonStringifyReplacer {
-  return pathAwareReplacer(function (_key: string, value: any, path: string): any {
+export function pathBasedReplacer(rules: JsonStringifyReplacerFromPathBasedRules['rules']): JsonStringifyReplacerFromPathBasedRules {
+  const replacer =  pathAwareReplacer(function (_key: string, value: any, path: string): any {
     for (const [regexp, replace] of rules) {
       if (regexp.test(path)) {
         return replace(value);
@@ -87,4 +93,5 @@ export function pathBasedReplacer(rules: Array<[RegExp, (input: any) => any]>): 
     pathArray: false,
     ancestors: false,
   });
+  return Object.assign(replacer, { rules });
 }
