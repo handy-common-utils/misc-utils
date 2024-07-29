@@ -843,6 +843,18 @@ Re-exports [HttpStatusMessage](http_status.md#httpstatusmessage)
 
 ___
 
+##### JsonStringifyReplacer
+
+Re-exports [JsonStringifyReplacer](#jsonstringifyreplacer)
+
+___
+
+##### JsonStringifyReplacerFromPathBasedRules
+
+Re-exports [JsonStringifyReplacerFromPathBasedRules](#jsonstringifyreplacerfrompathbasedrules)
+
+___
+
 ##### LineLogger
 
 Re-exports [LineLogger](#classesline_loggerlineloggermd)
@@ -1270,6 +1282,39 @@ A mask function that has specified parameters as pre-set
 
 #### Type Aliases
 
+##### JsonStringifyReplacer
+
+Ƭ **JsonStringifyReplacer**: (`this`: `any`, `key`: `string`, `value`: `any`) => `any`
+
+###### Type declaration
+
+▸ (`this`, `key`, `value`): `any`
+
+The original replacer expected by JSON.stringify(...)
+
+####### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | `any` |
+| `key` | `string` |
+| `value` | `any` |
+
+####### Returns
+
+`any`
+
+___
+
+##### JsonStringifyReplacerFromPathBasedRules
+
+Ƭ **JsonStringifyReplacerFromPathBasedRules**: [`JsonStringifyReplacer`](#jsonstringifyreplacer) & { `rules`: [`RegExp`, (`input`: `any`) => `any`][]  }
+
+A JsonStringifyReplacer that was created from path based rules.
+Those rules are stored in the `rules` property in case of need.
+
+___
+
 ##### PathAwareReplacer
 
 Ƭ **PathAwareReplacer**: (`key`: `string`, `value`: `any`, `path`: `string`, `parent`: `Parent`, `pathArray`: `string`[], `ancestors`: `Parent`[]) => `any`
@@ -1299,7 +1344,7 @@ The replacer that can potentially utilise the full path of the property in the o
 
 ##### pathAwareReplacer
 
-▸ **pathAwareReplacer**(`replacer`, `options?`): `JsonStringifyReplacer`
+▸ **pathAwareReplacer**(`replacer`, `options?`): [`JsonStringifyReplacer`](#jsonstringifyreplacer)
 
 Build a replacer function that can be passed to JSON.stringify(...).
 
@@ -1314,7 +1359,7 @@ Build a replacer function that can be passed to JSON.stringify(...).
 
 ###### Returns
 
-`JsonStringifyReplacer`
+[`JsonStringifyReplacer`](#jsonstringifyreplacer)
 
 The replacer function that can be passed to JSON.stringify(...).
 
@@ -1322,7 +1367,7 @@ ___
 
 ##### pathBasedReplacer
 
-▸ **pathBasedReplacer**(`rules`): `JsonStringifyReplacer`
+▸ **pathBasedReplacer**(`rules`): [`JsonStringifyReplacerFromPathBasedRules`](#jsonstringifyreplacerfrompathbasedrules)
 
 Create a replacer function for JSON.stringify(...) from an array of path based rules.
 This function is useful for creating masking replacers which can apply masking based on the path of the property.
@@ -1349,7 +1394,7 @@ console.log(JSON.stringify(obj, pathBasedReplacer([
 
 ###### Returns
 
-`JsonStringifyReplacer`
+[`JsonStringifyReplacerFromPathBasedRules`](#jsonstringifyreplacerfrompathbasedrules)
 
 the replacer function built from those path based rules
 
