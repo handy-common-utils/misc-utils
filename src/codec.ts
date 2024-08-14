@@ -106,3 +106,24 @@ export function generateRandomStringQuickly(len: number): string {
   }
   return strings.join('').slice(0, len);
 }
+
+/**
+ * Escape a string literal for using it inside of RegExp.
+ * (From: https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex)
+ * @param text the string literal to be escaped
+ * @returns escaped string that can be used inside of RegExp
+ */
+export function escapeForRegExp(text: string): string {
+  // eslint-disable-next-line unicorn/better-regex
+  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
+/**
+ * Escape replacement string for using it inside of RegExp replacement parameter.
+ * (From: https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex)
+ * @param text the replacement string to be escaped
+ * @returns escaped replacement string that can be used inside of RegExp replacement parameter
+ */
+export function escapeForRegExpReplacement(text: string): string {
+  return text.replace(/\$/g, '$$$$');
+}

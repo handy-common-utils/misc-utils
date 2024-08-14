@@ -1,6 +1,6 @@
 /* eslint-disable unicorn/no-useless-undefined */
 import { expect } from 'chai';
-import { base64UrlFromUInt32, generateRandomString, generateRandomStringQuickly, shortBase64UrlFromUInt32, urlSafe } from '../src/index';
+import { base64UrlFromUInt32, escapeForRegExp, escapeForRegExpReplacement, generateRandomString, generateRandomStringQuickly, shortBase64UrlFromUInt32, urlSafe } from '../src/index';
 
 describe('pathSafe', () => {
   it('should return null for null', () => {
@@ -64,5 +64,49 @@ describe('generateRandomStringQuickly', () => {
     expect(generateRandomStringQuickly(12)).to.have.length(12);
     expect(generateRandomStringQuickly(13)).to.have.length(13);
     expect(generateRandomStringQuickly(900)).to.have.length(900);
+  });
+});
+
+describe('escapeForRegExp', () => {
+  it('should escape special characters used in RegExp', () => {
+    expect(escapeForRegExp('.*+?^${}()|[]\\')).to.equal('\\.\\*\\+\\?\\^\\$\\{\\}\\(\\)\\|\\[\\]\\\\');
+  });
+
+  it('should return the same string if there are no special characters', () => {
+    expect(escapeForRegExp('abc')).to.equal('abc');
+  });
+
+  it('should escape a string with mixed characters', () => {
+    expect(escapeForRegExp('abc.*+?^$def')).to.equal('abc\\.\\*\\+\\?\\^\\$def');
+  });
+
+  it('should handle empty strings', () => {
+    expect(escapeForRegExp('')).to.equal('');
+  });
+
+  it('should escape a string with only one special character', () => {
+    expect(escapeForRegExp('$')).to.equal('\\$');
+  });
+});
+
+describe('escapeForRegExpReplacement', () => {
+  it('should escape $ in the replacement string', () => {
+    expect(escapeForRegExpReplacement('$')).to.equal('$$');
+  });
+
+  it('should escape multiple $ symbols in the replacement string', () => {
+    expect(escapeForRegExpReplacement('$$$')).to.equal('$$$$$$');
+  });
+
+  it('should return the same string if there are no $ symbols', () => {
+    expect(escapeForRegExpReplacement('abc')).to.equal('abc');
+  });
+
+  it('should handle a string with mixed characters including $', () => {
+    expect(escapeForRegExpReplacement('abc$def')).to.equal('abc$$def');
+  });
+
+  it('should handle empty strings', () => {
+    expect(escapeForRegExpReplacement('')).to.equal('');
   });
 });
