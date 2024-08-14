@@ -652,6 +652,48 @@ URL/path safe BASE64 string representing the integer input, or the original inpu
 
 ___
 
+##### escapeForRegExp
+
+▸ **escapeForRegExp**(`text`): `string`
+
+Escape a string literal for using it inside of RegExp.
+(From: https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex)
+
+###### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `text` | `string` | the string literal to be escaped |
+
+###### Returns
+
+`string`
+
+escaped string that can be used inside of RegExp
+
+___
+
+##### escapeForRegExpReplacement
+
+▸ **escapeForRegExpReplacement**(`text`): `string`
+
+Escape replacement string for using it inside of RegExp replacement parameter.
+(From: https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex)
+
+###### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `text` | `string` | the replacement string to be escaped |
+
+###### Returns
+
+`string`
+
+escaped replacement string that can be used inside of RegExp replacement parameter
+
+___
+
 ##### generateRandomString
 
 ▸ **generateRandomString**(`len`): `string`
@@ -900,6 +942,18 @@ ___
 ##### distributeRoundRobin
 
 Re-exports [distributeRoundRobin](#distributeroundrobin)
+
+___
+
+##### escapeForRegExp
+
+Re-exports [escapeForRegExp](#escapeforregexp)
+
+___
+
+##### escapeForRegExpReplacement
+
+Re-exports [escapeForRegExpReplacement](#escapeforregexpreplacement)
 
 ___
 
