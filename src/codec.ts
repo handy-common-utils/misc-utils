@@ -111,9 +111,12 @@ export function generateRandomStringQuickly(len: number): string {
  * Escape a string literal for using it inside of RegExp.
  * (From: https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex)
  * @param text the string literal to be escaped
- * @returns escaped string that can be used inside of RegExp
+ * @returns escaped string that can be used inside of RegExp, or an empty string if the input is null or undefined
  */
-export function escapeForRegExp(text: string): string {
+export function escapeForRegExp(text: string|undefined|null): string {
+  if (text == null) {
+    return '';
+  }
   // eslint-disable-next-line unicorn/better-regex
   return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
@@ -121,9 +124,12 @@ export function escapeForRegExp(text: string): string {
 /**
  * Escape replacement string for using it inside of RegExp replacement parameter.
  * (From: https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex)
- * @param text the replacement string to be escaped
+ * @param text the replacement string to be escaped, or an empty string if the input is null or undefined
  * @returns escaped replacement string that can be used inside of RegExp replacement parameter
  */
-export function escapeForRegExpReplacement(text: string): string {
+export function escapeForRegExpReplacement(text: string|undefined|null): string {
+  if (text == null) {
+    return '';
+  }
   return text.replace(/\$/g, '$$$$');
 }

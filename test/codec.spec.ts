@@ -68,6 +68,10 @@ describe('generateRandomStringQuickly', () => {
 });
 
 describe('escapeForRegExp', () => {
+  it('should return an empty string when input is undefined or null', () => {
+    expect(escapeForRegExp(undefined)).to.equal('');
+    expect(escapeForRegExp(null)).to.equal('');
+  });
   it('should escape special characters used in RegExp', () => {
     expect(escapeForRegExp('.*+?^${}()|[]\\')).to.equal('\\.\\*\\+\\?\\^\\$\\{\\}\\(\\)\\|\\[\\]\\\\');
   });
@@ -90,6 +94,10 @@ describe('escapeForRegExp', () => {
 });
 
 describe('escapeForRegExpReplacement', () => {
+  it('should return an empty string when input is undefined or null', () => {
+    expect(escapeForRegExpReplacement(undefined)).to.equal('');
+    expect(escapeForRegExpReplacement(null)).to.equal('');
+  });
   it('should escape $ in the replacement string', () => {
     expect(escapeForRegExpReplacement('$')).to.equal('$$');
   });
