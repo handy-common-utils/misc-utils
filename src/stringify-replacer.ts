@@ -18,9 +18,6 @@ export type JsonStringifyReplacer = (this: any, key: string, value: any) => any;
  */
 export type PathAwareReplacer = (key: string, value: any, path: string, parent: Parent, pathArray: Array<string>, ancestors: Array<Parent>) => any;
 
-const currentPath: any[] = [];
-const ancestors: any[] = [];
-
 /**
  * Build a replacer function that can be passed to JSON.stringify(...).
  * @param replacer The actual replacer function which could utilise additional information.
@@ -30,6 +27,8 @@ const ancestors: any[] = [];
  * @returns The replacer function that can be passed to JSON.stringify(...).
  */
 export function pathAwareReplacer(replacer: PathAwareReplacer, options?: {pathArray?: boolean, ancestors?: boolean}): JsonStringifyReplacer {
+  const currentPath: any[] = [];
+  const ancestors: any[] = [];
   return function (this: any, key: string, value: any): any {
     if (typeof key === 'string' && key === '') {   // root object
       currentPath.length = 0;
