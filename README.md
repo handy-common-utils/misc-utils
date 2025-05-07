@@ -592,6 +592,35 @@ This function has been tuned for performance.
 
 The result as an array of arrays which each represents a group
 
+___
+
+##### downSampleRandomly
+
+▸ **downSampleRandomly**<`T`\>(`array`, `numSamples`, `probabilityTransformerFunction?`): `T`[]
+
+Down samples the input array randomly.
+
+###### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+###### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `array` | `T`[] | The input array |
+| `numSamples` | `number` | Number of samples to be taken from the input array. If the number of samples is greater than or equal to the length of the input array, the output array will contain all the elements in the input array. |
+| `probabilityTransformerFunction` | (`x`: `number`) => `number` | A function that turns a random number within [0, 1) to another number within [0, 1). If not provided, the identity function F(x) = x will be used. The probability of an element being selected from the input array is determined by this function. |
+
+###### Returns
+
+`T`[]
+
+A new array with the down sampled elements from the input array.
+         The order of the elements in the output array is the same as the input array.
+
 
 <a name="modulescodecmd"></a>
 
@@ -942,6 +971,12 @@ ___
 ##### distributeRoundRobin
 
 Re-exports [distributeRoundRobin](#distributeroundrobin)
+
+___
+
+##### downSampleRandomly
+
+Re-exports [downSampleRandomly](#downsamplerandomly)
 
 ___
 
