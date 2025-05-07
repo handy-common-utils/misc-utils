@@ -663,13 +663,13 @@ Escape a string literal for using it inside of RegExp.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `text` | `string` | the string literal to be escaped |
+| `text` | `undefined` \| ``null`` \| `string` | the string literal to be escaped |
 
 ###### Returns
 
 `string`
 
-escaped string that can be used inside of RegExp
+escaped string that can be used inside of RegExp, or an empty string if the input is null or undefined
 
 ___
 
@@ -684,7 +684,7 @@ Escape replacement string for using it inside of RegExp replacement parameter.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `text` | `string` | the replacement string to be escaped |
+| `text` | `undefined` \| ``null`` \| `string` | the replacement string to be escaped, or an empty string if the input is null or undefined |
 
 ###### Returns
 
