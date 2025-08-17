@@ -1,0 +1,35 @@
+function getErrorDetails(err: unknown): { message: string; statusCode: string } {
+  const msg = (err as any)?.errorMessage ?? (err as Error).message ?? String(err);
+  const statusCode = String((err as any)?.response?.status ?? (err as any)?.statusCode ?? (err as any)?.status);
+  return { message: msg, statusCode };
+}
+
+/**
+ * Checks if the error could be a networking timeout error.
+ * @param err The error to check.
+ * @returns True if the error is a networking timeout error, false otherwise.
+ */
+export function couldBeNetworkingTimeoutError(err: unknown): boolean {
+  const { message: msg, statusCode } = getErrorDetails(err);
+  return statusCode === '504' || msg.includes('ETIMEDOUT');
+}
+
+/**
+ * Checks if the error could be a temporary networking error.
+ * @param err The error to check.
+ * @returns True if the error is a temporary networking error, false otherwise.
+ */
+export function couldBeTemporaryNetworkingError(err: unknown): boolean {
+  const { message: msg, statusCode } = getErrorDetails(err);
+  return statusCode === '504' || msg.includes('ECONNREFUSED') || msg.includes('ETIMEDOUT') || msg.includes('EAI_AGAIN') || msg.includes('ENOTFOUND') || msg.includes('socket hang up');
+}
+
+/**
+ * Checks if the error could be a server error.
+ * @param err The error to check.
+ * @returns True if the error is a server error, false otherwise.
+ */
+export function couldBeServerError(err: unknown): boolean {
+  const { message: msg, statusCode } = getErrorDetails(err);
+  return /5\d{2}/.test(statusCode) || msg.includes('Internal Server Error');
+}
