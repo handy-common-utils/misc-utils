@@ -21,6 +21,10 @@ describe('couldBeNetworkingTimeoutError', () => {
     expect(couldBeNetworkingTimeoutError({ statusCode: 400 })).to.be.false;
     expect(couldBeNetworkingTimeoutError(new Error('Some other error'))).to.be.false;
   });
+  it('should return false for undefined and null', () => {
+    expect(couldBeNetworkingTimeoutError(undefined as any)).to.be.false;
+    expect(couldBeNetworkingTimeoutError(null)).to.be.false;
+  });
 });
 
 describe('couldBeTemporaryNetworkingError', () => {
@@ -52,6 +56,10 @@ describe('couldBeTemporaryNetworkingError', () => {
     expect(couldBeTemporaryNetworkingError({ statusCode: 400 })).to.be.false;
     expect(couldBeTemporaryNetworkingError(new Error('Some other error'))).to.be.false;
   });
+  it('should return false for undefined and null', () => {
+    expect(couldBeTemporaryNetworkingError(undefined as any)).to.be.false;
+    expect(couldBeTemporaryNetworkingError(null)).to.be.false;
+  });
 });
 
 describe('couldBeServerError', () => {
@@ -69,5 +77,9 @@ describe('couldBeServerError', () => {
   it('should return false for other errors', () => {
     expect(couldBeServerError({ statusCode: 404 })).to.be.false;
     expect(couldBeServerError(new Error('Some other error'))).to.be.false;
+  });
+  it('should return false for undefined and null', () => {
+    expect(couldBeServerError(undefined as any)).to.be.false;
+    expect(couldBeServerError(null)).to.be.false;
   });
 });
