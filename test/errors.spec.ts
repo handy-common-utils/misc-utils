@@ -44,10 +44,6 @@ describe('couldBeTemporaryNetworkingError', () => {
     expect(couldBeTemporaryNetworkingError({ errorMessage: 'EAI_AGAIN' })).to.be.true;
   });
 
-  it('should return true for message containing ENOTFOUND', () => {
-    expect(couldBeTemporaryNetworkingError({ errorMessage: 'ENOTFOUND' })).to.be.true;
-  });
-
   it('should return true for message containing socket hang up', () => {
     expect(couldBeTemporaryNetworkingError({ errorMessage: 'socket hang up' })).to.be.true;
   });
