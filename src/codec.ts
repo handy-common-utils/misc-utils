@@ -1,4 +1,4 @@
-// eslint-disable-next-line unicorn/prefer-node-protocol
+/* eslint-disable unicorn/prefer-node-protocol, unicorn/prefer-string-replace-all, unicorn/prefer-string-raw */
 import * as crypto from 'crypto';
 
 /**

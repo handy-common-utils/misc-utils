@@ -62,7 +62,7 @@ export function pathAwareReplacer(replacer: PathAwareReplacer, options?: {pathAr
  * A JsonStringifyReplacer that was created from path based rules.
  * Those rules are stored in the `rules` property in case of need.
  */
-export type JsonStringifyReplacerFromPathBasedRules = JsonStringifyReplacer & { rules: Array<[RegExp, (input: any) => any]> };
+export type JsonStringifyReplacerFromPathBasedRules = { rules: Array<[RegExp, (input: any) => any]> } & JsonStringifyReplacer;
 
 /**
  * Create a replacer function for JSON.stringify(...) from an array of path based rules.

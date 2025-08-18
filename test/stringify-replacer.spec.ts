@@ -1,8 +1,9 @@
 /* eslint-disable unicorn/no-useless-undefined */
 /* eslint-disable unicorn/no-for-loop */
 import { expect } from 'chai';
-import stringify from 'safe-stable-stringify';
 import fastStringify from 'fast-safe-stringify';
+import stringify from 'safe-stable-stringify';
+
 import { mask, maskAll, maskEmail, maskFullName } from '../src/mask';
 import { pathAwareReplacer, pathBasedReplacer } from '../src/stringify-replacer';
 

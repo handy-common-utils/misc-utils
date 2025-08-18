@@ -1,5 +1,6 @@
 /* eslint-disable unicorn/no-useless-undefined */
 import { expect } from 'chai';
+
 import { base64UrlFromUInt32, escapeForRegExp, escapeForRegExpReplacement, generateRandomString, generateRandomStringQuickly, shortBase64UrlFromUInt32, urlSafe } from '../src/index';
 
 describe('pathSafe', () => {
@@ -81,7 +82,7 @@ describe('escapeForRegExp', () => {
   });
 
   it('should escape a string with mixed characters', () => {
-    expect(escapeForRegExp('abc.*+?^$def')).to.equal('abc\\.\\*\\+\\?\\^\\$def');
+    expect(escapeForRegExp('abc.*+?^$def')).to.equal(String.raw`abc\.\*\+\?\^\$def`);
   });
 
   it('should handle empty strings', () => {
@@ -89,7 +90,7 @@ describe('escapeForRegExp', () => {
   });
 
   it('should escape a string with only one special character', () => {
-    expect(escapeForRegExp('$')).to.equal('\\$');
+    expect(escapeForRegExp('$')).to.equal(String.raw`\$`);
   });
 });
 

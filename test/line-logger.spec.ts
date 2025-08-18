@@ -1,8 +1,9 @@
 import chai, { expect } from 'chai';
+import medikooLog from 'log';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
+
 import { LineLogger } from '../src/line-logger';
-import medikooLog from 'log';
 
 chai.use(sinonChai);
 

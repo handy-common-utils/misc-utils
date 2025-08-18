@@ -1,5 +1,6 @@
 /* eslint-disable unicorn/consistent-function-scoping */
 import { expect } from 'chai';
+
 import { substituteAll } from '../src';
 
 describe('substituteAll', () => {

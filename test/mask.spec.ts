@@ -1,5 +1,6 @@
 /* eslint-disable unicorn/no-useless-undefined */
 import { expect } from 'chai';
+
 import { mask, maskAll, maskCreditCard, maskEmail, maskFullName, masker } from '../src/mask';
 
 describe('mask(...)', () => {
@@ -12,6 +13,9 @@ describe('mask(...)', () => {
     expect(() => mask('abcd', 3, 5, 2)).to.throw;
     expect(() => mask('abcd', 3, 0, 2)).to.throw;
     expect(() => mask('abcd', 0, 2, 2)).to.throw;
+    expect(() => mask('abcdef', 3, 3, 6)).to.throw(
+      'Invalid parameter: expected minLength > keepLeft + keepRight, but got 6, 3, 3',
+    );
   });
   it('should be able to mask with same length asterisks', () => {
     expect(mask('abcde')).to.equal('a****');
