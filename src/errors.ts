@@ -10,6 +10,9 @@ function getErrorDetails(err: unknown): { message: string; statusCode: string } 
  * @returns True if the error is a networking timeout error, false otherwise.
  */
 export function couldBeNetworkingTimeoutError(err: unknown): boolean {
+  if (err == null) {
+    return false;
+  }
   const { message, statusCode } = getErrorDetails(err);
   return statusCode === '504' || message.includes('ETIMEDOUT');
 }
@@ -20,6 +23,9 @@ export function couldBeNetworkingTimeoutError(err: unknown): boolean {
  * @returns True if the error is a temporary networking error, false otherwise.
  */
 export function couldBeTemporaryNetworkingError(err: unknown): boolean {
+  if (err == null) {
+    return false;
+  }
   const { message, statusCode } = getErrorDetails(err);
   return statusCode === '504' || message.includes('ECONNREFUSED') || message.includes('ETIMEDOUT') || message.includes('EAI_AGAIN') || message.includes('socket hang up');
 }
@@ -30,6 +36,9 @@ export function couldBeTemporaryNetworkingError(err: unknown): boolean {
  * @returns True if the error is a server error, false otherwise.
  */
 export function couldBeServerError(err: unknown): boolean {
+  if (err == null) {
+    return false;
+  }
   const { message, statusCode } = getErrorDetails(err);
   return /5\d{2}/.test(statusCode) || message.includes('Internal Server Error');
 }
