@@ -1,29 +1,89 @@
 # @handy-common-utils/misc-utils
 
-Miscellaneous utilities
+Miscellaneous utilities for JavaScript/TypeScript development.
 
 [![Version](https://img.shields.io/npm/v/@handy-common-utils/misc-utils.svg)](https://npmjs.org/package/@handy-common-utils/misc-utils)
 [![Downloads/week](https://img.shields.io/npm/dw/@handy-common-utils/misc-utils.svg)](https://npmjs.org/package/@handy-common-utils/misc-utils)
 [![CI](https://github.com/handy-common-utils/misc-utils/actions/workflows/ci.yml/badge.svg)](https://github.com/handy-common-utils/misc-utils/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/handy-common-utils/misc-utils/branch/master/graph/badge.svg?token=awSIttXQ6L)](https://codecov.io/gh/handy-common-utils/misc-utils)
 
-## How to use
+## Features
 
-First add it as a dependency:
+This package provides several utility categories:
+
+- Array manipulation (distribution and sampling)
+- String encoding related utilities
+- Error classification helpers
+- HTTP status codes and messages
+- Line-based logging
+- String masking for sensitive data
+- JSON stringify replacers
+- String substitution utilities
+
+## Installation
 
 ```sh
 npm install @handy-common-utils/misc-utils
 ```
 
-Then you can use it in the code:
+## Quick Examples
 
-```javascript
-import { shortBase64UrlFromUInt32 } from '@handy-common-utils/misc-utils';
+### Array Utilities
 
-const urlSafeBase64 = shortBase64UrlFromUInt32(12345);
+```typescript
+import { distributeRoundRobin, downSampleRandomly } from '@handy-common-utils/misc-utils';
+
+// Distribute items evenly across groups
+const items = [1, 2, 3, 4, 5, 6];
+const groups = distributeRoundRobin(items, 3);
+// Result: [[1,4], [2,5], [3,6]]
+
+// Random sampling
+const sample = downSampleRandomly(items, 3);
+// Gets 3 random items while maintaining relative order
 ```
 
-```javascript
+### Encoding of Strings
+
+```typescript
+import { 
+  shortBase64UrlFromUInt32,
+  generateRandomString 
+} from '@handy-common-utils/misc-utils';
+
+// Convert number to URL-safe base64
+const urlSafeId = shortBase64UrlFromUInt32(12345);
+
+// Generate random string (cryptographically strong)
+const randomId = generateRandomString(16);
+// Generate random string (no cryptographic strength)
+const randomId2 = generateRandomStringQuickly(16);
+```
+
+### Error Classification
+
+```typescript
+import {
+  couldBeNetworkingTimeoutError,
+  couldBeServerError,
+  couldBeTemporaryNetworkingError
+} from '@handy-common-utils/misc-utils';
+
+try {
+  await fetchData();
+} catch (error) {
+  if (couldBeTemporaryNetworkingError(error)) {
+    // Retry logic
+  }
+  if (couldBeServerError(error)) {
+    // Log server error
+  }
+}
+```
+
+### Line Logger
+
+```typescript
  // use chalk (chalk is not a dependency of this package, you need to add chalk as a dependency separately)
  import chalk from 'chalk';
  import { LineLogger } from '@handy-common-utils/misc-utils';
@@ -32,6 +92,8 @@ const urlSafeBase64 = shortBase64UrlFromUInt32(12345);
  this.output = LineLogger.consoleWithColour(this.flags, chalk);
  this.output.warn('Configuration file not found, default configuration would be used.');  // it would be printed out in yellow
 ```
+
+### String Masking 
 
 ```typescript
 import { mask, maskAll, maskEmail, maskFullName, pathBasedReplacer } from '@handy-common-utils/misc-utils';
@@ -44,6 +106,103 @@ const masked = JSON.stringify(obj, pathBasedReplacer([
   [/(^|\.)cc$/i, () => undefined],
   [/(^|\.)ssn$/i, mask],
 ]));
+```
+
+### JSON Stringify with Replacers
+
+```typescript
+import { pathBasedReplacer } from '@handy-common-utils/misc-utils';
+
+const data = {
+  user: {
+    name: 'John Smith',
+    email: 'john@example.com',
+    ssn: '123-45-6789',
+    creditCard: '4111-1111-1111-1111'
+  }
+};
+
+const replacer = pathBasedReplacer([
+  [/\.name$/, maskFullName],
+  [/\.email$/, maskEmail],
+  [/\.ssn$/, maskAll],
+  [/\.creditCard$/, maskCreditCard]
+]);
+
+console.log(JSON.stringify(data, replacer, 2));
+```
+
+### String Substitution
+
+```typescript
+import { substituteAll } from '@handy-common-utils/misc-utils';
+
+// Template substitution
+const template = 'Hello, {name}! Your order #{orderId} is ready.';
+const values = { name: 'John', orderId: '12345' };
+const result = substituteAll(template, /{([^{}]+)}/g, (_, groups) => {
+  return values[groups[1]] || '';
+});
+// Result: "Hello, John! Your order #12345 is ready."
+```
+
+### String Utilities
+
+```typescript
+import {
+  truncate,
+  capitalize,
+  capitalise,
+  camelToSnake,
+  snakeToCamel,
+  pluralize,
+  pluralise,
+  applyWordCasing
+} from '@handy-common-utils/misc-utils';
+
+// Truncate a string
+truncate('hello world', 8); // 'hello...'
+truncate('hello world', 8, '!'); // 'hello w!'
+
+// Capitalize/capitalise
+capitalize('hELLo'); // 'Hello'
+capitalise('hELLo'); // 'Hello'
+
+// Convert camelCase to snake_case
+camelToSnake('helloWorld'); // 'hello_world'
+camelToSnake('JSONData'); // 'json_data'
+
+// Convert snake_case to camelCase
+snakeToCamel('hello_world'); // 'helloWorld'
+snakeToCamel('hello__world'); // 'helloWorld'
+
+// Pluralize words
+pluralize('cat', 2); // 'cats'
+pluralise('person', 2); // 'people'
+pluralize('fish', 2); // 'fish'
+
+// Preserve casing from template
+applyWordCasing('CAT', 'dog'); // 'DOG'
+applyWordCasing('Cat', 'dog'); // 'Dog'
+```
+
+### Number Utilities
+
+```typescript
+import { clamp, isInRange, roundTo } from '@handy-common-utils/misc-utils';
+
+// Clamp a number within a range
+clamp(5, 0, 10); // 5
+clamp(-5, 0, 10); // 0
+clamp(15, 0, 10); // 10
+
+// Check if a number is in range
+isInRange(5, 0, 10); // true
+isInRange(15, 0, 10); // false
+
+// Round to decimal places
+roundTo(3.14159, 2); // 3.14
+roundTo(123.456, -1); // 120
 ```
 
 ## Masking
