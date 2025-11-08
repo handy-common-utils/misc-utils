@@ -225,11 +225,98 @@ export class StringUtils {
 }
 
 // Export functions as constants for convenience
+/**
+ * Truncates a string to a specified length, optionally adding a suffix.
+ * @param str The string to truncate
+ * @param length Maximum length of the resulting string (including suffix if provided)
+ * @param suffix Optional suffix to add to truncated string (default: '...')
+ * @returns Truncated string
+ */
 export const truncate = StringUtils.truncate;
+
+/**
+ * Capitalizes the first letter of a string, making the rest lowercase.
+ * @param str The string to capitalize
+ * @returns Capitalized string
+ */
 export const capitalize = StringUtils.capitalize;
+
+/**
+ * Capitalises the first letter of a string, making the rest lowercase.
+ * @param str The string to capitalise
+ * @returns Capitalised string
+ */
 export const capitalise = StringUtils.capitalise;
+
+/**
+ * Converts a camelCase string to snake_case.
+ * @param str The camelCase string to convert
+ * @returns snake_case string
+ */
 export const camelToSnake = StringUtils.camelToSnake;
+
+/**
+ * Converts a snake_case string to camelCase.
+ * @param str The snake_case string to convert
+ * @returns camelCase string
+ */
 export const snakeToCamel = StringUtils.snakeToCamel;
+
+/**
+ * Returns the plural form of a single English word based on the supplied count.
+ *
+ * Capabilities:
+ * - Preserves basic input casing (using `applyWordCasing`) so e.g. "Cat" -> "Cats",
+ *   "CAT" -> "CATS".
+ * - Handles common irregular plurals (person->people, child->children, mouse->mice, etc.).
+ * - Treats a number of nouns as uncountable (sheep, fish, species, series, news, etc.).
+ * - Applies common rules: f/fe -> ves (knife->knives), consonant+y -> ies (baby->babies),
+ *   words ending with s/x/z/ch/sh -> add 'es'.
+ * - For words ending with 'o' there is a small exceptions list that will add 'es' (hero,
+ *   potato, tomato, echo, torpedo); otherwise 's' is added.
+ *
+ * Limitations and notes:
+ * - This is a pragmatic, rule-based implementation covering the most common English cases,
+ *   not a complete linguistic solution. It does not support locales or full irregular/exception
+ *   lists (many English words have irregular forms not included here).
+ * - The function expects a single word token. It does not pluralize multi-word phrases or
+ *   attempt to inflect verbs. Use a dedicated library (for example, the 'pluralize' npm
+ *   package) if you need comprehensive, production-grade pluralization.
+ * - Casing preservation is basic (all-caps and Title Case); mixed/mid-word casing (camelCase,
+ *   acronyms inside words) is not fully reconstructed.
+ *
+ * @param word The single English word to pluralize (may be mixed case)
+ * @param count The numeric count; if equal to 1 the original word is returned
+ * @returns The pluralized word with basic casing preserved
+ */
 export const pluralize = StringUtils.pluralize;
+
+/**
+ * Returns the plural form of a single English word based on the supplied count (alias).
+ *
+ * See `pluralize` for capabilities and limitations.
+ *
+ * @param word The single English word to pluralize (may be mixed case)
+ * @param count The numeric count; if equal to 1 the original word is returned
+ * @returns The pluralized word with basic casing preserved
+ */
 export const pluralise = StringUtils.pluralise;
+
+/**
+ * Preserve basic casing from a template single word and apply it to another word.
+ *
+ * Rules:
+ * - If `casingTemplate` is all upper-case, return `word` in all upper-case.
+ * - If `casingTemplate` is Title Case (first letter uppercase, rest lowercase), return
+ *   `word` in Title Case.
+ * - Otherwise return `word` as-is.
+ *
+ * This helper focuses on single-word tokens only and intentionally does not handle
+ * complex multi-word or mixed-case patterns. Use for word-level casing preservation
+ * (for example, to preserve input casing when returning a pluralized form).
+ *
+ * @param casingTemplate A word whose casing should be copied (e.g. 'Cat' or 'CAT')
+ * @param word The word to apply casing to (usually a transformed/lowercased form)
+ * @returns The `word` adjusted to match the template's basic casing
+ */
 export const applyWordCasing = StringUtils.applyWordCasing;

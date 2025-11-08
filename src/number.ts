@@ -34,6 +34,28 @@ export class NumberUtils {
 }
 
 // Export functions as constants for convenience
+/**
+ * Constrains a number within specified bounds.
+ * @param num The number to clamp
+ * @param min The minimum value
+ * @param max The maximum value
+ * @returns The clamped value
+ */
 export const clamp = NumberUtils.clamp;
+
+/**
+ * Checks if a number is within a specified range (inclusive).
+ * @param num The number to check
+ * @param min The minimum value
+ * @param max The maximum value
+ * @returns True if the number is within range
+ */
 export const isInRange = NumberUtils.isInRange;
+
+/**
+ * Rounds a number to a specified number of decimal places.
+ * @param num The number to round
+ * @param precision The number of decimal places (default: 0)
+ * @returns Rounded number
+ */
 export const roundTo = NumberUtils.roundTo;
