@@ -358,6 +358,8 @@ const result = substituteAll(input, searchPattern, substitute);
 | [index](#indexreadmemd) | - |
 | [line-logger](#line-loggerreadmemd) | - |
 | [mask](#maskreadmemd) | - |
+| [number](#numberreadmemd) | - |
+| [string](#stringreadmemd) | - |
 | [stringify-replacer](#stringify-replacerreadmemd) | - |
 | [substitute](#substitutereadmemd) | - |
 
@@ -869,6 +871,14 @@ Some (not all) HTTP status messages matching their codes
 
 #### References
 
+<a id="api-applywordcasing"></a>
+
+##### applyWordCasing
+
+Re-exports [applyWordCasing](#stringvariablesapplywordcasingmd)
+
+***
+
 <a id="api-base64fromuint32"></a>
 
 ##### base64FromUInt32
@@ -882,6 +892,38 @@ Re-exports [base64FromUInt32](#codecfunctionsbase64fromuint32md)
 ##### base64UrlFromUInt32
 
 Re-exports [base64UrlFromUInt32](#codecfunctionsbase64urlfromuint32md)
+
+***
+
+<a id="api-cameltosnake"></a>
+
+##### camelToSnake
+
+Re-exports [camelToSnake](#stringvariablescameltosnakemd)
+
+***
+
+<a id="api-capitalise"></a>
+
+##### capitalise
+
+Re-exports [capitalise](#stringvariablescapitalisemd)
+
+***
+
+<a id="api-capitalize"></a>
+
+##### capitalize
+
+Re-exports [capitalize](#stringvariablescapitalizemd)
+
+***
+
+<a id="api-clamp"></a>
+
+##### clamp
+
+Re-exports [clamp](#numbervariablesclampmd)
 
 ***
 
@@ -1005,6 +1047,14 @@ Re-exports [HttpStatusMessage](#http-statusvariableshttpstatusmessagemd)
 
 ***
 
+<a id="api-isinrange"></a>
+
+##### isInRange
+
+Re-exports [isInRange](#numbervariablesisinrangemd)
+
+***
+
 <a id="api-jsonstringifyreplacer"></a>
 
 ##### JsonStringifyReplacer
@@ -1077,6 +1127,14 @@ Re-exports [maskFullName](#maskfunctionsmaskfullnamemd)
 
 ***
 
+<a id="api-numberutils"></a>
+
+##### NumberUtils
+
+Re-exports [NumberUtils](#numberclassesnumberutilsmd)
+
+***
+
 <a id="api-pathawarereplacer"></a>
 
 ##### pathAwareReplacer
@@ -1101,6 +1159,30 @@ Re-exports [pathBasedReplacer](#stringify-replacerfunctionspathbasedreplacermd)
 
 ***
 
+<a id="api-pluralise"></a>
+
+##### pluralise
+
+Re-exports [pluralise](#stringvariablespluralisemd)
+
+***
+
+<a id="api-pluralize"></a>
+
+##### pluralize
+
+Re-exports [pluralize](#stringvariablespluralizemd)
+
+***
+
+<a id="api-roundto"></a>
+
+##### roundTo
+
+Re-exports [roundTo](#numbervariablesroundtomd)
+
+***
+
 <a id="api-shortbase64fromuint32"></a>
 
 ##### shortBase64FromUInt32
@@ -1117,11 +1199,35 @@ Re-exports [shortBase64UrlFromUInt32](#codecfunctionsshortbase64urlfromuint32md)
 
 ***
 
+<a id="api-snaketocamel"></a>
+
+##### snakeToCamel
+
+Re-exports [snakeToCamel](#stringvariablessnaketocamelmd)
+
+***
+
+<a id="api-stringutils"></a>
+
+##### StringUtils
+
+Re-exports [StringUtils](#stringclassesstringutilsmd)
+
+***
+
 <a id="api-substituteall"></a>
 
 ##### substituteAll
 
 Re-exports [substituteAll](#substitutefunctionssubstituteallmd)
+
+***
+
+<a id="api-truncate"></a>
+
+##### truncate
+
+Re-exports [truncate](#stringvariablestruncatemd)
 
 ***
 
@@ -1712,6 +1818,870 @@ const maskApiKey = masker(2, 2, 10);
   const maskedString = maskApiKey(myApiKey);
 ```
 
+## Number
+
+
+<a id="numberreadmemd"></a>
+
+### number
+
+#### Classes
+
+| Class | Description |
+| ------ | ------ |
+| [NumberUtils](#numberclassesnumberutilsmd) | - |
+
+#### Variables
+
+| Variable | Description |
+| ------ | ------ |
+| [clamp](#numbervariablesclampmd) | Constrains a number within specified bounds. |
+| [isInRange](#numbervariablesisinrangemd) | Checks if a number is within a specified range (inclusive). |
+| [roundTo](#numbervariablesroundtomd) | Rounds a number to a specified number of decimal places. |
+
+### Classes
+
+
+<a id="numberclassesnumberutilsmd"></a>
+
+#### Class: NumberUtils
+
+##### Constructors
+
+<a id="api-constructor"></a>
+
+###### Constructor
+
+> **new NumberUtils**(): `NumberUtils`
+
+####### Returns
+
+`NumberUtils`
+
+##### Methods
+
+<a id="api-clamp"></a>
+
+###### clamp()
+
+> `static` **clamp**(`num`, `min`, `max`): `number`
+
+Constrains a number within specified bounds.
+
+####### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `num` | `number` | The number to clamp |
+| `min` | `number` | The minimum value |
+| `max` | `number` | The maximum value |
+
+####### Returns
+
+`number`
+
+The clamped value
+
+***
+
+<a id="api-isinrange"></a>
+
+###### isInRange()
+
+> `static` **isInRange**(`num`, `min`, `max`): `boolean`
+
+Checks if a number is within a specified range (inclusive).
+
+####### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `num` | `number` | The number to check |
+| `min` | `number` | The minimum value |
+| `max` | `number` | The maximum value |
+
+####### Returns
+
+`boolean`
+
+True if the number is within range
+
+***
+
+<a id="api-roundto"></a>
+
+###### roundTo()
+
+> `static` **roundTo**(`num`, `precision`): `number`
+
+Rounds a number to a specified number of decimal places.
+
+####### Parameters
+
+| Parameter | Type | Default value | Description |
+| ------ | ------ | ------ | ------ |
+| `num` | `number` | `undefined` | The number to round |
+| `precision` | `number` | `0` | The number of decimal places (default: 0) |
+
+####### Returns
+
+`number`
+
+Rounded number
+
+### Variables
+
+
+<a id="numbervariablesclampmd"></a>
+
+#### Variable: clamp()
+
+> `const` **clamp**: (`num`, `min`, `max`) => `number` = `NumberUtils.clamp`
+
+Constrains a number within specified bounds.
+
+Constrains a number within specified bounds.
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `num` | `number` | The number to clamp |
+| `min` | `number` | The minimum value |
+| `max` | `number` | The maximum value |
+
+##### Returns
+
+`number`
+
+The clamped value
+
+##### Param
+
+The number to clamp
+
+##### Param
+
+The minimum value
+
+##### Param
+
+The maximum value
+
+##### Returns
+
+The clamped value
+
+
+<a id="numbervariablesisinrangemd"></a>
+
+#### Variable: isInRange()
+
+> `const` **isInRange**: (`num`, `min`, `max`) => `boolean` = `NumberUtils.isInRange`
+
+Checks if a number is within a specified range (inclusive).
+
+Checks if a number is within a specified range (inclusive).
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `num` | `number` | The number to check |
+| `min` | `number` | The minimum value |
+| `max` | `number` | The maximum value |
+
+##### Returns
+
+`boolean`
+
+True if the number is within range
+
+##### Param
+
+The number to check
+
+##### Param
+
+The minimum value
+
+##### Param
+
+The maximum value
+
+##### Returns
+
+True if the number is within range
+
+
+<a id="numbervariablesroundtomd"></a>
+
+#### Variable: roundTo()
+
+> `const` **roundTo**: (`num`, `precision`) => `number` = `NumberUtils.roundTo`
+
+Rounds a number to a specified number of decimal places.
+
+Rounds a number to a specified number of decimal places.
+
+##### Parameters
+
+| Parameter | Type | Default value | Description |
+| ------ | ------ | ------ | ------ |
+| `num` | `number` | `undefined` | The number to round |
+| `precision` | `number` | `0` | The number of decimal places (default: 0) |
+
+##### Returns
+
+`number`
+
+Rounded number
+
+##### Param
+
+The number to round
+
+##### Param
+
+The number of decimal places (default: 0)
+
+##### Returns
+
+Rounded number
+
+## String
+
+
+<a id="stringreadmemd"></a>
+
+### string
+
+#### Classes
+
+| Class | Description |
+| ------ | ------ |
+| [StringUtils](#stringclassesstringutilsmd) | - |
+
+#### Variables
+
+| Variable | Description |
+| ------ | ------ |
+| [applyWordCasing](#stringvariablesapplywordcasingmd) | Preserve basic casing from a template single word and apply it to another word. |
+| [camelToSnake](#stringvariablescameltosnakemd) | Converts a camelCase string to snake_case. |
+| [capitalise](#stringvariablescapitalisemd) | Capitalises the first letter of a string, making the rest lowercase. |
+| [capitalize](#stringvariablescapitalizemd) | Capitalizes the first letter of a string, making the rest lowercase. |
+| [pluralise](#stringvariablespluralisemd) | Returns the plural form of a single English word based on the supplied count (alias). |
+| [pluralize](#stringvariablespluralizemd) | Returns the plural form of a single English word based on the supplied count. |
+| [snakeToCamel](#stringvariablessnaketocamelmd) | Converts a snake_case string to camelCase. |
+| [truncate](#stringvariablestruncatemd) | Truncates a string to a specified length, optionally adding a suffix. |
+
+### Classes
+
+
+<a id="stringclassesstringutilsmd"></a>
+
+#### Class: StringUtils
+
+##### Constructors
+
+<a id="api-constructor"></a>
+
+###### Constructor
+
+> **new StringUtils**(): `StringUtils`
+
+####### Returns
+
+`StringUtils`
+
+##### Methods
+
+<a id="api-applywordcasing"></a>
+
+###### applyWordCasing()
+
+> `static` **applyWordCasing**(`casingTemplate`, `word`): `string`
+
+Preserve basic casing from a template single word and apply it to another word.
+
+Rules:
+- If `casingTemplate` is all upper-case, return `word` in all upper-case.
+- If `casingTemplate` is Title Case (first letter uppercase, rest lowercase), return
+  `word` in Title Case.
+- Otherwise return `word` as-is.
+
+This helper focuses on single-word tokens only and intentionally does not handle
+complex multi-word or mixed-case patterns. Use for word-level casing preservation
+(for example, to preserve input casing when returning a pluralized form).
+
+####### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `casingTemplate` | `string` | A word whose casing should be copied (e.g. 'Cat' or 'CAT') |
+| `word` | `string` | The word to apply casing to (usually a transformed/lowercased form) |
+
+####### Returns
+
+`string`
+
+The `word` adjusted to match the template's basic casing
+
+***
+
+<a id="api-cameltosnake"></a>
+
+###### camelToSnake()
+
+> `static` **camelToSnake**(`str`): `string`
+
+Converts a camelCase string to snake_case.
+
+####### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `str` | `string` | The camelCase string to convert |
+
+####### Returns
+
+`string`
+
+snake_case string
+
+***
+
+<a id="api-capitalise"></a>
+
+###### capitalise()
+
+> `static` **capitalise**(`str`): `string`
+
+Capitalises the first letter of a string, making the rest lowercase.
+
+####### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `str` | `string` | The string to capitalise |
+
+####### Returns
+
+`string`
+
+Capitalised string
+
+***
+
+<a id="api-capitalize"></a>
+
+###### capitalize()
+
+> `static` **capitalize**(`str`): `string`
+
+Capitalizes the first letter of a string, making the rest lowercase.
+
+####### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `str` | `string` | The string to capitalize |
+
+####### Returns
+
+`string`
+
+Capitalized string
+
+***
+
+<a id="api-pluralise"></a>
+
+###### pluralise()
+
+> `static` **pluralise**(`word`, `count`): `string`
+
+Returns the plural form of a single English word based on the supplied count.
+
+Capabilities:
+- Preserves basic input casing (using `applyWordCasing`) so e.g. "Cat" -> "Cats",
+  "CAT" -> "CATS".
+- Handles common irregular plurals (person->people, child->children, mouse->mice, etc.).
+- Treats a number of nouns as uncountable (sheep, fish, species, series, news, etc.).
+- Applies common rules: f/fe -> ves (knife->knives), consonant+y -> ies (baby->babies),
+  words ending with s/x/z/ch/sh -> add 'es'.
+- For words ending with 'o' there is a small exceptions list that will add 'es' (hero,
+  potato, tomato, echo, torpedo); otherwise 's' is added.
+
+Limitations and notes:
+- This is a pragmatic, rule-based implementation covering the most common English cases,
+  not a complete linguistic solution. It does not support locales or full irregular/exception
+  lists (many English words have irregular forms not included here).
+- The function expects a single word token. It does not pluralize multi-word phrases or
+  attempt to inflect verbs. Use a dedicated library (for example, the 'pluralize' npm
+  package) if you need comprehensive, production-grade pluralization.
+- Casing preservation is basic (all-caps and Title Case); mixed/mid-word casing (camelCase,
+  acronyms inside words) is not fully reconstructed.
+
+####### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `word` | `string` | The single English word to pluralize (may be mixed case) |
+| `count` | `number` | The numeric count; if equal to 1 the original word is returned |
+
+####### Returns
+
+`string`
+
+The pluralized word with basic casing preserved
+
+***
+
+<a id="api-pluralize"></a>
+
+###### pluralize()
+
+> `static` **pluralize**(`word`, `count`): `string`
+
+Returns the plural form of a single English word based on the supplied count.
+
+Capabilities:
+- Preserves basic input casing (using `applyWordCasing`) so e.g. "Cat" -> "Cats",
+  "CAT" -> "CATS".
+- Handles common irregular plurals (person->people, child->children, mouse->mice, etc.).
+- Treats a number of nouns as uncountable (sheep, fish, species, series, news, etc.).
+- Applies common rules: f/fe -> ves (knife->knives), consonant+y -> ies (baby->babies),
+  words ending with s/x/z/ch/sh -> add 'es'.
+- For words ending with 'o' there is a small exceptions list that will add 'es' (hero,
+  potato, tomato, echo, torpedo); otherwise 's' is added.
+
+Limitations and notes:
+- This is a pragmatic, rule-based implementation covering the most common English cases,
+  not a complete linguistic solution. It does not support locales or full irregular/exception
+  lists (many English words have irregular forms not included here).
+- The function expects a single word token. It does not pluralize multi-word phrases or
+  attempt to inflect verbs. Use a dedicated library (for example, the 'pluralize' npm
+  package) if you need comprehensive, production-grade pluralization.
+- Casing preservation is basic (all-caps and Title Case); mixed/mid-word casing (camelCase,
+  acronyms inside words) is not fully reconstructed.
+
+####### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `word` | `string` | The single English word to pluralize (may be mixed case) |
+| `count` | `number` | The numeric count; if equal to 1 the original word is returned |
+
+####### Returns
+
+`string`
+
+The pluralized word with basic casing preserved
+
+***
+
+<a id="api-snaketocamel"></a>
+
+###### snakeToCamel()
+
+> `static` **snakeToCamel**(`str`): `string`
+
+Converts a snake_case string to camelCase.
+
+####### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `str` | `string` | The snake_case string to convert |
+
+####### Returns
+
+`string`
+
+camelCase string
+
+***
+
+<a id="api-truncate"></a>
+
+###### truncate()
+
+> `static` **truncate**(`str`, `length`, `suffix`): `string`
+
+Truncates a string to a specified length, optionally adding a suffix.
+
+####### Parameters
+
+| Parameter | Type | Default value | Description |
+| ------ | ------ | ------ | ------ |
+| `str` | `string` | `undefined` | The string to truncate |
+| `length` | `number` | `undefined` | Maximum length of the resulting string (including suffix if provided) |
+| `suffix` | `string` | `'...'` | Optional suffix to add to truncated string (default: '...') |
+
+####### Returns
+
+`string`
+
+Truncated string
+
+### Variables
+
+
+<a id="stringvariablesapplywordcasingmd"></a>
+
+#### Variable: applyWordCasing()
+
+> `const` **applyWordCasing**: (`casingTemplate`, `word`) => `string` = `StringUtils.applyWordCasing`
+
+Preserve basic casing from a template single word and apply it to another word.
+
+Rules:
+- If `casingTemplate` is all upper-case, return `word` in all upper-case.
+- If `casingTemplate` is Title Case (first letter uppercase, rest lowercase), return
+  `word` in Title Case.
+- Otherwise return `word` as-is.
+
+This helper focuses on single-word tokens only and intentionally does not handle
+complex multi-word or mixed-case patterns. Use for word-level casing preservation
+(for example, to preserve input casing when returning a pluralized form).
+
+Preserve basic casing from a template single word and apply it to another word.
+
+Rules:
+- If `casingTemplate` is all upper-case, return `word` in all upper-case.
+- If `casingTemplate` is Title Case (first letter uppercase, rest lowercase), return
+  `word` in Title Case.
+- Otherwise return `word` as-is.
+
+This helper focuses on single-word tokens only and intentionally does not handle
+complex multi-word or mixed-case patterns. Use for word-level casing preservation
+(for example, to preserve input casing when returning a pluralized form).
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `casingTemplate` | `string` | A word whose casing should be copied (e.g. 'Cat' or 'CAT') |
+| `word` | `string` | The word to apply casing to (usually a transformed/lowercased form) |
+
+##### Returns
+
+`string`
+
+The `word` adjusted to match the template's basic casing
+
+##### Param
+
+A word whose casing should be copied (e.g. 'Cat' or 'CAT')
+
+##### Param
+
+The word to apply casing to (usually a transformed/lowercased form)
+
+##### Returns
+
+The `word` adjusted to match the template's basic casing
+
+
+<a id="stringvariablescameltosnakemd"></a>
+
+#### Variable: camelToSnake()
+
+> `const` **camelToSnake**: (`str`) => `string` = `StringUtils.camelToSnake`
+
+Converts a camelCase string to snake_case.
+
+Converts a camelCase string to snake_case.
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `str` | `string` | The camelCase string to convert |
+
+##### Returns
+
+`string`
+
+snake_case string
+
+##### Param
+
+The camelCase string to convert
+
+##### Returns
+
+snake_case string
+
+
+<a id="stringvariablescapitalisemd"></a>
+
+#### Variable: capitalise()
+
+> `const` **capitalise**: (`str`) => `string` = `StringUtils.capitalise`
+
+Capitalises the first letter of a string, making the rest lowercase.
+
+Capitalises the first letter of a string, making the rest lowercase.
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `str` | `string` | The string to capitalise |
+
+##### Returns
+
+`string`
+
+Capitalised string
+
+##### Param
+
+The string to capitalise
+
+##### Returns
+
+Capitalised string
+
+
+<a id="stringvariablescapitalizemd"></a>
+
+#### Variable: capitalize()
+
+> `const` **capitalize**: (`str`) => `string` = `StringUtils.capitalize`
+
+Capitalizes the first letter of a string, making the rest lowercase.
+
+Capitalizes the first letter of a string, making the rest lowercase.
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `str` | `string` | The string to capitalize |
+
+##### Returns
+
+`string`
+
+Capitalized string
+
+##### Param
+
+The string to capitalize
+
+##### Returns
+
+Capitalized string
+
+
+<a id="stringvariablespluralisemd"></a>
+
+#### Variable: pluralise()
+
+> `const` **pluralise**: (`word`, `count`) => `string` = `StringUtils.pluralise`
+
+Returns the plural form of a single English word based on the supplied count (alias).
+
+See `pluralize` for capabilities and limitations.
+
+Returns the plural form of a single English word based on the supplied count.
+
+Capabilities:
+- Preserves basic input casing (using `applyWordCasing`) so e.g. "Cat" -> "Cats",
+  "CAT" -> "CATS".
+- Handles common irregular plurals (person->people, child->children, mouse->mice, etc.).
+- Treats a number of nouns as uncountable (sheep, fish, species, series, news, etc.).
+- Applies common rules: f/fe -> ves (knife->knives), consonant+y -> ies (baby->babies),
+  words ending with s/x/z/ch/sh -> add 'es'.
+- For words ending with 'o' there is a small exceptions list that will add 'es' (hero,
+  potato, tomato, echo, torpedo); otherwise 's' is added.
+
+Limitations and notes:
+- This is a pragmatic, rule-based implementation covering the most common English cases,
+  not a complete linguistic solution. It does not support locales or full irregular/exception
+  lists (many English words have irregular forms not included here).
+- The function expects a single word token. It does not pluralize multi-word phrases or
+  attempt to inflect verbs. Use a dedicated library (for example, the 'pluralize' npm
+  package) if you need comprehensive, production-grade pluralization.
+- Casing preservation is basic (all-caps and Title Case); mixed/mid-word casing (camelCase,
+  acronyms inside words) is not fully reconstructed.
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `word` | `string` | The single English word to pluralize (may be mixed case) |
+| `count` | `number` | The numeric count; if equal to 1 the original word is returned |
+
+##### Returns
+
+`string`
+
+The pluralized word with basic casing preserved
+
+##### Param
+
+The single English word to pluralize (may be mixed case)
+
+##### Param
+
+The numeric count; if equal to 1 the original word is returned
+
+##### Returns
+
+The pluralized word with basic casing preserved
+
+
+<a id="stringvariablespluralizemd"></a>
+
+#### Variable: pluralize()
+
+> `const` **pluralize**: (`word`, `count`) => `string` = `StringUtils.pluralize`
+
+Returns the plural form of a single English word based on the supplied count.
+
+Capabilities:
+- Preserves basic input casing (using `applyWordCasing`) so e.g. "Cat" -> "Cats",
+  "CAT" -> "CATS".
+- Handles common irregular plurals (person->people, child->children, mouse->mice, etc.).
+- Treats a number of nouns as uncountable (sheep, fish, species, series, news, etc.).
+- Applies common rules: f/fe -> ves (knife->knives), consonant+y -> ies (baby->babies),
+  words ending with s/x/z/ch/sh -> add 'es'.
+- For words ending with 'o' there is a small exceptions list that will add 'es' (hero,
+  potato, tomato, echo, torpedo); otherwise 's' is added.
+
+Limitations and notes:
+- This is a pragmatic, rule-based implementation covering the most common English cases,
+  not a complete linguistic solution. It does not support locales or full irregular/exception
+  lists (many English words have irregular forms not included here).
+- The function expects a single word token. It does not pluralize multi-word phrases or
+  attempt to inflect verbs. Use a dedicated library (for example, the 'pluralize' npm
+  package) if you need comprehensive, production-grade pluralization.
+- Casing preservation is basic (all-caps and Title Case); mixed/mid-word casing (camelCase,
+  acronyms inside words) is not fully reconstructed.
+
+Returns the plural form of a single English word based on the supplied count.
+
+Capabilities:
+- Preserves basic input casing (using `applyWordCasing`) so e.g. "Cat" -> "Cats",
+  "CAT" -> "CATS".
+- Handles common irregular plurals (person->people, child->children, mouse->mice, etc.).
+- Treats a number of nouns as uncountable (sheep, fish, species, series, news, etc.).
+- Applies common rules: f/fe -> ves (knife->knives), consonant+y -> ies (baby->babies),
+  words ending with s/x/z/ch/sh -> add 'es'.
+- For words ending with 'o' there is a small exceptions list that will add 'es' (hero,
+  potato, tomato, echo, torpedo); otherwise 's' is added.
+
+Limitations and notes:
+- This is a pragmatic, rule-based implementation covering the most common English cases,
+  not a complete linguistic solution. It does not support locales or full irregular/exception
+  lists (many English words have irregular forms not included here).
+- The function expects a single word token. It does not pluralize multi-word phrases or
+  attempt to inflect verbs. Use a dedicated library (for example, the 'pluralize' npm
+  package) if you need comprehensive, production-grade pluralization.
+- Casing preservation is basic (all-caps and Title Case); mixed/mid-word casing (camelCase,
+  acronyms inside words) is not fully reconstructed.
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `word` | `string` | The single English word to pluralize (may be mixed case) |
+| `count` | `number` | The numeric count; if equal to 1 the original word is returned |
+
+##### Returns
+
+`string`
+
+The pluralized word with basic casing preserved
+
+##### Param
+
+The single English word to pluralize (may be mixed case)
+
+##### Param
+
+The numeric count; if equal to 1 the original word is returned
+
+##### Returns
+
+The pluralized word with basic casing preserved
+
+
+<a id="stringvariablessnaketocamelmd"></a>
+
+#### Variable: snakeToCamel()
+
+> `const` **snakeToCamel**: (`str`) => `string` = `StringUtils.snakeToCamel`
+
+Converts a snake_case string to camelCase.
+
+Converts a snake_case string to camelCase.
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `str` | `string` | The snake_case string to convert |
+
+##### Returns
+
+`string`
+
+camelCase string
+
+##### Param
+
+The snake_case string to convert
+
+##### Returns
+
+camelCase string
+
+
+<a id="stringvariablestruncatemd"></a>
+
+#### Variable: truncate()
+
+> `const` **truncate**: (`str`, `length`, `suffix`) => `string` = `StringUtils.truncate`
+
+Truncates a string to a specified length, optionally adding a suffix.
+
+Truncates a string to a specified length, optionally adding a suffix.
+
+##### Parameters
+
+| Parameter | Type | Default value | Description |
+| ------ | ------ | ------ | ------ |
+| `str` | `string` | `undefined` | The string to truncate |
+| `length` | `number` | `undefined` | Maximum length of the resulting string (including suffix if provided) |
+| `suffix` | `string` | `'...'` | Optional suffix to add to truncated string (default: '...') |
+
+##### Returns
+
+`string`
+
+Truncated string
+
+##### Param
+
+The string to truncate
+
+##### Param
+
+Maximum length of the resulting string (including suffix if provided)
+
+##### Param
+
+Optional suffix to add to truncated string (default: '...')
+
+##### Returns
+
+Truncated string
+
 ## Stringify Replacer
 
 
@@ -1780,7 +2750,7 @@ This function is useful for creating masking replacers which can apply masking b
 
 [`JsonStringifyReplacerFromPathBasedRules`](#stringify-replacertype-aliasesjsonstringifyreplacerfrompathbasedrulesmd)
 
-the replacer function built from those path based rules
+The replacer function built from those path based rules. It also has a `rules` property storing all the path based rules provided as inputs.
 
 ##### Example
 
