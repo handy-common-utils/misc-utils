@@ -78,7 +78,7 @@ export type JsonStringifyReplacerFromPathBasedRules = { rules: Array<[RegExp, (i
  *  [/.*\.ssn$/, mask],
  * ])));
  * @param rules Array of rules: if the regular expression tests true with the property path, the replacer function will be applied on the value
- * @returns the replacer function built from those path based rules
+ * @returns The replacer function built from those path based rules. It also has a `rules` property storing all the path based rules provided as inputs.
  */
 export function pathBasedReplacer(rules: JsonStringifyReplacerFromPathBasedRules['rules']): JsonStringifyReplacerFromPathBasedRules {
   const replacer =  pathAwareReplacer(function (_key: string, value: any, path: string): any {

@@ -133,6 +133,12 @@ const json = JSON.stringify({
     },
   ],
 }, replacer, 2);
+
+// Combining multiple path based replaces
+const replacer2 = pathBasedReplacer([
+  ...
+]);
+const combinedReplacer = pathBasedReplacer([...replacer.rules, ...replacer2.rules]);
 ```
 
 ## substituteAll
