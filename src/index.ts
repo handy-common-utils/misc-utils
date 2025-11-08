@@ -4,5 +4,7 @@ export * from './errors';
 export * from './http-status';
 export * from './line-logger';
 export * from './mask';
+export * from './number';
+export * from './string';
 export * from './stringify-replacer';
 export * from './substitute';
