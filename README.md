@@ -358,6 +358,7 @@ const result = substituteAll(input, searchPattern, substitute);
 | [index](#indexreadmemd) | - |
 | [line-logger](#line-loggerreadmemd) | - |
 | [mask](#maskreadmemd) | - |
+| [merge](#mergereadmemd) | - |
 | [number](#numberreadmemd) | - |
 | [string](#stringreadmemd) | - |
 | [stringify-replacer](#stringify-replacerreadmemd) | - |
@@ -1127,6 +1128,22 @@ Re-exports [maskFullName](#maskfunctionsmaskfullnamemd)
 
 ***
 
+<a id="api-merge"></a>
+
+##### merge
+
+Re-exports [merge](#mergefunctionsmergemd)
+
+***
+
+<a id="api-mergeoptions"></a>
+
+##### MergeOptions
+
+Re-exports [MergeOptions](#mergeinterfacesmergeoptionsmd)
+
+***
+
 <a id="api-numberutils"></a>
 
 ##### NumberUtils
@@ -1817,6 +1834,74 @@ A mask function that has specified parameters as pre-set
 const maskApiKey = masker(2, 2, 10);
   const maskedString = maskApiKey(myApiKey);
 ```
+
+## Merge
+
+
+<a id="mergereadmemd"></a>
+
+### merge
+
+#### Interfaces
+
+| Interface | Description |
+| ------ | ------ |
+| [MergeOptions](#mergeinterfacesmergeoptionsmd) | Options to customize the merge behavior. |
+
+#### Functions
+
+| Function | Description |
+| ------ | ------ |
+| [merge](#mergefunctionsmergemd) | Recursively merges properties of one or more source objects into a destination object. |
+
+### Functions
+
+
+<a id="mergefunctionsmergemd"></a>
+
+#### Function: merge()
+
+> **merge**\<`T`, `U`\>(`options`, `destination`, ...`sources`): `T` & `U`\[`number`\]
+
+Recursively merges properties of one or more source objects into a destination object.
+
+##### Type Parameters
+
+| Type Parameter |
+| ------ |
+| `T` *extends* `object` |
+| `U` *extends* `any`[] |
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `options` | [`MergeOptions`](#mergeinterfacesmergeoptionsmd) \| `null` \| `undefined` | Customizes the merge behavior. |
+| `destination` | `T` | The object to merge properties into. It will be mutated unless `options.immutable` is true. |
+| ...`sources` | `U` | The source objects. |
+
+##### Returns
+
+`T` & `U`\[`number`\]
+
+The merged object.
+
+### Interfaces
+
+
+<a id="mergeinterfacesmergeoptionsmd"></a>
+
+#### Interface: MergeOptions
+
+Options to customize the merge behavior.
+
+##### Properties
+
+| Property | Type | Description |
+| ------ | ------ | ------ |
+| <a id="api-array"></a> `array?` | `"replace"` \| `"append"` \| `"merge"` | Defines how to handle arrays during the merge. - `replace`: The source array completely replaces the destination array. - `append`: The source array's elements are added to the end of the destination array. - `merge`: (Default) Mimics Lodash's behavior. It overwrites elements at the same index. If an element is an object, it merges them recursively. If the source array is longer, its additional elements are appended. **Default** `'merge'` |
+| <a id="api-immutable"></a> `immutable?` | `boolean` | If `true`, the merge will be immutable, creating a new object. If `false` or not provided, the destination object will be mutated. **Default** `false` |
+| <a id="api-set"></a> `set?` | `"replace"` \| `"merge"` | Defines how to handle `Set` objects during the merge. - `replace`: (Default) The source `Set` completely replaces the destination `Set`. - `merge`: A new `Set` is created containing all elements from both the destination and source `Set`s. **Default** `'replace'` |
 
 ## Number
 
