@@ -64,8 +64,10 @@ export class StringUtils {
   static camelToSnake(str: string): string {
     if (!str) return str;
     return str
-      .replaceAll(/([\da-z])([A-Z])/g, '$1_$2')
-      .replaceAll(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
+      // eslint-disable-next-line unicorn/prefer-string-replace-all
+      .replace(/([\da-z])([A-Z])/g, '$1_$2')
+      // eslint-disable-next-line unicorn/prefer-string-replace-all
+      .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
       .toLowerCase()
       .replace(/^_/, '');
   }
@@ -79,7 +81,8 @@ export class StringUtils {
     if (!str) return str;
     return str
       .toLowerCase()
-      .replaceAll(/_+([a-z])/g, (_: string, letter: string) => letter.toUpperCase());
+      // eslint-disable-next-line unicorn/prefer-string-replace-all
+      .replace(/_+([a-z])/g, (_: string, letter: string) => letter.toUpperCase());
   }
 
   /**
@@ -149,20 +152,20 @@ export class StringUtils {
 
     // Uncountable nouns
     const uncountables = new Set([
-      'sheep',
-      'fish',
-      'deer',
-      'species',
-      'series',
-      'money',
-      'rice',
-      'information',
-      'equipment',
-      'news',
       'bison',
+      'deer',
+      'equipment',
+      'fish',
+      'information',
+      'money',
       'moose',
-      'swine',
+      'news',
+      'rice',
       'salmon',
+      'series',
+      'sheep',
+      'species',
+      'swine',
       'trout',
     ]);
     if (uncountables.has(lower)) return word;
@@ -195,7 +198,7 @@ export class StringUtils {
     }
 
     // Words that form plural by adding 'es' when ending with o
-    const oEsExceptions = new Set(['hero', 'potato', 'tomato', 'echo', 'torpedo']);
+    const oEsExceptions = new Set(['echo', 'hero', 'potato', 'tomato', 'torpedo']);
 
     // Rules-based pluralization
     // f/fe -> ves (knife -> knives)

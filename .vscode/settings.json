@@ -1,9 +1,14 @@
 {
     "cSpell.words": [
+        "Medikoo",
         "preversion",
         "Replacer",
         "Replacers",
         "typeof"
     ],
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "eslint.options": {
+        "flags": ["v10_config_lookup_from_file"]
+    },
+    "eslint.useFlatConfig": true
 }

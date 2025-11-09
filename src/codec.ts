@@ -117,7 +117,6 @@ export function escapeForRegExp(text: string|undefined|null): string {
   if (text == null) {
     return '';
   }
-  // eslint-disable-next-line unicorn/better-regex
   return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 

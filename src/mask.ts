@@ -1,4 +1,3 @@
-/* eslint-disable no-mixed-operators */
 /* eslint-disable unicorn/prefer-string-slice */
 
 /**

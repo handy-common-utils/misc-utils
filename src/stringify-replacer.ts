@@ -24,6 +24,8 @@ export type PathAwareReplacer = (key: string, value: any, path: string, parent: 
  * @param options Options to control whether the pathArray and ancestors parameters would have values populated.
  *                By default all information available would be populated.
  *                There is no need to specify options unless you are extremely concerned about performance, for example if you need to frequently stringify 500MB objects.
+ * @param options.pathArray When false, pathArray would be an empty array. This would remove the need to construct a pathArray from the path string.
+ * @param options.ancestors When false, ancestors would be an empty array.
  * @returns The replacer function that can be passed to JSON.stringify(...).
  */
 export function pathAwareReplacer(replacer: PathAwareReplacer, options?: {pathArray?: boolean, ancestors?: boolean}): JsonStringifyReplacer {
@@ -62,7 +64,7 @@ export function pathAwareReplacer(replacer: PathAwareReplacer, options?: {pathAr
  * A JsonStringifyReplacer that was created from path based rules.
  * Those rules are stored in the `rules` property in case of need.
  */
-export type JsonStringifyReplacerFromPathBasedRules = { rules: Array<[RegExp, (input: any) => any]> } & JsonStringifyReplacer;
+export type JsonStringifyReplacerFromPathBasedRules = JsonStringifyReplacer & { rules: Array<[RegExp, (input: any) => any]> };
 
 /**
  * Create a replacer function for JSON.stringify(...) from an array of path based rules.

@@ -1,6 +1,4 @@
 /* eslint-disable max-params */
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @typescript-eslint/ban-types */
 
 // These types are copied from @types/log, see: https://github.com/medikoo/log
 interface MedikooLogFunction {
@@ -13,7 +11,6 @@ interface MedikooLogger {
   error: MedikooLogFunction;
 }
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * A LineLogger logs/prints one entire line of text before advancing to another line.
  * This class is useful for encapsulating console.log/info/warn/error functions.
@@ -42,12 +39,13 @@ interface MedikooLogger {
  * this.output = LineLogger.consoleWithColour(this.flags, chalk);
  * this.output.warn('Configuration file not found, default configuration would be used.');  // it would be printed out in yellow
  */
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 export class LineLogger<DEBUG_FUNC extends Function, INFO_FUNC extends Function, WARN_FUNC extends Function, ERROR_FUNC extends Function> {
   protected static NO_OP_FUNC = function () {};
 
   /**
    * Build an instance with console.log/info/warn/error.
-   * @param flags           The flag object that contains fields for knowning whether debug is enabled and whether quiet mode is enabled.
+   * @param flags           The flag object that contains fields for knowing whether debug is enabled and whether quiet mode is enabled.
    * Values of those fields are evaluated only once within this function.
    * They are not evaluated when debug/info/warn/error functions are called.
    * @param debugFlagName   Name of the debug field in the flags object
@@ -76,25 +74,28 @@ export class LineLogger<DEBUG_FUNC extends Function, INFO_FUNC extends Function,
    * @returns An instance that uses console.log/info/warn/error and also adds colour to the messages using chalk/colors/cli-color.
    */
   static consoleWithColour<FLAGS extends Record<string, any>, COLOURER extends Record<string, any>>(flags: FLAGS,
-    // eslint-disable-next-line default-param-last
     colourer: COLOURER, debugColourFuncName: keyof COLOURER = 'grey', infoColourFuncName?: keyof COLOURER | undefined, warnColourFuncName: keyof COLOURER = 'yellow', errorColourFuncName: keyof COLOURER = 'red',
     debugFlagName: keyof FLAGS = 'debug', quietFlagName: keyof FLAGS = 'quiet',
   ) {
     return new LineLogger(
       // debug
       (message?: any, ...optionalParams: any[]) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
         console.log(debugColourFuncName == null || typeof message !== 'string' ? message : (colourer[debugColourFuncName] as any as Function)(message), ...optionalParams);
       },
       // info
       (message?: any, ...optionalParams: any[]) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
         console.info(infoColourFuncName == null || typeof message !== 'string' ? message : (colourer[infoColourFuncName] as any as Function)(message), ...optionalParams);
       },
       // warn
       (message?: any, ...optionalParams: any[]) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
         console.warn(warnColourFuncName == null || typeof message !== 'string' ? message : (colourer[warnColourFuncName] as any as Function)(message), ...optionalParams);
       },
       // error
       (message?: any, ...optionalParams: any[]) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
         console.error(errorColourFuncName == null || typeof message !== 'string' ? message : (colourer[errorColourFuncName] as any as Function)(message), ...optionalParams);
       },
       flags[debugFlagName],

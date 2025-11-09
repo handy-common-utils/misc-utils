@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/no-useless-undefined */
 import { expect } from 'chai';
 
-import { mask, maskAll, maskCreditCard, maskEmail, maskFullName, masker } from '../src/mask';
+import { mask, maskAll, maskCreditCard, maskEmail, masker, maskFullName } from '../src/mask';
 
 describe('mask(...)', () => {
   it('should handle null/undefined/empty correctly', () => {

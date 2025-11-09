@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { clamp, isInRange, roundTo } from '../src/index';
+import { clamp, isInRange, roundTo } from '../src/number';
 
 describe('NumberUtils', () => {
   describe('clamp', () => {

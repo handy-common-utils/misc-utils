@@ -23,7 +23,7 @@ jobs:
             package.json
             package-lock.json
       - run: npm ci
-      - run: npx semantic-release
+      - run: npx zx-bulk-release
         env:
           NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
           GH_TOKEN: ${{ secrets.GORELEASER_PAT }}

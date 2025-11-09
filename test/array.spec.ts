@@ -1,7 +1,6 @@
-/* eslint-disable unicorn/no-array-for-each */
 import { expect } from 'chai';
 
-import { distributeRoundRobin , downSampleRandomly } from '../src';
+import { distributeRoundRobin , downSampleRandomly } from '../src/array';
 
 describe('distributeRoundRobin()', () => {
   it('should work when number of groups equals number of elements', () => {

@@ -14,14 +14,13 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "devDependencies": {
-    "@handy-common-utils/dev-dependencies-mocha": "^1.7.0",
-    "@semantic-release/git": "^10.0.1",
+    "@handy-common-utils/dev-dependencies-mocha": "^1.10.1",
     "@types/log": "^6.3.0",
     "@types/node": "^16.11.12",
     "fast-safe-stringify": "^2.1.1",
     "log": "^6.3.1",
     "safe-stable-stringify": "^2.4.3",
-    "semantic-release": "^21.0.3"
+    "zx-bulk-release": "^2.15.39"
   },
   "publishConfig": {
     "access": "public"
