@@ -15,12 +15,14 @@
   "types": "dist/index.d.ts",
   "devDependencies": {
     "@handy-common-utils/dev-dependencies-mocha": "^1.10.1",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/npm": "^12.0.2",
     "@types/log": "^6.3.0",
     "@types/node": "^16.11.12",
     "fast-safe-stringify": "^2.1.1",
     "log": "^6.3.1",
     "safe-stable-stringify": "^2.4.3",
-    "semantic-release": "^25.0.2"
+    "semantic-release": "^24.2.9"
   },
   "publishConfig": {
     "access": "public"
@@ -38,9 +40,5 @@
     "utils"
   ],
   "author": "James Hu",
-  "license": "Apache-2.0",
-  "volta": {
-    "node": "18.20.0",
-    "npm": "10.5.0"
-  }
+  "license": "Apache-2.0"
 }
