@@ -20,7 +20,7 @@
     "fast-safe-stringify": "^2.1.1",
     "log": "^6.3.1",
     "safe-stable-stringify": "^2.4.3",
-    "zx-bulk-release": "^2.15.39"
+    "semantic-release": "^25.0.2"
   },
   "publishConfig": {
     "access": "public"
