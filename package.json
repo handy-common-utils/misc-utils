@@ -1,6 +1,6 @@
 {
   "name": "@handy-common-utils/misc-utils",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "Miscellaneous utilities",
   "scripts": {
     "pretest": "eslint . --ext .ts",

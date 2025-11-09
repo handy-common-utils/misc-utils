@@ -474,7 +474,7 @@ Encode an unsigned 32-bit integer into BASE64 string.
 
 | Type Parameter |
 | ------ |
-| `T` *extends* `undefined` \| `null` \| `number` |
+| `T` *extends* `number` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -501,7 +501,7 @@ Encode an unsigned 32-bit integer into URL/path safe BASE64 string.
 
 | Type Parameter |
 | ------ |
-| `T` *extends* `undefined` \| `null` \| `number` |
+| `T` *extends* `number` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -530,7 +530,7 @@ Escape a string literal for using it inside of RegExp.
 
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
-| `text` | `undefined` \| `null` \| `string` | the string literal to be escaped |
+| `text` | `string` \| `null` \| `undefined` | the string literal to be escaped |
 
 ##### Returns
 
@@ -552,7 +552,7 @@ Escape replacement string for using it inside of RegExp replacement parameter.
 
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
-| `text` | `undefined` \| `null` \| `string` | the replacement string to be escaped, or an empty string if the input is null or undefined |
+| `text` | `string` \| `null` \| `undefined` | the replacement string to be escaped, or an empty string if the input is null or undefined |
 
 ##### Returns
 
@@ -619,7 +619,7 @@ Encode an unsigned 32-bit integer into BASE64 string without trailing '='.
 
 | Type Parameter |
 | ------ |
-| `T` *extends* `undefined` \| `null` \| `number` |
+| `T` *extends* `number` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -646,7 +646,7 @@ Encode an unsigned 32-bit integer into URL/path safe BASE64 string without trail
 
 | Type Parameter |
 | ------ |
-| `T` *extends* `undefined` \| `null` \| `number` |
+| `T` *extends* `number` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -674,7 +674,7 @@ Make a "normal" (BASE64) string URL/path safe.
 
 | Type Parameter |
 | ------ |
-| `T` *extends* `undefined` \| `null` \| `string` |
+| `T` *extends* `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -835,7 +835,7 @@ Some (not all) well known HTTP status codes
 
 Some (not all) HTTP status messages matching their codes
 
-##### Type declaration
+##### Type Declaration
 
 | Name | Type | Default value |
 | ------ | ------ | ------ |
@@ -1366,7 +1366,7 @@ Build an instance with console.log/info/warn/error.
 
 | Parameter | Type | Default value | Description |
 | ------ | ------ | ------ | ------ |
-| `flags` | `FLAGS` | `...` | The flag object that contains fields for knowning whether debug is enabled and whether quiet mode is enabled. Values of those fields are evaluated only once within this function. They are not evaluated when debug/info/warn/error functions are called. |
+| `flags` | `FLAGS` | `...` | The flag object that contains fields for knowing whether debug is enabled and whether quiet mode is enabled. Values of those fields are evaluated only once within this function. They are not evaluated when debug/info/warn/error functions are called. |
 | `debugFlagName` | keyof `FLAGS` | `'debug'` | Name of the debug field in the flags object |
 | `quietFlagName` | keyof `FLAGS` | `'quiet'` | Name of the quiet field in the flags object |
 
@@ -1582,7 +1582,7 @@ Build an instance with console.log/info/warn/error.
 
 | Parameter | Type | Default value | Description |
 | ------ | ------ | ------ | ------ |
-| `flags` | `FLAGS` | `...` | The flag object that contains fields for knowning whether debug is enabled and whether quiet mode is enabled. Values of those fields are evaluated only once within this function. They are not evaluated when debug/info/warn/error functions are called. |
+| `flags` | `FLAGS` | `...` | The flag object that contains fields for knowing whether debug is enabled and whether quiet mode is enabled. Values of those fields are evaluated only once within this function. They are not evaluated when debug/info/warn/error functions are called. |
 | `debugFlagName` | keyof `FLAGS` | `'debug'` | Name of the debug field in the flags object |
 | `quietFlagName` | keyof `FLAGS` | `'quiet'` | Name of the quiet field in the flags object |
 
@@ -1643,7 +1643,7 @@ Mask the content of a string
 
 | Type Parameter |
 | ------ |
-| `T` *extends* `undefined` \| `null` \| `string` |
+| `T` *extends* `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -1653,7 +1653,7 @@ Mask the content of a string
 | `keepLeft` | `number` | `1` | Number of characters on the left to be kept in the output without masking. Default value is 1. |
 | `keepRight` | `number` | `0` | Number of characters on the right to be kept in the output without masking. Default value is 0. |
 | `minLength` | `number` | `3` | Minimal length of the string for keepLeft and keepRight to be effective. If the input string is shorter than this length, the whole string would be masked. Default value is 3. |
-| `maskLengthOrMaskString` | `undefined` \| `null` \| `string` \| `number` | `null` | The string to be used for replacing the part in the input that needs to be masked, or the length of the mask string if a fixed length is desired, or null/undefined if the mask string should have the same length as the part to be masked. Default value is null. |
+| `maskLengthOrMaskString` | `string` \| `number` \| `null` \| `undefined` | `null` | The string to be used for replacing the part in the input that needs to be masked, or the length of the mask string if a fixed length is desired, or null/undefined if the mask string should have the same length as the part to be masked. Default value is null. |
 | `maskPattern` | `string` | `'*'` | The pattern to be repeated as the mask. Default value is '*'. |
 
 ##### Returns
@@ -1675,7 +1675,7 @@ Replace each character of the input with '*'
 
 | Type Parameter |
 | ------ |
-| `T` *extends* `undefined` \| `null` \| `string` |
+| `T` *extends* `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -1702,7 +1702,7 @@ Mask credit card number string
 
 | Type Parameter |
 | ------ |
-| `T` *extends* `undefined` \| `null` \| `string` |
+| `T` *extends* `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -1729,7 +1729,7 @@ Mask sensitive information in an email address while keeping some information fo
 
 | Type Parameter |
 | ------ |
-| `T` *extends* `undefined` \| `null` \| `string` |
+| `T` *extends* `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -1756,7 +1756,7 @@ Mask sensitive information in the full name while keeping useful information for
 
 | Type Parameter |
 | ------ |
-| `T` *extends* `undefined` \| `null` \| `string` |
+| `T` *extends* `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -1783,7 +1783,7 @@ Create a mask function with pre-set parameters.
 
 | Type Parameter | Default type |
 | ------ | ------ |
-| `T` *extends* `undefined` \| `null` \| `string` | `string` |
+| `T` *extends* `string` \| `null` \| `undefined` | `string` |
 
 ##### Parameters
 
@@ -1792,7 +1792,7 @@ Create a mask function with pre-set parameters.
 | `keepLeft?` | `number` | Number of characters on the left to be kept in the output without masking. Default value is 1. |
 | `keepRight?` | `number` | Number of characters on the right to be kept in the output without masking. Default value is 0. |
 | `minLength?` | `number` | Minimal length of the string for keepLeft and keepRight to be effective. If the input string is shorter than this length, the whole string would be masked. Default value is 3. |
-| `maskLengthOrMaskString?` | `null` \| `string` \| `number` | The string to be used for replacing the part in the input that needs to be masked, or the length of the mask string if a fixed length is desired, or null/undefined if the mask string should have the same length as the part to be masked. Default value is null. |
+| `maskLengthOrMaskString?` | `string` \| `number` \| `null` | The string to be used for replacing the part in the input that needs to be masked, or the length of the mask string if a fixed length is desired, or null/undefined if the mask string should have the same length as the part to be masked. Default value is null. |
 | `maskPattern?` | `string` | The pattern to be repeated as the mask. Default value is '*'. |
 
 ##### Returns
@@ -2721,8 +2721,8 @@ Build a replacer function that can be passed to JSON.stringify(...).
 | ------ | ------ | ------ |
 | `replacer` | [`PathAwareReplacer`](#stringify-replacertype-aliasespathawarereplacermd) | The actual replacer function which could utilise additional information. |
 | `options?` | \{ `ancestors?`: `boolean`; `pathArray?`: `boolean`; \} | Options to control whether the pathArray and ancestors parameters would have values populated. By default all information available would be populated. There is no need to specify options unless you are extremely concerned about performance, for example if you need to frequently stringify 500MB objects. |
-| `options.ancestors?` | `boolean` | - |
-| `options.pathArray?` | `boolean` | - |
+| `options.ancestors?` | `boolean` | When false, ancestors would be an empty array. |
+| `options.pathArray?` | `boolean` | When false, pathArray would be an empty array. This would remove the need to construct a pathArray from the path string. |
 
 ##### Returns
 
@@ -2794,12 +2794,12 @@ The original replacer expected by JSON.stringify(...)
 
 #### Type Alias: JsonStringifyReplacerFromPathBasedRules
 
-> **JsonStringifyReplacerFromPathBasedRules** = `object` & [`JsonStringifyReplacer`](#stringify-replacertype-aliasesjsonstringifyreplacermd)
+> **JsonStringifyReplacerFromPathBasedRules** = [`JsonStringifyReplacer`](#stringify-replacertype-aliasesjsonstringifyreplacermd) & `object`
 
 A JsonStringifyReplacer that was created from path based rules.
 Those rules are stored in the `rules` property in case of need.
 
-##### Type declaration
+##### Type Declaration
 
 | Name | Type |
 | ------ | ------ |
@@ -2857,7 +2857,7 @@ Substitute all occurrences of a pattern in a string.
 
 | Type Parameter |
 | ------ |
-| `T` *extends* `undefined` \| `null` \| `string` |
+| `T` *extends* `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -2865,7 +2865,7 @@ Substitute all occurrences of a pattern in a string.
 | ------ | ------ | ------ |
 | `input` | `T` | The input string on which the substitutions will be performed. |
 | `searchPattern` | `RegExp` | The regular expression pattern used to search for segments that should be substituted. It must have the `g` flag set. If the beginning part of the `input` should be skipped, set the `lastIndex` of the `searchPattern` before calling this function. After all the substitution are done, the `lastIndex` of the `searchPattern` will be reset to zero. See [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/RegExp/lastIndex](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/lastIndex) |
-| `substitute` | (`match`, `matchResult`) => `null` \| `string` | TThe function that builds the substitution string. It is called with the matched substring and the result of `RegExp.exec()`. See [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/RegExp/exec#examples](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec#examples). The function can return null to indicate that no further substitution is desired. In such case, the `lastIndex` of the `searchPattern` will not be reset to zero. |
+| `substitute` | (`match`, `matchResult`) => `string` \| `null` | TThe function that builds the substitution string. It is called with the matched substring and the result of `RegExp.exec()`. See [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/RegExp/exec#examples](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec#examples). The function can return null to indicate that no further substitution is desired. In such case, the `lastIndex` of the `searchPattern` will not be reset to zero. |
 
 ##### Returns
 
