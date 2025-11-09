@@ -2,7 +2,7 @@
 /* eslint-disable unicorn/no-for-loop */
 import { expect } from 'chai';
 import fastStringify from 'fast-safe-stringify';
-import stringify from 'safe-stable-stringify';
+import { stringify } from 'safe-stable-stringify';
 
 import { mask, maskAll, maskEmail, maskFullName } from '../src/mask';
 import { pathAwareReplacer, pathBasedReplacer } from '../src/stringify-replacer';

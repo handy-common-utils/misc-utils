@@ -1,11 +1,11 @@
-import chai, { expect } from 'chai';
+import { expect, use } from 'chai';
 import medikooLog from 'log';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
 import { LineLogger } from '../src/line-logger';
 
-chai.use(sinonChai);
+use(sinonChai);
 
 describe('LineLogger', () => {
   describe('LineLogger.console', () => {

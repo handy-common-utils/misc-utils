@@ -190,7 +190,7 @@ export const consoleWithoutColour = LineLogger.console;
  * @param debugFlagName   Name of the debug field in the flags object
  * @param quietFlagName   Name of the quiet field in the flags object. Quiet flag can override debug flag.
  * @returns An LineLogger instance that uses console.log/info/warn/error and also adds colour to the messages using chalk/colors/cli-color.
-*/
+ */
 export const consoleWithColour = LineLogger.consoleWithColour;
 
 /**

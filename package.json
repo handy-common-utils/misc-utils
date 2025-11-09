@@ -17,9 +17,11 @@
     "@handy-common-utils/dev-dependencies-mocha": "^1.10.1",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/npm": "^12.0.2",
+    "@types/lodash": "^4.17.20",
     "@types/log": "^6.3.0",
     "@types/node": "^16.11.12",
     "fast-safe-stringify": "^2.1.1",
+    "lodash": "^4.17.21",
     "log": "^6.3.1",
     "safe-stable-stringify": "^2.4.3",
     "semantic-release": "^24.2.9"
