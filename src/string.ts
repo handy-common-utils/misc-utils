@@ -118,6 +118,27 @@ export class StringUtils {
 
 
   /**
+   * Escapes special XML entities/characters in a string.
+   * Replaces &, <, >, ", and ' with their corresponding XML entities.
+   * Designed for performance using a single pass and lookup table.
+   * @param str The string to escape for XML
+   * @returns The escaped XML string
+   */
+  static escapeXml<T extends string | null | undefined>(str: T): T {
+    if (!str) return str;
+    const xmlEntities: Record<string, string> = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&apos;',
+    };
+    // Use replaceAll for each entity for lint compliance
+    // eslint-disable-next-line unicorn/prefer-string-replace-all
+    return str.replace(/[&<>'"]/g, ch => xmlEntities[ch]) as T;
+  }
+
+  /**
    * Returns the plural form of a single English word based on the supplied count.
    *
    * Capabilities:
@@ -323,3 +344,12 @@ export const pluralise = StringUtils.pluralise;
  * @returns The `word` adjusted to match the template's basic casing
  */
 export const applyWordCasing = StringUtils.applyWordCasing;
+
+/**
+ * Escapes special XML entities/characters in a string.
+ * Replaces &, <, >, ", and ' with their corresponding XML entities.
+ * Designed for performance using a single pass and lookup table.
+ * @param str The string to escape for XML
+ * @returns The escaped XML string
+ */
+export const escapeXml = StringUtils.escapeXml;

@@ -1,6 +1,6 @@
 import { expect } from 'chai';
  
-import { applyWordCasing, camelToSnake, capitalise, capitalize, pluralise, pluralize, snakeToCamel, truncate } from '../src/string';
+import { applyWordCasing, camelToSnake, capitalise, capitalize, escapeXml, pluralise, pluralize, snakeToCamel, truncate } from '../src/string';
 
 describe('StringUtils', () => {
   describe('truncate', () => {
@@ -147,6 +147,31 @@ describe('StringUtils', () => {
       expect(pluralise('cat', 2)).to.equal('cats');
       expect(pluralise('child', 2)).to.equal('children');
       expect(pluralise('dog', 1)).to.equal('dog');
+    });
+  });
+
+  describe('escapeXml', () => {
+    it('should escape all XML special characters', () => {
+      expect(escapeXml("<tag attr='val'>&\"</tag>")).to.equal('&lt;tag attr=&apos;val&apos;&gt;&amp;&quot;&lt;/tag&gt;');
+    });
+    it('should return original string if no special characters', () => {
+      expect(escapeXml('hello world')).to.equal('hello world');
+    });
+    it('should handle empty string', () => {
+      const input: string | undefined = '';
+      expect(escapeXml(input)).to.equal('');
+    });
+    it('should escape only the relevant characters', () => {
+      expect(escapeXml('a&b<c>d"e\'f')).to.equal('a&amp;b&lt;c&gt;d&quot;e&apos;f');
+    });
+
+    it('should handle undefined input', () => {
+      const input: string | undefined = undefined;
+      expect(escapeXml(input)).to.equal(undefined);
+    });
+    it('should handle null input', () => {
+      const input: string | null = null;
+      expect(escapeXml(input)).to.equal(null);
     });
   });
 });
