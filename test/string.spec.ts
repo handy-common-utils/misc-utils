@@ -1,6 +1,6 @@
 import { expect } from 'chai';
  
-import { applyWordCasing, camelToSnake, capitalise, capitalize, escapeXml, pluralise, pluralize, snakeToCamel, truncate } from '../src/string';
+import { applyWordCasing, camelToSnake, capitalise, capitalize, escapeXml, pluralise, pluralize, snakeToCamel, truncate, unescapeXml } from '../src/string';
 
 describe('StringUtils', () => {
   describe('truncate', () => {
@@ -172,6 +172,29 @@ describe('StringUtils', () => {
     it('should handle null input', () => {
       const input: string | null = null;
       expect(escapeXml(input)).to.equal(null);
+    });
+  });
+
+  describe('unescapeXml', () => {
+    it('should unescape all XML entities', () => {
+      expect(unescapeXml('&lt;tag attr=&apos;val&apos;&gt;&amp;&quot;&lt;/tag&gt;')).to.equal("<tag attr='val'>&\"</tag>");
+    });
+    it('should return original string if no entities', () => {
+      expect(unescapeXml('hello world')).to.equal('hello world');
+    });
+    it('should handle empty string', () => {
+      expect(unescapeXml('')).to.equal('');
+    });
+    it('should handle undefined input', () => {
+      const input: string | undefined = undefined;
+      expect(unescapeXml(input)).to.equal(undefined);
+    });
+    it('should handle null input', () => {
+      const input: string | undefined | null = null;
+      expect(unescapeXml(input)).to.equal(null);
+    });
+    it('should unescape only the relevant entities', () => {
+      expect(unescapeXml('a&amp;b&lt;c&gt;d&quot;e&apos;f')).to.equal('a&b<c>d"e\'f');
     });
   });
 });

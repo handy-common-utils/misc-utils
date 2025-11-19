@@ -116,28 +116,6 @@ export class StringUtils {
     return StringUtils.pluralize(word, count);
   }
 
-
-  /**
-   * Escapes special XML entities/characters in a string.
-   * Replaces &, <, >, ", and ' with their corresponding XML entities.
-   * Designed for performance using a single pass and lookup table.
-   * @param str The string to escape for XML
-   * @returns The escaped XML string
-   */
-  static escapeXml<T extends string | null | undefined>(str: T): T {
-    if (!str) return str;
-    const xmlEntities: Record<string, string> = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&apos;',
-    };
-    // Use replaceAll for each entity for lint compliance
-    // eslint-disable-next-line unicorn/prefer-string-replace-all
-    return str.replace(/[&<>'"]/g, ch => xmlEntities[ch]) as T;
-  }
-
   /**
    * Returns the plural form of a single English word based on the supplied count.
    *
@@ -246,6 +224,47 @@ export class StringUtils {
     // Default: just add 's'
     return StringUtils.applyWordCasing(word, lower + 's');
   }
+
+  /**
+   * Escapes special XML entities/characters in a string.
+   * Replaces &, <, >, ", and ' with their corresponding XML entities.
+   * Designed for performance using a single pass and lookup table.
+   * @param str The string to escape for XML
+   * @returns The escaped XML string
+   */
+  static escapeXml<T extends string | null | undefined>(str: T): T {
+    if (!str) return str;
+    const xmlEntities: Record<string, string> = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&apos;',
+    };
+    // Use replaceAll for each entity for lint compliance
+    // eslint-disable-next-line unicorn/prefer-string-replace-all
+    return str.replace(/[&<>'"]/g, ch => xmlEntities[ch]) as T;
+  }
+
+  /**
+   * Unescapes XML entities/characters in a string.
+   * Converts &amp;, &lt;, &gt;, &quot;, &apos; back to their original characters.
+   * @param str The string to unescape from XML
+   * @returns The unescaped string
+   */
+  static unescapeXml<T extends string | null | undefined>(str: T): T {
+    if (!str) return str;
+    const xmlEntities: Record<string, string> = {
+      '&amp;': '&',
+      '&lt;': '<',
+      '&gt;': '>',
+      '&quot;': '"',
+      '&apos;': "'",
+    };
+    // Replace all XML entities using a regex
+    // eslint-disable-next-line unicorn/prefer-string-replace-all
+    return str.replace(/&(amp|lt|gt|quot|apos);/g, entity => xmlEntities[entity]) as T;
+  }
 }
 
 // Export functions as constants for convenience
@@ -353,3 +372,11 @@ export const applyWordCasing = StringUtils.applyWordCasing;
  * @returns The escaped XML string
  */
 export const escapeXml = StringUtils.escapeXml;
+
+/**
+ * Unescapes XML entities/characters in a string.
+ * Converts &amp;, &lt;, &gt;, &quot;, &apos; back to their original characters.
+ * @param str The string to unescape from XML
+ * @returns The unescaped string
+ */
+export const unescapeXml = StringUtils.unescapeXml;
