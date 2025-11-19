@@ -1016,6 +1016,14 @@ Re-exports [escapeForRegExpReplacement](#codecfunctionsescapeforregexpreplacemen
 
 ***
 
+<a id="api-escapexml"></a>
+
+##### escapeXml
+
+Re-exports [escapeXml](#stringvariablesescapexmlmd)
+
+***
+
 <a id="api-generaterandomstring"></a>
 
 ##### generateRandomString
@@ -1245,6 +1253,14 @@ Re-exports [substituteAll](#substitutefunctionssubstituteallmd)
 ##### truncate
 
 Re-exports [truncate](#stringvariablestruncatemd)
+
+***
+
+<a id="api-unescapexml"></a>
+
+##### unescapeXml
+
+Re-exports [unescapeXml](#stringvariablesunescapexmlmd)
 
 ***
 
@@ -2155,10 +2171,12 @@ Rounded number
 | [camelToSnake](#stringvariablescameltosnakemd) | Converts a camelCase string to snake_case. |
 | [capitalise](#stringvariablescapitalisemd) | Capitalises the first letter of a string, making the rest lowercase. |
 | [capitalize](#stringvariablescapitalizemd) | Capitalizes the first letter of a string, making the rest lowercase. |
+| [escapeXml](#stringvariablesescapexmlmd) | Escapes special XML entities/characters in a string. Replaces &, <, >, ", and ' with their corresponding XML entities. Designed for performance using a single pass and lookup table. |
 | [pluralise](#stringvariablespluralisemd) | Returns the plural form of a single English word based on the supplied count (alias). |
 | [pluralize](#stringvariablespluralizemd) | Returns the plural form of a single English word based on the supplied count. |
 | [snakeToCamel](#stringvariablessnaketocamelmd) | Converts a snake_case string to camelCase. |
 | [truncate](#stringvariablestruncatemd) | Truncates a string to a specified length, optionally adding a suffix. |
+| [unescapeXml](#stringvariablesunescapexmlmd) | Unescapes XML entities/characters in a string. Converts &amp;, &lt;, &gt;, &quot;, &apos; back to their original characters. |
 
 ### Classes
 
@@ -2277,6 +2295,36 @@ Capitalizes the first letter of a string, making the rest lowercase.
 `string`
 
 Capitalized string
+
+***
+
+<a id="api-escapexml"></a>
+
+###### escapeXml()
+
+> `static` **escapeXml**\<`T`\>(`str`): `T`
+
+Escapes special XML entities/characters in a string.
+Replaces &, <, >, ", and ' with their corresponding XML entities.
+Designed for performance using a single pass and lookup table.
+
+####### Type Parameters
+
+| Type Parameter |
+| ------ |
+| `T` *extends* `string` \| `null` \| `undefined` |
+
+####### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `str` | `T` | The string to escape for XML |
+
+####### Returns
+
+`T`
+
+The escaped XML string
 
 ***
 
@@ -2409,6 +2457,35 @@ Truncates a string to a specified length, optionally adding a suffix.
 `string`
 
 Truncated string
+
+***
+
+<a id="api-unescapexml"></a>
+
+###### unescapeXml()
+
+> `static` **unescapeXml**\<`T`\>(`str`): `T`
+
+Unescapes XML entities/characters in a string.
+Converts &amp;, &lt;, &gt;, &quot;, &apos; back to their original characters.
+
+####### Type Parameters
+
+| Type Parameter |
+| ------ |
+| `T` *extends* `string` \| `null` \| `undefined` |
+
+####### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `str` | `T` | The string to unescape from XML |
+
+####### Returns
+
+`T`
+
+The unescaped string
 
 ### Variables
 
@@ -2560,6 +2637,47 @@ The string to capitalize
 ##### Returns
 
 Capitalized string
+
+
+<a id="stringvariablesescapexmlmd"></a>
+
+#### Variable: escapeXml()
+
+> `const` **escapeXml**: \<`T`\>(`str`) => `T` = `StringUtils.escapeXml`
+
+Escapes special XML entities/characters in a string.
+Replaces &, <, >, ", and ' with their corresponding XML entities.
+Designed for performance using a single pass and lookup table.
+
+Escapes special XML entities/characters in a string.
+Replaces &, <, >, ", and ' with their corresponding XML entities.
+Designed for performance using a single pass and lookup table.
+
+##### Type Parameters
+
+| Type Parameter |
+| ------ |
+| `T` *extends* `string` \| `null` \| `undefined` |
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `str` | `T` | The string to escape for XML |
+
+##### Returns
+
+`T`
+
+The escaped XML string
+
+##### Param
+
+The string to escape for XML
+
+##### Returns
+
+The escaped XML string
 
 
 <a id="stringvariablespluralisemd"></a>
@@ -2766,6 +2884,45 @@ Optional suffix to add to truncated string (default: '...')
 ##### Returns
 
 Truncated string
+
+
+<a id="stringvariablesunescapexmlmd"></a>
+
+#### Variable: unescapeXml()
+
+> `const` **unescapeXml**: \<`T`\>(`str`) => `T` = `StringUtils.unescapeXml`
+
+Unescapes XML entities/characters in a string.
+Converts &amp;, &lt;, &gt;, &quot;, &apos; back to their original characters.
+
+Unescapes XML entities/characters in a string.
+Converts &amp;, &lt;, &gt;, &quot;, &apos; back to their original characters.
+
+##### Type Parameters
+
+| Type Parameter |
+| ------ |
+| `T` *extends* `string` \| `null` \| `undefined` |
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `str` | `T` | The string to unescape from XML |
+
+##### Returns
+
+`T`
+
+The unescaped string
+
+##### Param
+
+The string to unescape from XML
+
+##### Returns
+
+The unescaped string
 
 ## Stringify Replacer
 
