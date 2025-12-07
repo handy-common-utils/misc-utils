@@ -32,6 +32,7 @@ describe('shortBase64UrlFromUInt32 and base64UrlFromUInt32', () => {
     [1, 'AAAAAQ'],
     [1234234, 'ABLVOg'],
     [8378978, 'AH_aYg'],
+    [4294967295, '_____w'],
   ] as Array<[number, string]>) {
     it(`should return correct values for ${i}`, () => {
       expect(shortBase64UrlFromUInt32(i)).to.equal(r);

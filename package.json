@@ -14,7 +14,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "devDependencies": {
-    "@handy-common-utils/dev-dependencies-mocha": "^1.10.1",
+    "@handy-common-utils/dev-dependencies-mocha": "^1.10.3",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/npm": "^12.0.2",
     "@types/lodash": "^4.17.20",

@@ -28,9 +28,23 @@ export function base64FromUInt32<T extends number | undefined | null>(ui32: T): 
   if (ui32 == null) {
     return ui32 as any;
   }
-  const buf = Buffer.allocUnsafe(4);
-  buf.writeUInt32BE(ui32!, 0);
-  return buf.toString('base64');
+
+  // This is the version works in Node.js but not browsers
+  // const buf = Buffer.allocUnsafe(4);
+  // buf.writeUInt32BE(ui32!, 0);
+  // return buf.toString('base64');
+
+  // This is the version works in both Node.js and browsers
+  const buffer = new ArrayBuffer(4);
+  const view = new DataView(buffer);
+  view.setUint32(0, ui32, false); // 'false' specifies Big-Endian
+  const uint8Array = new Uint8Array(buffer);
+  let binaryString = '';
+  uint8Array.forEach(byte => {
+    // eslint-disable-next-line unicorn/prefer-code-point
+    binaryString += String.fromCharCode(byte);
+  });
+  return btoa(binaryString);
 }
 
 /**

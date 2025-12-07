@@ -1,6 +1,8 @@
 {
   "ecmaVersion": "es2021",
   "module": false,
+  "checkBrowser": true,
+  "browserslistQuery": "> 0.3%",
   "allowHashBang": true,
   "files": "./dist/**/*.js",
   "not": [
