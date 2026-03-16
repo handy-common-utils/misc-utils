@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { clamp, isInRange, roundTo } from '../src/number';
+import { clamp, isInRange, rangeIntersection, roundTo } from '../src/number';
 
 describe('NumberUtils', () => {
   describe('clamp', () => {
@@ -65,6 +65,29 @@ describe('NumberUtils', () => {
     it('should handle negative precision', () => {
       expect(roundTo(123.456, -1)).to.equal(120);
       expect(roundTo(123.456, -2)).to.equal(100);
+    });
+  });
+
+  describe('rangeIntersection', () => {
+    it('should return the correct intersection when ranges overlap', () => {
+      expect(rangeIntersection(0, 10, 5, 15)).to.deep.equal([5, 10]);
+      expect(rangeIntersection(5, 15, 0, 10)).to.deep.equal([5, 10]);
+      expect(rangeIntersection(0, 20, 5, 15)).to.deep.equal([5, 15]);
+      expect(rangeIntersection(5, 15, 0, 20)).to.deep.equal([5, 15]);
+    });
+
+    it('should return undefined when ranges do not overlap', () => {
+      expect(rangeIntersection(0, 5, 10, 15)).to.be.undefined;
+      expect(rangeIntersection(10, 15, 0, 5)).to.be.undefined;
+    });
+
+    it('should handle single-point intersections', () => {
+      expect(rangeIntersection(0, 5, 5, 10)).to.deep.equal([5, 5]);
+    });
+
+    it('should handle inverted ranges properly', () => {
+      expect(rangeIntersection(10, 0, 15, 5)).to.deep.equal([5, 10]);
+      expect(rangeIntersection(5, 0, 15, 10)).to.be.undefined;
     });
   });
 });
