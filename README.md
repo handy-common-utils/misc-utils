@@ -360,6 +360,7 @@ const result = substituteAll(input, searchPattern, substitute);
 | [mask](#maskreadmemd) | - |
 | [merge](#mergereadmemd) | - |
 | [number](#numberreadmemd) | - |
+| [random](#randomreadmemd) | - |
 | [string](#stringreadmemd) | - |
 | [stringify-replacer](#stringify-replacerreadmemd) | - |
 | [substitute](#substitutereadmemd) | - |
@@ -1024,6 +1025,30 @@ Re-exports [escapeXml](#stringvariablesescapexmlmd)
 
 ***
 
+<a id="api-generaterandomboolean"></a>
+
+##### generateRandomBoolean
+
+Re-exports [generateRandomBoolean](#randomfunctionsgeneraterandombooleanmd)
+
+***
+
+<a id="api-generaterandominteger"></a>
+
+##### generateRandomInteger
+
+Re-exports [generateRandomInteger](#randomfunctionsgeneraterandomintegermd)
+
+***
+
+<a id="api-generaterandomnumber"></a>
+
+##### generateRandomNumber
+
+Re-exports [generateRandomNumber](#randomfunctionsgeneraterandomnumbermd)
+
+***
+
 <a id="api-generaterandomstring"></a>
 
 ##### generateRandomString
@@ -1184,6 +1209,14 @@ Re-exports [pathBasedReplacer](#stringify-replacerfunctionspathbasedreplacermd)
 
 ***
 
+<a id="api-pickrandomelement"></a>
+
+##### pickRandomElement
+
+Re-exports [pickRandomElement](#randomfunctionspickrandomelementmd)
+
+***
+
 <a id="api-pluralise"></a>
 
 ##### pluralise
@@ -1197,6 +1230,14 @@ Re-exports [pluralise](#stringvariablespluralisemd)
 ##### pluralize
 
 Re-exports [pluralize](#stringvariablespluralizemd)
+
+***
+
+<a id="api-rangeintersection"></a>
+
+##### rangeIntersection
+
+Re-exports [rangeIntersection](#numbervariablesrangeintersectionmd)
 
 ***
 
@@ -1938,6 +1979,7 @@ Options to customize the merge behavior.
 | ------ | ------ |
 | [clamp](#numbervariablesclampmd) | Constrains a number within specified bounds. |
 | [isInRange](#numbervariablesisinrangemd) | Checks if a number is within a specified range (inclusive). |
+| [rangeIntersection](#numbervariablesrangeintersectionmd) | Calculates the intersection between two ranges. |
 | [roundTo](#numbervariablesroundtomd) | Rounds a number to a specified number of decimal places. |
 
 ### Classes
@@ -1974,8 +2016,8 @@ Constrains a number within specified bounds.
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
 | `num` | `number` | The number to clamp |
-| `min` | `number` | The minimum value |
-| `max` | `number` | The maximum value |
+| `min` | `number` | The minimum value (inclusive) |
+| `max` | `number` | The maximum value (inclusive) |
 
 ####### Returns
 
@@ -2006,6 +2048,31 @@ Checks if a number is within a specified range (inclusive).
 `boolean`
 
 True if the number is within range
+
+***
+
+<a id="api-rangeintersection"></a>
+
+###### rangeIntersection()
+
+> `static` **rangeIntersection**(`min1`, `max1`, `min2`, `max2`): \[`number`, `number`\] \| `undefined`
+
+Calculates the intersection between two ranges.
+
+####### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `min1` | `number` | Minimum value of the first range |
+| `max1` | `number` | Maximum value of the first range |
+| `min2` | `number` | Minimum value of the second range |
+| `max2` | `number` | Maximum value of the second range |
+
+####### Returns
+
+\[`number`, `number`\] \| `undefined`
+
+The intersection as a tuple [min, max], or undefined if there is no intersection.
 
 ***
 
@@ -2048,8 +2115,8 @@ Constrains a number within specified bounds.
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
 | `num` | `number` | The number to clamp |
-| `min` | `number` | The minimum value |
-| `max` | `number` | The maximum value |
+| `min` | `number` | The minimum value (inclusive) |
+| `max` | `number` | The maximum value (inclusive) |
 
 ##### Returns
 
@@ -2115,6 +2182,52 @@ The maximum value
 True if the number is within range
 
 
+<a id="numbervariablesrangeintersectionmd"></a>
+
+#### Variable: rangeIntersection()
+
+> `const` **rangeIntersection**: (`min1`, `max1`, `min2`, `max2`) => \[`number`, `number`\] \| `undefined` = `NumberUtils.rangeIntersection`
+
+Calculates the intersection between two ranges.
+
+Calculates the intersection between two ranges.
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `min1` | `number` | Minimum value of the first range |
+| `max1` | `number` | Maximum value of the first range |
+| `min2` | `number` | Minimum value of the second range |
+| `max2` | `number` | Maximum value of the second range |
+
+##### Returns
+
+\[`number`, `number`\] \| `undefined`
+
+The intersection as a tuple [min, max], or undefined if there is no intersection.
+
+##### Param
+
+Minimum value of the first range
+
+##### Param
+
+Maximum value of the first range
+
+##### Param
+
+Minimum value of the second range
+
+##### Param
+
+Maximum value of the second range
+
+##### Returns
+
+The intersection as a tuple [min, max], or undefined if there is no intersection.
+
+
 <a id="numbervariablesroundtomd"></a>
 
 #### Variable: roundTo()
@@ -2149,6 +2262,115 @@ The number of decimal places (default: 0)
 ##### Returns
 
 Rounded number
+
+## Random
+
+
+<a id="randomreadmemd"></a>
+
+### random
+
+#### Functions
+
+| Function | Description |
+| ------ | ------ |
+| [generateRandomBoolean](#randomfunctionsgeneraterandombooleanmd) | Generates a random boolean value. |
+| [generateRandomInteger](#randomfunctionsgeneraterandomintegermd) | Generates a random integer within [min, max). |
+| [generateRandomNumber](#randomfunctionsgeneraterandomnumbermd) | Generates a random number based on a distribution function. |
+| [pickRandomElement](#randomfunctionspickrandomelementmd) | Picks a random element from an array. |
+
+### Functions
+
+
+<a id="randomfunctionsgeneraterandombooleanmd"></a>
+
+#### Function: generateRandomBoolean()
+
+> **generateRandomBoolean**(`probabilityOfTrue`): `boolean`
+
+Generates a random boolean value.
+
+##### Parameters
+
+| Parameter | Type | Default value | Description |
+| ------ | ------ | ------ | ------ |
+| `probabilityOfTrue` | `number` | `0.5` | The probability of returning true, between 0 and 1. Default is 0.5. |
+
+##### Returns
+
+`boolean`
+
+True with the specified probability, otherwise false.
+
+
+<a id="randomfunctionsgeneraterandomintegermd"></a>
+
+#### Function: generateRandomInteger()
+
+> **generateRandomInteger**(`min`, `max`): `number`
+
+Generates a random integer within [min, max).
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `min` | `number` | The inclusive lower bound. |
+| `max` | `number` | The exclusive upper bound. |
+
+##### Returns
+
+`number`
+
+A random integer between min (inclusive) and max (exclusive).
+
+
+<a id="randomfunctionsgeneraterandomnumbermd"></a>
+
+#### Function: generateRandomNumber()
+
+> **generateRandomNumber**(`probabilityTransformerFunction`): `number`
+
+Generates a random number based on a distribution function.
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `probabilityTransformerFunction` | (`x`) => `number` | A function that turns a random number within [0, 1) to another number. If not provided, the identity function F(x) = x will be used. |
+
+##### Returns
+
+`number`
+
+A generated random number.
+
+
+<a id="randomfunctionspickrandomelementmd"></a>
+
+#### Function: pickRandomElement()
+
+> **pickRandomElement**\<`T`\>(`array`): `T` \| `undefined`
+
+Picks a random element from an array.
+
+##### Type Parameters
+
+| Type Parameter |
+| ------ |
+| `T` |
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `array` | `T`[] | The array to pick an element from. |
+
+##### Returns
+
+`T` \| `undefined`
+
+A randomly selected element from the array, or undefined if the array is empty.
 
 ## String
 
