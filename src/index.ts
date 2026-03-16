@@ -6,6 +6,7 @@ export * from './line-logger';
 export * from './mask';
 export * from './merge';
 export * from './number';
+export * from './random';
 export * from './string';
 export * from './stringify-replacer';
 export * from './substitute';
