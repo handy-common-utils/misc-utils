@@ -77,3 +77,42 @@ export function downSampleRandomly<T>(array:  Array<T>, numSamples: number, prob
   }
   return result;
 }
+
+/**
+ * Finds an element in a sorted array using a golden ratio split (0.618) which statistically performs better than a "standard" binary search.
+ * @param array The sorted input array. If it is not sorted, the result would be incorrect.
+ * @param compareFn A function that returns:
+ *                  - 0 if the element is the exact match.
+ *                  - A negative number if the element comes before the target.
+ *                  - A positive number if the element comes after the target.
+ * @returns The found element or undefined if not found or the array is null/empty.
+ */
+export function findInSorted<T>(array: Array<T> | null | undefined, compareFn: (item: T) => number): T | undefined {
+  if (!array || array.length === 0) {
+    return undefined;
+  }
+
+  const GOLDEN_RATIO = 0.6180339887;
+
+  const search = (low: number, high: number): T | undefined => {
+    if (low > high) {
+      return undefined;
+    }
+
+    const index = Math.floor(low + (high - low) * GOLDEN_RATIO);
+    const item = array![index];
+    const comparison = compareFn(item);
+
+    if (comparison === 0) {
+      return item;
+    }
+
+    if (comparison < 0) {
+      return search(index + 1, high);
+    }
+
+    return search(low, index - 1);
+  };
+
+  return search(0, array.length - 1);
+}

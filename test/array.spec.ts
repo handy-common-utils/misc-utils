@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { distributeRoundRobin , downSampleRandomly } from '../src/array';
+import { distributeRoundRobin , downSampleRandomly, findInSorted } from '../src/array';
 
 describe('distributeRoundRobin()', () => {
   it('should work when number of groups equals number of elements', () => {
@@ -116,5 +116,60 @@ describe('downSampleRandomly()', () => {
     const result = downSampleRandomly(items, 3);
     const uniqueItems = new Set(result);
     expect(uniqueItems.size).to.equal(result.length);
+  });
+});
+
+describe('findInSorted()', () => {
+  it('should find an element in the middle of a sorted array', () => {
+    const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    expect(findInSorted(arr, (item) => item - 5)).to.equal(5);
+  });
+
+  it('should find the first element', () => {
+    const arr = [1, 2, 3, 4, 5];
+    expect(findInSorted(arr, (item) => item - 1)).to.equal(1);
+  });
+
+  it('should find the last element', () => {
+    const arr = [1, 2, 3, 4, 5];
+    expect(findInSorted(arr, (item) => item - 5)).to.equal(5);
+  });
+
+  it('should return undefined if the element is not found (smaller than min)', () => {
+    const arr = [1, 2, 3, 4, 5];
+    expect(findInSorted(arr, (item) => item - 0)).to.be.undefined;
+  });
+
+  it('should return undefined if the element is not found (larger than max)', () => {
+    const arr = [1, 2, 3, 4, 5];
+    expect(findInSorted(arr, (item) => item - 6)).to.be.undefined;
+  });
+
+  it('should return undefined if the element is not found (between elements)', () => {
+    const arr = [1, 3, 5, 7, 9];
+    expect(findInSorted(arr, (item) => item - 4)).to.be.undefined;
+  });
+
+  it('should return undefined for an empty array', () => {
+    expect(findInSorted([], (item: number) => item - 1)).to.be.undefined;
+  });
+
+  it('should return undefined for a null or undefined array', () => {
+    expect(findInSorted(null, (item: number) => item - 1)).to.be.undefined;
+    expect(findInSorted(undefined, (item: number) => item - 1)).to.be.undefined;
+  });
+
+  it('should work with a single element array (found)', () => {
+    expect(findInSorted([42], (item) => item - 42)).to.equal(42);
+  });
+
+  it('should work with a single element array (not found)', () => {
+    expect(findInSorted([42], (item) => item - 43)).to.be.undefined;
+  });
+
+  it('should work with a large array', () => {
+    const arr = Array.from({ length: 1000 }, (_, i) => i * 2);
+    expect(findInSorted(arr, (item) => item - 500)).to.equal(500);
+    expect(findInSorted(arr, (item) => item - 501)).to.be.undefined;
   });
 });
