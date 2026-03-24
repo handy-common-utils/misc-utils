@@ -376,11 +376,44 @@ const result = substituteAll(input, searchPattern, substitute);
 
 | Function | Description |
 | ------ | ------ |
+| [chunk](#arrayfunctionschunkmd) | Splits an array into chunks of a specified size. |
 | [distributeRoundRobin](#arrayfunctionsdistributeroundrobinmd) | Distributes an array into a number of groups in a round robin fashion. This function has been tuned for performance. |
 | [downSampleRandomly](#arrayfunctionsdownsamplerandomlymd) | Down samples the input array randomly. |
+| [findIndexInSorted](#arrayfunctionsfindindexinsortedmd) | Finds the index of an element in a sorted array using a golden ratio split (0.6180339887). |
+| [findInsertionIndex](#arrayfunctionsfindinsertionindexmd) | Finds the index where an item should be inserted into a sorted array to maintain order, using a golden ratio split (0.6180339887) for consistent performance. |
 | [findInSorted](#arrayfunctionsfindinsortedmd) | Finds an element in a sorted array using a golden ratio split (0.618) which statistically performs better than a "standard" binary search. |
+| [partition](#arrayfunctionspartitionmd) | Partitions an array into multiple groups based on a classifier function. |
+| [shuffle](#arrayfunctionsshufflemd) | Shuffles the elements of an array randomly using the Fisher-Yates algorithm. |
 
 ### Functions
+
+
+<a id="arrayfunctionschunkmd"></a>
+
+#### Function: chunk()
+
+> **chunk**\<`T`\>(`array`, `size`): `T`[][]
+
+Splits an array into chunks of a specified size.
+
+##### Type Parameters
+
+| Type Parameter |
+| ------ |
+| `T` |
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `array` | `T`[] | The input array. |
+| `size` | `number` | The size of each chunk. |
+
+##### Returns
+
+`T`[][]
+
+An array of chunks.
 
 
 <a id="arrayfunctionsdistributeroundrobinmd"></a>
@@ -468,6 +501,119 @@ Finds an element in a sorted array using a golden ratio split (0.618) which stat
 `T` \| `undefined`
 
 The found element or undefined if not found or the array is null/empty.
+
+
+<a id="arrayfunctionsfindindexinsortedmd"></a>
+
+#### Function: findIndexInSorted()
+
+> **findIndexInSorted**\<`T`\>(`array`, `compareFn`): `number` \| `undefined`
+
+Finds the index of an element in a sorted array using a golden ratio split (0.6180339887).
+
+##### Type Parameters
+
+| Type Parameter |
+| ------ |
+| `T` |
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `array` | `T`[] \| `null` \| `undefined` | The sorted input array. |
+| `compareFn` | (`item`) => `number` | A function that returns: - 0 if the element is the exact match. - A negative number if the element comes before the target. - A positive number if the element comes after the target. |
+
+##### Returns
+
+`number` \| `undefined`
+
+The index of the found element, or undefined if not found or the array is null/empty.
+
+
+<a id="arrayfunctionsfindinsertionindexmd"></a>
+
+#### Function: findInsertionIndex()
+
+> **findInsertionIndex**\<`T`\>(`array`, `item`, `compareFn`): `number`
+
+Finds the index where an item should be inserted into a sorted array to maintain order,
+using a golden ratio split (0.6180339887) for consistent performance.
+
+##### Type Parameters
+
+| Type Parameter |
+| ------ |
+| `T` |
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `array` | `T`[] | The sorted input array. |
+| `item` | `T` | The item to be inserted. |
+| `compareFn` | (`a`, `b`) => `number` | A function to compare elements (standard comparator). |
+
+##### Returns
+
+`number`
+
+The insertion index.
+
+
+<a id="arrayfunctionspartitionmd"></a>
+
+#### Function: partition()
+
+> **partition**\<`T`\>(`array`, `classifier`): `T`[][]
+
+Partitions an array into multiple groups based on a classifier function.
+
+##### Type Parameters
+
+| Type Parameter |
+| ------ |
+| `T` |
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `array` | `T`[] | The input array. |
+| `classifier` | (`item`) => `number` \| `boolean` | A function that returns a boolean or a non-negative integer. - If boolean: true maps to group 0, false maps to group 1. - If number: the index of the group. Negative numbers map to group 0. |
+
+##### Returns
+
+`T`[][]
+
+An array of arrays, each representing a group.
+
+
+<a id="arrayfunctionsshufflemd"></a>
+
+#### Function: shuffle()
+
+> **shuffle**\<`T`\>(`array`): `T`[]
+
+Shuffles the elements of an array randomly using the Fisher-Yates algorithm.
+
+##### Type Parameters
+
+| Type Parameter |
+| ------ |
+| `T` |
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `array` | `T`[] | The input array. |
+
+##### Returns
+
+`T`[]
+
+A new array with the elements shuffled.
 
 ## Codec
 
@@ -950,6 +1096,14 @@ Re-exports [capitalize](#stringvariablescapitalizemd)
 
 ***
 
+<a id="api-chunk"></a>
+
+##### chunk
+
+Re-exports [chunk](#arrayfunctionschunkmd)
+
+***
+
 <a id="api-clamp"></a>
 
 ##### clamp
@@ -1054,11 +1208,35 @@ Re-exports [escapeXml](#stringvariablesescapexmlmd)
 
 ***
 
+<a id="api-findindexinsorted"></a>
+
+##### findIndexInSorted
+
+Re-exports [findIndexInSorted](#arrayfunctionsfindindexinsortedmd)
+
+***
+
+<a id="api-findinsertionindex"></a>
+
+##### findInsertionIndex
+
+Re-exports [findInsertionIndex](#arrayfunctionsfindinsertionindexmd)
+
+***
+
 <a id="api-findinsorted"></a>
 
 ##### findInSorted
 
 Re-exports [findInSorted](#arrayfunctionsfindinsortedmd)
+
+***
+
+<a id="api-gaussianrandom"></a>
+
+##### gaussianRandom
+
+Re-exports [gaussianRandom](#randomfunctionsgaussianrandommd)
 
 ***
 
@@ -1091,6 +1269,14 @@ Re-exports [generateRandomNumber](#randomfunctionsgeneraterandomnumbermd)
 ##### generateRandomString
 
 Re-exports [generateRandomString](#codecfunctionsgeneraterandomstringmd)
+
+***
+
+<a id="api-generaterandomstringfromchars"></a>
+
+##### generateRandomStringFromChars
+
+Re-exports [generateRandomStringFromChars](#randomfunctionsgeneraterandomstringfromcharsmd)
 
 ***
 
@@ -1222,6 +1408,14 @@ Re-exports [NumberUtils](#numberclassesnumberutilsmd)
 
 ***
 
+<a id="api-partition"></a>
+
+##### partition
+
+Re-exports [partition](#arrayfunctionspartitionmd)
+
+***
+
 <a id="api-pathawarereplacer"></a>
 
 ##### pathAwareReplacer
@@ -1286,6 +1480,14 @@ Re-exports [roundTo](#numbervariablesroundtomd)
 
 ***
 
+<a id="api-seededrandom"></a>
+
+##### seededRandom
+
+Re-exports [seededRandom](#randomfunctionsseededrandommd)
+
+***
+
 <a id="api-shortbase64fromuint32"></a>
 
 ##### shortBase64FromUInt32
@@ -1299,6 +1501,14 @@ Re-exports [shortBase64FromUInt32](#codecfunctionsshortbase64fromuint32md)
 ##### shortBase64UrlFromUInt32
 
 Re-exports [shortBase64UrlFromUInt32](#codecfunctionsshortbase64urlfromuint32md)
+
+***
+
+<a id="api-shuffle"></a>
+
+##### shuffle
+
+Re-exports [shuffle](#arrayfunctionsshufflemd)
 
 ***
 
@@ -1347,6 +1557,14 @@ Re-exports [unescapeXml](#stringvariablesunescapexmlmd)
 ##### urlSafe
 
 Re-exports [urlSafe](#codecfunctionsurlsafemd)
+
+***
+
+<a id="api-weightedpickrandomelement"></a>
+
+##### weightedPickRandomElement
+
+Re-exports [weightedPickRandomElement](#randomfunctionsweightedpickrandomelementmd)
 
 ## Line Logger
 
@@ -2311,12 +2529,38 @@ Rounded number
 
 | Function | Description |
 | ------ | ------ |
+| [gaussianRandom](#randomfunctionsgaussianrandommd) | Generates a random number following a normal (Gaussian) distribution using Box-Muller transform. |
 | [generateRandomBoolean](#randomfunctionsgeneraterandombooleanmd) | Generates a random boolean value. |
 | [generateRandomInteger](#randomfunctionsgeneraterandomintegermd) | Generates a random integer within [min, max). |
 | [generateRandomNumber](#randomfunctionsgeneraterandomnumbermd) | Generates a random number based on a distribution function. |
+| [generateRandomStringFromChars](#randomfunctionsgeneraterandomstringfromcharsmd) | Generates a random string using the characters provided. |
 | [pickRandomElement](#randomfunctionspickrandomelementmd) | Picks a random element from an array. |
+| [seededRandom](#randomfunctionsseededrandommd) | Creates a seeded pseudo-random number generator (LCG). |
+| [weightedPickRandomElement](#randomfunctionsweightedpickrandomelementmd) | Picks an item from an array based on weights. |
 
 ### Functions
+
+
+<a id="randomfunctionsgaussianrandommd"></a>
+
+#### Function: gaussianRandom()
+
+> **gaussianRandom**(`mean`, `stdev`): `number`
+
+Generates a random number following a normal (Gaussian) distribution using Box-Muller transform.
+
+##### Parameters
+
+| Parameter | Type | Default value | Description |
+| ------ | ------ | ------ | ------ |
+| `mean` | `number` | `0` | The mean of the distribution. |
+| `stdev` | `number` | `1` | The standard deviation of the distribution. |
+
+##### Returns
+
+`number`
+
+A random number.
 
 
 <a id="randomfunctionsgeneraterandombooleanmd"></a>
@@ -2383,6 +2627,28 @@ Generates a random number based on a distribution function.
 A generated random number.
 
 
+<a id="randomfunctionsgeneraterandomstringfromcharsmd"></a>
+
+#### Function: generateRandomStringFromChars()
+
+> **generateRandomStringFromChars**(`length`, `chars`): `string`
+
+Generates a random string using the characters provided.
+
+##### Parameters
+
+| Parameter | Type | Default value | Description |
+| ------ | ------ | ------ | ------ |
+| `length` | `number` | `undefined` | The length of the string to generate. |
+| `chars` | `string` | `'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'` | The characters to use. Defaults to alphanumeric characters. |
+
+##### Returns
+
+`string`
+
+A random string.
+
+
 <a id="randomfunctionspickrandomelementmd"></a>
 
 #### Function: pickRandomElement()
@@ -2408,6 +2674,59 @@ Picks a random element from an array.
 `T` \| `undefined`
 
 A randomly selected element from the array, or undefined if the array is empty.
+
+
+<a id="randomfunctionsseededrandommd"></a>
+
+#### Function: seededRandom()
+
+> **seededRandom**(`seed`): () => `number`
+
+Creates a seeded pseudo-random number generator (LCG).
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `seed` | `number` | The seed value. |
+
+##### Returns
+
+A function that generates random numbers in [0, 1).
+
+> (): `number`
+
+###### Returns
+
+`number`
+
+
+<a id="randomfunctionsweightedpickrandomelementmd"></a>
+
+#### Function: weightedPickRandomElement()
+
+> **weightedPickRandomElement**\<`T`\>(`items`, `weights`): `T` \| `undefined`
+
+Picks an item from an array based on weights.
+
+##### Type Parameters
+
+| Type Parameter |
+| ------ |
+| `T` |
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `items` | `T`[] | The items to pick from. |
+| `weights` | `number`[] | The weights of the items. |
+
+##### Returns
+
+`T` \| `undefined`
+
+The picked item or undefined if invalid input.
 
 ## String
 
