@@ -378,6 +378,7 @@ const result = substituteAll(input, searchPattern, substitute);
 | ------ | ------ |
 | [distributeRoundRobin](#arrayfunctionsdistributeroundrobinmd) | Distributes an array into a number of groups in a round robin fashion. This function has been tuned for performance. |
 | [downSampleRandomly](#arrayfunctionsdownsamplerandomlymd) | Down samples the input array randomly. |
+| [findInSorted](#arrayfunctionsfindinsortedmd) | Finds an element in a sorted array using a golden ratio split (0.618) which statistically performs better than a "standard" binary search. |
 
 ### Functions
 
@@ -439,6 +440,34 @@ Down samples the input array randomly.
 
 A new array with the down sampled elements from the input array.
          The order of the elements in the output array is the same as the input array.
+
+
+<a id="arrayfunctionsfindinsortedmd"></a>
+
+#### Function: findInSorted()
+
+> **findInSorted**\<`T`\>(`array`, `compareFn`): `T` \| `undefined`
+
+Finds an element in a sorted array using a golden ratio split (0.618) which statistically performs better than a "standard" binary search.
+
+##### Type Parameters
+
+| Type Parameter |
+| ------ |
+| `T` |
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `array` | `T`[] \| `null` \| `undefined` | The sorted input array. If it is not sorted, the result would be incorrect. |
+| `compareFn` | (`item`) => `number` | A function that returns: - 0 if the element is the exact match. - A negative number if the element comes before the target. - A positive number if the element comes after the target. |
+
+##### Returns
+
+`T` \| `undefined`
+
+The found element or undefined if not found or the array is null/empty.
 
 ## Codec
 
@@ -1022,6 +1051,14 @@ Re-exports [escapeForRegExpReplacement](#codecfunctionsescapeforregexpreplacemen
 ##### escapeXml
 
 Re-exports [escapeXml](#stringvariablesescapexmlmd)
+
+***
+
+<a id="api-findinsorted"></a>
+
+##### findInSorted
+
+Re-exports [findInSorted](#arrayfunctionsfindinsortedmd)
 
 ***
 
