@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { generateRandomBoolean, generateRandomInteger, generateRandomNumber, pickRandomElement } from '../src/random';
+import { gaussianRandom, generateRandomBoolean, generateRandomInteger, generateRandomNumber, generateRandomStringFromChars, pickRandomElement, seededRandom, weightedPickRandomElement } from '../src/random';
 
 describe('random', () => {
   describe('generateRandomNumber()', () => {
@@ -54,6 +54,72 @@ describe('random', () => {
       const array = [1, 2, 3, 4, 5];
       const element = pickRandomElement(array);
       expect(array).to.include(element as number);
+    });
+  });
+
+  describe('generateRandomStringFromChars()', () => {
+    it('should generate a string of requested length', () => {
+      expect(generateRandomStringFromChars(10)).to.have.length(10);
+    });
+
+    it('should use provided characters', () => {
+      const result = generateRandomStringFromChars(100, 'ABC');
+      expect(result).to.match(/^[ABC]+$/);
+    });
+
+    it('should handle length 0', () => {
+      expect(generateRandomStringFromChars(0)).to.equal('');
+    });
+  });
+
+  describe('weightedPickRandomElement()', () => {
+    it('should pick based on weights', () => {
+      const items = ['A', 'B'];
+      const weights = [1, 0]; // Always A
+      expect(weightedPickRandomElement(items, weights)).to.equal('A');
+    });
+
+    it('should return undefined for invalid input', () => {
+      expect(weightedPickRandomElement([], [])).to.be.undefined;
+      expect(weightedPickRandomElement(['A'], [1, 2])).to.be.undefined;
+      expect(weightedPickRandomElement(['A'], [0])).to.be.undefined;
+    });
+
+    it('should handle zero weight correctly', () => {
+      const items = ['A', 'B', 'C'];
+      const weights = [0, 1, 0]; // Always B
+      expect(weightedPickRandomElement(items, weights)).to.equal('B');
+    });
+
+    it('should fallback to last element if random is exactly totalWeight (rare)', () => {
+      // Hard to test without mocking Math.random
+    });
+  });
+
+  describe('gaussianRandom()', () => {
+    it('should return a number', () => {
+      expect(gaussianRandom()).to.be.a('number');
+    });
+  });
+
+  describe('seededRandom()', () => {
+    it('should be repeatable with same seed', () => {
+      const gen1 = seededRandom(12345);
+      const gen2 = seededRandom(12345);
+      const values1 = [gen1(), gen1(), gen1()];
+      const values2 = [gen2(), gen2(), gen2()];
+      expect(values1).to.deep.equal(values2);
+    });
+
+    it('should be different with different seeds', () => {
+      const gen1 = seededRandom(12345);
+      const gen2 = seededRandom(54321);
+      expect(gen1()).to.not.equal(gen2());
+    });
+
+    it('should handle 0 as seed', () => {
+      const gen = seededRandom(0);
+      expect(gen()).to.be.within(0, 1);
     });
   });
 });

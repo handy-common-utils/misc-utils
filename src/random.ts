@@ -38,3 +38,71 @@ export function pickRandomElement<T>(array: Array<T>): T | undefined {
   }
   return array[generateRandomInteger(0, array.length)];
 }
+
+/**
+ * Generates a random string using the characters provided.
+ * @param length The length of the string to generate.
+ * @param chars The characters to use. Defaults to alphanumeric characters.
+ * @returns A random string.
+ */
+export function generateRandomStringFromChars(length: number, chars: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'): string {
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
+
+/**
+ * Picks an item from an array based on weights.
+ * @param items The items to pick from.
+ * @param weights The weights of the items.
+ * @returns The picked item or undefined if invalid input.
+ */
+export function weightedPickRandomElement<T>(items: Array<T>, weights: Array<number>): T | undefined {
+  if (items.length === 0 || items.length !== weights.length) {
+    return undefined;
+  }
+  const totalWeight = weights.reduce((acc, w) => acc + w, 0);
+  if (totalWeight <= 0) {
+    return undefined;
+  }
+  let r = Math.random() * totalWeight;
+  for (const [i, item] of items.entries()) {
+    if (r < weights[i]) {
+      return item;
+    }
+    r -= weights[i];
+  }
+  return items.at(-1);
+}
+
+/**
+ * Generates a random number following a normal (Gaussian) distribution using Box-Muller transform.
+ * @param mean The mean of the distribution.
+ * @param stdev The standard deviation of the distribution.
+ * @returns A random number.
+ */
+export function gaussianRandom(mean: number = 0, stdev: number = 1): number {
+  const u = 1 - Math.random(); // (0, 1]
+  const v = Math.random(); // [0, 1)
+  const z = Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  return z * stdev + mean;
+}
+
+/**
+ * Creates a seeded pseudo-random number generator (LCG).
+ * @param seed The seed value.
+ * @returns A function that generates random numbers in [0, 1).
+ */
+export function seededRandom(seed: number): () => number {
+  let state = Math.abs(seed) % 2147483647;
+  if (state === 0) {
+    state = 1;
+  }
+
+  return () => {
+    state = (state * 48271) % 2147483647;
+    return (state - 1) / 2147483646;
+  };
+}
