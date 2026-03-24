@@ -1,10 +1,10 @@
 import { expect } from 'chai';
 
-import { distributeRoundRobin , downSampleRandomly, findInSorted } from '../src/array';
+import { chunk, distributeRoundRobin, downSampleRandomly, findIndexInSorted, findInsertionIndex, findInSorted, partition, shuffle } from '../src/array';
 
 describe('distributeRoundRobin()', () => {
   it('should work when number of groups equals number of elements', () => {
-    const items = [1, 2, 3, 4, 5];
+    const items: number[] = [1, 2, 3, 4, 5];
     const result = distributeRoundRobin(items, 5);
     expect(result).to.deep.equal([[1], [2], [3], [4], [5]]);
   });
@@ -171,5 +171,128 @@ describe('findInSorted()', () => {
     const arr = Array.from({ length: 1000 }, (_, i) => i * 2);
     expect(findInSorted(arr, (item) => item - 500)).to.equal(500);
     expect(findInSorted(arr, (item) => item - 501)).to.be.undefined;
+  });
+});
+
+describe('findIndexInSorted()', () => {
+  it('should find the index of an element in the middle', () => {
+    const arr = [10, 20, 30, 40, 50];
+    expect(findIndexInSorted(arr, (item: number) => item - 30)).to.equal(2);
+  });
+
+  it('should find the index of the first element', () => {
+    const arr = [10, 20, 30];
+    expect(findIndexInSorted(arr, (item: number) => item - 10)).to.equal(0);
+  });
+
+  it('should find the index of the last element', () => {
+    const arr = [10, 20, 30];
+    expect(findIndexInSorted(arr, (item: number) => item - 30)).to.equal(2);
+  });
+
+  it('should return undefined if not found', () => {
+    const arr = [10, 20, 30];
+    expect(findIndexInSorted(arr, (item: number) => item - 25)).to.be.undefined;
+  });
+
+  it('should return undefined for empty/null/undefined array', () => {
+    expect(findIndexInSorted([], (item: number) => item - 10)).to.be.undefined;
+    expect(findIndexInSorted(null, (item: number) => item - 10)).to.be.undefined;
+    expect(findIndexInSorted(undefined, (item: number) => item - 10)).to.be.undefined;
+  });
+});
+
+describe('shuffle()', () => {
+  it('should keep the same elements and length', () => {
+    const arr = [1, 2, 3, 4, 5];
+    const result = shuffle(arr);
+    expect(result).to.have.members(arr);
+    expect(result.length).to.equal(arr.length);
+  });
+
+  it('should return an empty array if input is empty', () => {
+    expect(shuffle([])).to.deep.equal([]);
+  });
+
+  it('should not mutate the original array', () => {
+    const arr = [1, 2, 3];
+    shuffle(arr);
+    expect(arr).to.deep.equal([1, 2, 3]);
+  });
+});
+
+describe('chunk()', () => {
+  it('should split array into equal chunks', () => {
+    expect(chunk([1, 2, 3, 4], 2)).to.deep.equal([[1, 2], [3, 4]]);
+  });
+
+  it('should handle uneven chunks', () => {
+    expect(chunk([1, 2, 3, 4, 5], 2)).to.deep.equal([[1, 2], [3, 4], [5]]);
+  });
+
+  it('should handle chunk size larger than array', () => {
+    expect(chunk([1, 2, 3], 5)).to.deep.equal([[1, 2, 3]]);
+  });
+
+  it('should return empty for empty array or size <= 0', () => {
+    expect(chunk([], 2)).to.deep.equal([]);
+    expect(chunk([1, 2], 0)).to.deep.equal([]);
+    expect(chunk([1, 2], -1)).to.deep.equal([]);
+  });
+});
+
+describe('partition()', () => {
+  it('should partition based on boolean', () => {
+    const arr = [1, 2, 3, 4];
+    // true -> group 0, false -> group 1
+    const result = partition(arr, (item: number) => item % 2 === 0);
+    expect(result[0]).to.have.members([2, 4]);
+    expect(result[1]).to.have.members([1, 3]);
+  });
+
+  it('should partition based on number', () => {
+    const arr = [1, 2, 3, 4, 5, 6];
+    // group by remainder of 3
+    const result = partition(arr, (item: number) => item % 3);
+    // 1 % 3 = 1, 2 % 3 = 2, 3 % 3 = 0, 4 % 3 = 1, 5 % 3 = 2, 6 % 3 = 0
+    expect(result[0]).to.have.members([3, 6]);
+    expect(result[1]).to.have.members([1, 4]);
+    expect(result[2]).to.have.members([2, 5]);
+  });
+
+  it('should handle negative numbers as group 0', () => {
+    const arr = [1];
+    expect(partition(arr, () => -5)[0]).to.deep.equal([1]);
+  });
+
+  it('should handle empty gaps in number partitions', () => {
+    const arr = [1];
+    const result = partition(arr, () => 2); // all go to index 2
+    expect(result[0]).to.deep.equal([]);
+    expect(result[1]).to.deep.equal([]);
+    expect(result[2]).to.deep.equal([1]);
+  });
+});
+
+describe('findInsertionIndex()', () => {
+  it('should find index in the middle', () => {
+    expect(findInsertionIndex([10, 20, 30], 25, (a: number, b: number) => a - b)).to.equal(2);
+  });
+
+  it('should find index at the start', () => {
+    expect(findInsertionIndex([10, 20, 30], 5, (a: number, b: number) => a - b)).to.equal(0);
+  });
+
+  it('should find index at the end', () => {
+    expect(findInsertionIndex([10, 20, 30], 35, (a: number, b: number) => a - b)).to.equal(3);
+  });
+
+  it('should find index for duplicate items (after existing)', () => {
+    // Standard binary search finds the first position where it doesn't violate order (leftmost)
+    expect(findInsertionIndex([10, 20, 20, 30], 20, (a: number, b: number) => a - b)).to.equal(1);
+  });
+
+  it('should work on empty array', () => {
+    expect(findInsertionIndex([], 10, (a: number, b: number) => a - b)).to.equal(0);
   });
 });

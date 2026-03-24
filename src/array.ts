@@ -116,3 +116,120 @@ export function findInSorted<T>(array: Array<T> | null | undefined, compareFn: (
 
   return search(0, array.length - 1);
 }
+
+/**
+ * Finds the index of an element in a sorted array using a golden ratio split (0.6180339887).
+ * @param array The sorted input array.
+ * @param compareFn A function that returns:
+ *                  - 0 if the element is the exact match.
+ *                  - A negative number if the element comes before the target.
+ *                  - A positive number if the element comes after the target.
+ * @returns The index of the found element, or undefined if not found or the array is null/empty.
+ */
+export function findIndexInSorted<T>(array: Array<T> | null | undefined, compareFn: (item: T) => number): number | undefined {
+  if (!array || array.length === 0) {
+    return undefined;
+  }
+
+  const GOLDEN_RATIO = 0.6180339887;
+
+  const search = (low: number, high: number): number | undefined => {
+    if (low > high) {
+      return undefined;
+    }
+
+    const index = Math.floor(low + (high - low) * GOLDEN_RATIO);
+    const item = array![index];
+    const comparison = compareFn(item);
+
+    if (comparison === 0) {
+      return index;
+    }
+
+    if (comparison < 0) {
+      return search(index + 1, high);
+    }
+
+    return search(low, index - 1);
+  };
+
+  return search(0, array.length - 1);
+}
+
+/**
+ * Shuffles the elements of an array randomly using the Fisher-Yates algorithm.
+ * @param array The input array.
+ * @returns A new array with the elements shuffled.
+ */
+export function shuffle<T>(array: Array<T>): Array<T> {
+  const result = [...array];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+/**
+ * Splits an array into chunks of a specified size.
+ * @param array The input array.
+ * @param size The size of each chunk.
+ * @returns An array of chunks.
+ */
+export function chunk<T>(array: Array<T>, size: number): Array<Array<T>> {
+  if (size <= 0) {
+    return [];
+  }
+  const result: Array<Array<T>> = [];
+  for (let i = 0; i < array.length; i += size) {
+    result.push(array.slice(i, i + size));
+  }
+  return result;
+}
+
+/**
+ * Partitions an array into multiple groups based on a classifier function.
+ * @param array The input array.
+ * @param classifier A function that returns a boolean or a non-negative integer.
+ *                  - If boolean: true maps to group 0, false maps to group 1.
+ *                  - If number: the index of the group. Negative numbers map to group 0.
+ * @returns An array of arrays, each representing a group.
+ */
+export function partition<T>(array: Array<T>, classifier: (item: T) => boolean | number): Array<Array<T>> {
+  const result: Array<Array<T>> = [];
+  for (const item of array) {
+    const key = classifier(item);
+    const index = typeof key === 'boolean' ? (key ? 0 : 1) : (key < 0 ? 0 : Math.floor(key));
+
+    while (result.length <= index) {
+      result.push([]);
+    }
+    result[index].push(item);
+  }
+  return result;
+}
+
+/**
+ * Finds the index where an item should be inserted into a sorted array to maintain order,
+ * using a golden ratio split (0.6180339887) for consistent performance.
+ * @param array The sorted input array.
+ * @param item The item to be inserted.
+ * @param compareFn A function to compare elements (standard comparator).
+ * @returns The insertion index.
+ */
+export function findInsertionIndex<T>(array: Array<T>, item: T, compareFn: (a: T, b: T) => number): number {
+  const GOLDEN_RATIO = 0.6180339887;
+  let low = 0;
+  let high = array.length;
+  while (low < high) {
+    const index = Math.floor(low + (high - low) * GOLDEN_RATIO);
+    const mid = Math.max(low, Math.min(index, high - 1));
+
+    if (compareFn(array[mid], item) < 0) {
+      low = mid + 1;
+    } else {
+      high = mid;
+    }
+  }
+  return low;
+}
