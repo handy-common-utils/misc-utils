@@ -189,14 +189,27 @@ export function chunk<T>(array: Array<T>, size: number): Array<Array<T>> {
 
 /**
  * Partitions an array into multiple groups based on a classifier function.
+ * Please note that by default the returned array could have length of zero if the input array is empty,
+ * or length of 1 if the classifier always returns the same value, or length of any number depending on the classifier function.
+ * For your use case, you may want to specify `initialCapacity` to make sure that the returned array always contains the
+ * specified number of elements or to avoid the overhead of resizing the result array.
  * @param array The input array.
  * @param classifier A function that returns a boolean or a non-negative integer.
  *                  - If boolean: true maps to group 0, false maps to group 1.
  *                  - If number: the index of the group. Negative numbers map to group 0.
+ * @param initialCapacity The initial capacity of the result array.
+ *                        If not specified, the returned array could contain any number of elements depending on the classifier function.
+ *                        For example, setting it to 2 could be useful for most binary classification use case.
  * @returns An array of arrays, each representing a group.
  */
-export function partition<T>(array: Array<T>, classifier: (item: T) => boolean | number): Array<Array<T>> {
+export function partition<T>(array: Array<T>, classifier: (item: T) => boolean | number, initialCapacity?: number): Array<Array<T>> {
   const result: Array<Array<T>> = [];
+  if (initialCapacity) {
+    for (let i = 0; i < initialCapacity; i++) {
+      result.push([]);
+    }
+  }
+
   for (const item of array) {
     const key = classifier(item);
     const index = typeof key === 'boolean' ? (key ? 0 : 1) : (key < 0 ? 0 : Math.floor(key));

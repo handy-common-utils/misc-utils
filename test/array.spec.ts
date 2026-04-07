@@ -272,6 +272,27 @@ describe('partition()', () => {
     expect(result[1]).to.deep.equal([]);
     expect(result[2]).to.deep.equal([1]);
   });
+
+  it('should respect initialCapacity and populate empty arrays when input is empty', () => {
+    const arr: number[] = [];
+    const result = partition(arr, () => 0, 3);
+    expect(result.length).to.equal(3);
+    expect(result).to.deep.equal([[], [], []]);
+  });
+
+  it('should respect initialCapacity when elements fall within the capacity', () => {
+    const arr = [1, 2];
+    const result = partition(arr, (item: number) => item % 2, 4);
+    expect(result.length).to.equal(4);
+    expect(result).to.deep.equal([[2], [1], [], []]);
+  });
+
+  it('should dynamically expand beyond initialCapacity if classifier returns a larger index', () => {
+    const arr = [1];
+    const result = partition(arr, () => 5, 2);
+    expect(result.length).to.equal(6);
+    expect(result).to.deep.equal([[], [], [], [], [], [1]]);
+  });
 });
 
 describe('findInsertionIndex()', () => {
