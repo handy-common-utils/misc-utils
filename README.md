@@ -380,9 +380,10 @@ const result = substituteAll(input, searchPattern, substitute);
 | [distributeRoundRobin](#arrayfunctionsdistributeroundrobinmd) | Distributes an array into a number of groups in a round robin fashion. This function has been tuned for performance. |
 | [downSampleRandomly](#arrayfunctionsdownsamplerandomlymd) | Down samples the input array randomly. |
 | [findIndexInSorted](#arrayfunctionsfindindexinsortedmd) | Finds the index of an element in a sorted array using a golden ratio split (0.6180339887). |
-| [findInsertionIndex](#arrayfunctionsfindinsertionindexmd) | Finds the index where an item should be inserted into a sorted array to maintain order, using a golden ratio split (0.6180339887) for consistent performance. |
+| [findInsertionIndexInSorted](#arrayfunctionsfindinsertionindexinsortedmd) | Finds the index where an item should be inserted into a sorted array to maintain order, using a golden ratio split (0.6180339887) for consistent performance. |
 | [findInSorted](#arrayfunctionsfindinsortedmd) | Finds an element in a sorted array using a golden ratio split (0.618) which statistically performs better than a "standard" binary search. |
-| [partition](#arrayfunctionspartitionmd) | Partitions an array into multiple groups based on a classifier function. |
+| [findWithinRangeInSorted](#arrayfunctionsfindwithinrangeinsortedmd) | Finds all elements within a specified range in a sorted array. |
+| [partition](#arrayfunctionspartitionmd) | Partitions an array into multiple groups based on a classifier function. Please note that by default the returned array could have length of zero if the input array is empty, or length of 1 if the classifier always returns the same value, or length of any number depending on the classifier function. For your use case, you may want to specify `initialCapacity` to make sure that the returned array always contains the specified number of elements or to avoid the overhead of resizing the result array. |
 | [shuffle](#arrayfunctionsshufflemd) | Shuffles the elements of an array randomly using the Fisher-Yates algorithm. |
 
 ### Functions
@@ -531,28 +532,29 @@ Finds the index of an element in a sorted array using a golden ratio split (0.61
 The index of the found element, or undefined if not found or the array is null/empty.
 
 
-<a id="arrayfunctionsfindinsertionindexmd"></a>
+<a id="arrayfunctionsfindinsertionindexinsortedmd"></a>
 
-#### Function: findInsertionIndex()
+#### Function: findInsertionIndexInSorted()
 
-> **findInsertionIndex**\<`T`\>(`array`, `item`, `compareFn`): `number`
+> **findInsertionIndexInSorted**\<`T`, `I`\>(`array`, `item`, `compareFn`): `number`
 
 Finds the index where an item should be inserted into a sorted array to maintain order,
 using a golden ratio split (0.6180339887) for consistent performance.
 
 ##### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `T` |
+| Type Parameter | Default type |
+| ------ | ------ |
+| `T` | - |
+| `I` | `T` |
 
 ##### Parameters
 
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
 | `array` | `T`[] | The sorted input array. |
-| `item` | `T` | The item to be inserted. |
-| `compareFn` | (`a`, `b`) => `number` | A function to compare elements (standard comparator). |
+| `item` | `I` | The item to be inserted. Please note that it does not have to be of the same type as the elements in the array. |
+| `compareFn` | (`a`, `b`) => `number` | A function to compare the element in the array with the item passed in (standard comparator). Should return a negative number if the element in the array is before the item passed in, 0 if it is at the same position as the item passed in, and a positive number if the element in the array is after the item passed in. |
 
 ##### Returns
 
@@ -561,13 +563,51 @@ using a golden ratio split (0.6180339887) for consistent performance.
 The insertion index.
 
 
+<a id="arrayfunctionsfindwithinrangeinsortedmd"></a>
+
+#### Function: findWithinRangeInSorted()
+
+> **findWithinRangeInSorted**\<`T`, `B`\>(`array`, `lowBoundary`, `highBoundary`, `compareFn`, `options?`): `T`[]
+
+Finds all elements within a specified range in a sorted array.
+
+##### Type Parameters
+
+| Type Parameter |
+| ------ |
+| `T` |
+| `B` |
+
+##### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `array` | `T`[] | The sorted input array. |
+| `lowBoundary` | `B` | The lower boundary of the range. |
+| `highBoundary` | `B` | The upper boundary of the range. |
+| `compareFn` | (`a`, `b`) => `number` | A function to compare an element of type T with a boundary of type B. Should return a negative number if `a < b`, 0 if `a === b`, and a positive number if `a > b`. |
+| `options?` | \{ `highInclusive?`: `boolean`; `lowInclusive?`: `boolean`; \} | specify whether boundaries are inclusive or exclusive. By default, both are inclusive. |
+| `options.highInclusive?` | `boolean` | optionally specifying whether the highBoundary is inclusive. Default is true. |
+| `options.lowInclusive?` | `boolean` | optionally specifying whether the lowBoundary is inclusive. Default is true. |
+
+##### Returns
+
+`T`[]
+
+An array containing all elements within the specified range.
+
+
 <a id="arrayfunctionspartitionmd"></a>
 
 #### Function: partition()
 
-> **partition**\<`T`\>(`array`, `classifier`): `T`[][]
+> **partition**\<`T`\>(`array`, `classifier`, `initialCapacity?`): `T`[][]
 
 Partitions an array into multiple groups based on a classifier function.
+Please note that by default the returned array could have length of zero if the input array is empty,
+or length of 1 if the classifier always returns the same value, or length of any number depending on the classifier function.
+For your use case, you may want to specify `initialCapacity` to make sure that the returned array always contains the
+specified number of elements or to avoid the overhead of resizing the result array.
 
 ##### Type Parameters
 
@@ -581,6 +621,7 @@ Partitions an array into multiple groups based on a classifier function.
 | ------ | ------ | ------ |
 | `array` | `T`[] | The input array. |
 | `classifier` | (`item`) => `number` \| `boolean` | A function that returns a boolean or a non-negative integer. - If boolean: true maps to group 0, false maps to group 1. - If number: the index of the group. Negative numbers map to group 0. |
+| `initialCapacity?` | `number` | The initial capacity of the result array. If not specified, the returned array could contain any number of elements depending on the classifier function. For example, setting it to 2 could be useful for most binary classification use case. |
 
 ##### Returns
 
@@ -1216,11 +1257,11 @@ Re-exports [findIndexInSorted](#arrayfunctionsfindindexinsortedmd)
 
 ***
 
-<a id="api-findinsertionindex"></a>
+<a id="api-findinsertionindexinsorted"></a>
 
-##### findInsertionIndex
+##### findInsertionIndexInSorted
 
-Re-exports [findInsertionIndex](#arrayfunctionsfindinsertionindexmd)
+Re-exports [findInsertionIndexInSorted](#arrayfunctionsfindinsertionindexinsortedmd)
 
 ***
 
@@ -1229,6 +1270,14 @@ Re-exports [findInsertionIndex](#arrayfunctionsfindinsertionindexmd)
 ##### findInSorted
 
 Re-exports [findInSorted](#arrayfunctionsfindinsortedmd)
+
+***
+
+<a id="api-findwithinrangeinsorted"></a>
+
+##### findWithinRangeInSorted
+
+Re-exports [findWithinRangeInSorted](#arrayfunctionsfindwithinrangeinsortedmd)
 
 ***
 
