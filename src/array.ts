@@ -157,6 +157,31 @@ export function findIndexInSorted<T>(array: Array<T> | null | undefined, compare
 }
 
 /**
+ * Finds the index where an item should be inserted into a sorted array to maintain order,
+ * using a golden ratio split (0.6180339887) for consistent performance.
+ * @param array The sorted input array.
+ * @param item The item to be inserted.
+ * @param compareFn A function to compare elements (standard comparator).
+ * @returns The insertion index.
+ */
+export function findInsertionIndexInSorted<T>(array: Array<T>, item: T, compareFn: (a: T, b: T) => number): number {
+  const GOLDEN_RATIO = 0.6180339887;
+  let low = 0;
+  let high = array.length;
+  while (low < high) {
+    const index = Math.floor(low + (high - low) * GOLDEN_RATIO);
+    const mid = Math.max(low, Math.min(index, high - 1));
+
+    if (compareFn(array[mid], item) < 0) {
+      low = mid + 1;
+    } else {
+      high = mid;
+    }
+  }
+  return low;
+}
+
+/**
  * Shuffles the elements of an array randomly using the Fisher-Yates algorithm.
  * @param array The input array.
  * @returns A new array with the elements shuffled.
@@ -222,27 +247,4 @@ export function partition<T>(array: Array<T>, classifier: (item: T) => boolean |
   return result;
 }
 
-/**
- * Finds the index where an item should be inserted into a sorted array to maintain order,
- * using a golden ratio split (0.6180339887) for consistent performance.
- * @param array The sorted input array.
- * @param item The item to be inserted.
- * @param compareFn A function to compare elements (standard comparator).
- * @returns The insertion index.
- */
-export function findInsertionIndex<T>(array: Array<T>, item: T, compareFn: (a: T, b: T) => number): number {
-  const GOLDEN_RATIO = 0.6180339887;
-  let low = 0;
-  let high = array.length;
-  while (low < high) {
-    const index = Math.floor(low + (high - low) * GOLDEN_RATIO);
-    const mid = Math.max(low, Math.min(index, high - 1));
 
-    if (compareFn(array[mid], item) < 0) {
-      low = mid + 1;
-    } else {
-      high = mid;
-    }
-  }
-  return low;
-}

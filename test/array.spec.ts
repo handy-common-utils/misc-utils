@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { chunk, distributeRoundRobin, downSampleRandomly, findIndexInSorted, findInsertionIndex, findInSorted, partition, shuffle } from '../src/array';
+import { chunk, distributeRoundRobin, downSampleRandomly, findIndexInSorted, findInsertionIndexInSorted, findInSorted, partition, shuffle } from '../src/array';
 
 describe('distributeRoundRobin()', () => {
   it('should work when number of groups equals number of elements', () => {
@@ -297,23 +297,23 @@ describe('partition()', () => {
 
 describe('findInsertionIndex()', () => {
   it('should find index in the middle', () => {
-    expect(findInsertionIndex([10, 20, 30], 25, (a: number, b: number) => a - b)).to.equal(2);
+    expect(findInsertionIndexInSorted([10, 20, 30], 25, (a: number, b: number) => a - b)).to.equal(2);
   });
 
   it('should find index at the start', () => {
-    expect(findInsertionIndex([10, 20, 30], 5, (a: number, b: number) => a - b)).to.equal(0);
+    expect(findInsertionIndexInSorted([10, 20, 30], 5, (a: number, b: number) => a - b)).to.equal(0);
   });
 
   it('should find index at the end', () => {
-    expect(findInsertionIndex([10, 20, 30], 35, (a: number, b: number) => a - b)).to.equal(3);
+    expect(findInsertionIndexInSorted([10, 20, 30], 35, (a: number, b: number) => a - b)).to.equal(3);
   });
 
   it('should find index for duplicate items (after existing)', () => {
     // Standard binary search finds the first position where it doesn't violate order (leftmost)
-    expect(findInsertionIndex([10, 20, 20, 30], 20, (a: number, b: number) => a - b)).to.equal(1);
+    expect(findInsertionIndexInSorted([10, 20, 20, 30], 20, (a: number, b: number) => a - b)).to.equal(1);
   });
 
   it('should work on empty array', () => {
-    expect(findInsertionIndex([], 10, (a: number, b: number) => a - b)).to.equal(0);
+    expect(findInsertionIndexInSorted([], 10, (a: number, b: number) => a - b)).to.equal(0);
   });
 });
