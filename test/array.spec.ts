@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { chunk, distributeRoundRobin, downSampleRandomly, findIndexInSorted, findInsertionIndexInSorted, findInSorted, partition, shuffle } from '../src/array';
+import { chunk, distributeRoundRobin, downSampleRandomly, findIndexInSorted, findInsertionIndexInSorted, findInSorted, findWithinRangeInSorted, partition, shuffle } from '../src/array';
 
 describe('distributeRoundRobin()', () => {
   it('should work when number of groups equals number of elements', () => {
@@ -315,5 +315,66 @@ describe('findInsertionIndex()', () => {
 
   it('should work on empty array', () => {
     expect(findInsertionIndexInSorted([], 10, (a: number, b: number) => a - b)).to.equal(0);
+  });
+});
+
+describe('findWithinRangeInSorted()', () => {
+  const arr = [10, 20, 30, 40, 50, 60, 70];
+  
+  it('should find elements within inclusive boundaries by default', () => {
+    const result = findWithinRangeInSorted(arr, 25, 55, (a: number, b: number) => a - b);
+    expect(result).to.deep.equal([30, 40, 50]);
+  });
+  
+  it('should find elements within inclusive boundaries when boundaries match elements', () => {
+    const result = findWithinRangeInSorted(arr, 20, 60, (a: number, b: number) => a - b);
+    expect(result).to.deep.equal([20, 30, 40, 50, 60]);
+  });
+  
+  it('should find elements within exclusive lower boundary', () => {
+    const result = findWithinRangeInSorted(arr, 20, 60, (a: number, b: number) => a - b, { lowInclusive: false });
+    expect(result).to.deep.equal([30, 40, 50, 60]);
+  });
+  
+  it('should find elements within exclusive upper boundary', () => {
+    const result = findWithinRangeInSorted(arr, 20, 60, (a: number, b: number) => a - b, { highInclusive: false });
+    expect(result).to.deep.equal([20, 30, 40, 50]);
+  });
+  
+  it('should find elements within exclusive lower and upper boundaries', () => {
+    const result = findWithinRangeInSorted(arr, 20, 60, (a: number, b: number) => a - b, { lowInclusive: false, highInclusive: false });
+    expect(result).to.deep.equal([30, 40, 50]);
+  });
+
+  it('should return empty array if range is out of bounds (too low)', () => {
+    const result = findWithinRangeInSorted(arr, 0, 5, (a: number, b: number) => a - b);
+    expect(result).to.deep.equal([]);
+  });
+
+  it('should return empty array if range is out of bounds (too high)', () => {
+    const result = findWithinRangeInSorted(arr, 80, 100, (a: number, b: number) => a - b);
+    expect(result).to.deep.equal([]);
+  });
+  
+  it('should return empty array if boundaries are reversed', () => {
+    const result = findWithinRangeInSorted(arr, 50, 30, (a: number, b: number) => a - b);
+    expect(result).to.deep.equal([]);
+  });
+
+  it('should handle duplicate items intersecting with boundaries', () => {
+    const dupArr = [10, 20, 20, 30, 30, 30, 40, 50];
+    const result = findWithinRangeInSorted(dupArr, 20, 30, (a: number, b: number) => a - b, { lowInclusive: false, highInclusive: true });
+    expect(result).to.deep.equal([30, 30, 30]);
+  });
+
+  it('should handle boundaries falling between duplicate items', () => {
+    const dupArr = [10, 20, 20, 20, 30];
+    const result = findWithinRangeInSorted(dupArr, 15, 25, (a: number, b: number) => a - b);
+    expect(result).to.deep.equal([20, 20, 20]);
+  });
+
+  it('should return an empty array if array is empty', () => {
+    const result = findWithinRangeInSorted([], 10, 20, (a: number, b: number) => a - b);
+    expect(result).to.deep.equal([]);
   });
 });

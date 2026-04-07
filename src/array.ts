@@ -160,11 +160,13 @@ export function findIndexInSorted<T>(array: Array<T> | null | undefined, compare
  * Finds the index where an item should be inserted into a sorted array to maintain order,
  * using a golden ratio split (0.6180339887) for consistent performance.
  * @param array The sorted input array.
- * @param item The item to be inserted.
- * @param compareFn A function to compare elements (standard comparator).
+ * @param item The item to be inserted. Please note that it does not have to be of the same type as the elements in the array.
+ * @param compareFn A function to compare the element in the array with the item passed in (standard comparator).
+ *                  Should return a negative number if the element in the array is before the item passed in,
+ *                  0 if it is at the same position as the item passed in, and a positive number if the element in the array is after the item passed in.
  * @returns The insertion index.
  */
-export function findInsertionIndexInSorted<T>(array: Array<T>, item: T, compareFn: (a: T, b: T) => number): number {
+export function findInsertionIndexInSorted<T, I = T>(array: Array<T>, item: I, compareFn: (a: T, b: I) => number): number {
   const GOLDEN_RATIO = 0.6180339887;
   let low = 0;
   let high = array.length;
@@ -180,6 +182,53 @@ export function findInsertionIndexInSorted<T>(array: Array<T>, item: T, compareF
   }
   return low;
 }
+
+/**
+ * Finds all elements within a specified range in a sorted array.
+ * @param array The sorted input array.
+ * @param lowBoundary The lower boundary of the range.
+ * @param highBoundary The upper boundary of the range.
+ * @param compareFn A function to compare an element of type T with a boundary of type B.
+ *                  Should return a negative number if `a < b`, 0 if `a === b`, and a positive number if `a > b`.
+ * @param options specify whether boundaries are inclusive or exclusive. By default, both are inclusive.
+ * @param options.lowInclusive optionally specifying whether the lowBoundary is inclusive. Default is true.
+ * @param options.highInclusive optionally specifying whether the highBoundary is inclusive. Default is true.
+ * @returns An array containing all elements within the specified range.
+ */
+export function findWithinRangeInSorted<T, B>(
+  array: Array<T>,
+  lowBoundary: B,
+  highBoundary: B,
+  compareFn: (a: T, b: B) => number,
+  options?: { lowInclusive?: boolean; highInclusive?: boolean, },
+): Array<T> {
+  const lowInclusive = options?.lowInclusive ?? true;
+  const highInclusive = options?.highInclusive ?? true;
+
+  const startIndex = findInsertionIndexInSorted(array, lowBoundary, compareFn);
+
+  const result: Array<T> = [];
+  for (let i = startIndex; i < array.length; i++) {
+    const item = array[i];
+    const lowCmp = compareFn(item, lowBoundary);
+
+    // Check if item meets lower boundary constraint
+    if (lowCmp < 0 || (!lowInclusive && lowCmp === 0)) {
+      continue;
+    }
+
+    const highCmp = compareFn(item, highBoundary);
+    // Check if item meets upper boundary constraint
+    if (highCmp > 0 || (!highInclusive && highCmp === 0)) {
+      break;
+    }
+
+    result.push(item);
+  }
+
+  return result;
+}
+
 
 /**
  * Shuffles the elements of an array randomly using the Fisher-Yates algorithm.
