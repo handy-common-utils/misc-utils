@@ -48,6 +48,16 @@ describe('couldBeTemporaryNetworkingError', () => {
     expect(couldBeTemporaryNetworkingError({ errorMessage: 'socket hang up' })).to.be.true;
   });
 
+  it('should return true for message containing EPIPE', () => {
+    expect(couldBeTemporaryNetworkingError({ errorMessage: 'EPIPE' })).to.be.true;
+    expect(couldBeTemporaryNetworkingError(new Error('write EPIPE'))).to.be.true;
+  });
+
+  it('should return true for message containing ECONNRESET', () => {
+    expect(couldBeTemporaryNetworkingError({ errorMessage: 'ECONNRESET' })).to.be.true;
+    expect(couldBeTemporaryNetworkingError(new Error('socket hang up ECONNRESET'))).to.be.true;
+  });
+
   it('should return false for other errors', () => {
     expect(couldBeTemporaryNetworkingError({ statusCode: 400 })).to.be.false;
     expect(couldBeTemporaryNetworkingError(new Error('Some other error'))).to.be.false;
