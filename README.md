@@ -432,7 +432,7 @@ The result as an array of arrays which each represents a group
 
 #### Function: downSampleRandomly()
 
-> **downSampleRandomly**\<`T`\>(`array`, `numSamples`, `probabilityTransformerFunction`): `T`[]
+> **downSampleRandomly**\<`T`\>(`array`, `numSamples`, `probabilityTransformerFunction?`): `T`[]
 
 Down samples the input array randomly.
 
@@ -684,7 +684,7 @@ BASE64 string representing the integer input, or the original input if it is nul
 
 #### Function: base64UrlFromUInt32()
 
-> **base64UrlFromUInt32**\<`T`\>(`ui32`, `replacements`): `string` \| `Exclude`\<`T`, `number`\>
+> **base64UrlFromUInt32**\<`T`\>(`ui32`, `replacements?`): `string` \| `Exclude`\<`T`, `number`\>
 
 Encode an unsigned 32-bit integer into URL/path safe BASE64 string.
 
@@ -823,7 +823,7 @@ BASE64 string without trailing '=' representing the integer input, or the origin
 
 #### Function: shortBase64UrlFromUInt32()
 
-> **shortBase64UrlFromUInt32**\<`T`\>(`ui32`, `replacements`): `string` \| `Exclude`\<`T`, `number`\>
+> **shortBase64UrlFromUInt32**\<`T`\>(`ui32`, `replacements?`): `string` \| `Exclude`\<`T`, `number`\>
 
 Encode an unsigned 32-bit integer into URL/path safe BASE64 string without trailing '='.
 
@@ -850,7 +850,7 @@ URL/path safe BASE64 string without trailing '=' representing the integer input,
 
 #### Function: urlSafe()
 
-> **urlSafe**\<`T`\>(`base64Input`, `replacements`): `T`
+> **urlSafe**\<`T`\>(`base64Input`, `replacements?`): `T`
 
 Make a "normal" (BASE64) string URL/path safe.
 
@@ -977,30 +977,30 @@ Some (not all) well known HTTP status codes
 
 ##### Enumeration Members
 
-| Enumeration Member                                                   | Value | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| -------------------------------------------------------------------- | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <a id="api-accepted202"></a> `ACCEPTED202`                           | `202` | The request has been received but not yet acted upon. It is non-committal, meaning that there is no way in HTTP to later send an asynchronous response indicating the outcome of processing the request. It is intended for cases where another process or server handles the request, or for batch processing.                                                                                                                                                                                                                                                                               |
-| <a id="api-bad_gateway502"></a> `BAD_GATEWAY502`                     | `502` | This error response means that the server, while working as a gateway to get a response needed to handle the request, got an invalid response.                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| <a id="api-bad_request400"></a> `BAD_REQUEST400`                     | `400` | This response means that server could not understand the request due to invalid syntax.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| <a id="api-conflict409"></a> `CONFLICT409`                           | `409` | This response is sent when a request conflicts with the current state of the server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| <a id="api-created201"></a> `CREATED201`                             | `201` | The request has succeeded and a new resource has been created as a result of it. This is typically the response sent after a PUT request.                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| <a id="api-forbidden403"></a> `FORBIDDEN403`                         | `403` | The client does not have access rights to the content, i.e. they are unauthorized, so server is rejecting to give proper response. Unlike 401, the client's identity is known to the server.                                                                                                                                                                                                                                                                                                                                                                                                  |
-| <a id="api-gateway_timeout504"></a> `GATEWAY_TIMEOUT504`             | `504` | This error response is given when the server is acting as a gateway and cannot get a response in time.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| <a id="api-internal_server_error500"></a> `INTERNAL_SERVER_ERROR500` | `500` | The server encountered an unexpected condition that prevented it from fulfilling the request.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| <a id="api-method_not_allowed405"></a> `METHOD_NOT_ALLOWED405`       | `405` | The request method is known by the server but has been disabled and cannot be used. For example, an API may forbid DELETE-ing a resource. The two mandatory methods, GET and HEAD, must never be disabled and should not return this error code.                                                                                                                                                                                                                                                                                                                                              |
-| <a id="api-moved_permanently301"></a> `MOVED_PERMANENTLY301`         | `301` | This response code means that URI of requested resource has been changed. Probably, new URI would be given in the response.                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| <a id="api-moved_temporarily302"></a> `MOVED_TEMPORARILY302`         | `302` | This response code means that URI of requested resource has been changed temporarily. New changes in the URI might be made in the future. Therefore, this same URI should be used by the client in future requests.                                                                                                                                                                                                                                                                                                                                                                           |
-| <a id="api-no_content204"></a> `NO_CONTENT204`                       | `204` | There is no content to send for this request, but the headers may be useful. The user-agent may update its cached headers for this resource with the new ones.                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| <a id="api-not_found404"></a> `NOT_FOUND404`                         | `404` | The server can not find requested resource. In the browser, this means the URL is not recognized. In an API, this can also mean that the endpoint is valid but the resource itself does not exist. Servers may also send this response instead of 403 to hide the existence of a resource from an unauthorized client. This response code is probably the most famous one due to its frequent occurence on the web.                                                                                                                                                                           |
-| <a id="api-not_implemented501"></a> `NOT_IMPLEMENTED501`             | `501` | The request method is not supported by the server and cannot be handled. The only methods that servers are required to support (and therefore that must not return this code) are GET and HEAD.                                                                                                                                                                                                                                                                                                                                                                                               |
-| <a id="api-ok200"></a> `OK200`                                       | `200` | The request has succeeded. The meaning of a success varies depending on the HTTP method: GET: The resource has been fetched and is transmitted in the message body. HEAD: The entity headers are in the message body. POST: The resource describing the result of the action is transmitted in the message body. TRACE: The message body contains the request message as received by the server                                                                                                                                                                                               |
-| <a id="api-permanent_redirect308"></a> `PERMANENT_REDIRECT308`       | `308` | This means that the resource is now permanently located at another URI, specified by the Location: HTTP Response header. This has the same semantics as the 301 Moved Permanently HTTP response code, with the exception that the user agent must not change the HTTP method used: if a POST was used in the first request, a POST must be used in the second request.                                                                                                                                                                                                                        |
-| <a id="api-request_timeout408"></a> `REQUEST_TIMEOUT408`             | `408` | This response is sent on an idle connection by some servers, even without any previous request by the client. It means that the server would like to shut down this unused connection. This response is used much more since some browsers, like Chrome, Firefox 27+, or IE9, use HTTP pre-connection mechanisms to speed up surfing. Also note that some servers merely shut down the connection without sending this message.                                                                                                                                                               |
-| <a id="api-see_other303"></a> `SEE_OTHER303`                         | `303` | Server sent this response to directing client to get requested resource to another URI with an GET request.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| <a id="api-service_unavailable503"></a> `SERVICE_UNAVAILABLE503`     | `503` | The server is not ready to handle the request. Common causes are a server that is down for maintenance or that is overloaded. Note that together with this response, a user-friendly page explaining the problem should be sent. This responses should be used for temporary conditions and the Retry-After: HTTP header should, if possible, contain the estimated time before the recovery of the service. The webmaster must also take care about the caching-related headers that are sent along with this response, as these temporary condition responses should usually not be cached. |
-| <a id="api-temporary_redirect307"></a> `TEMPORARY_REDIRECT307`       | `307` | Server sent this response to directing client to get requested resource to another URI with same method that used prior request. This has the same semantic than the 302 Found HTTP response code, with the exception that the user agent must not change the HTTP method used: if a POST was used in the first request, a POST must be used in the second request.                                                                                                                                                                                                                           |
-| <a id="api-too_many_requests429"></a> `TOO_MANY_REQUESTS429`         | `429` | The user has sent too many requests in a given amount of time ("rate limiting").                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| <a id="api-unauthorized401"></a> `UNAUTHORIZED401`                   | `401` | Although the HTTP standard specifies "unauthorized", semantically this response means "unauthenticated". That is, the client must authenticate itself to get the requested response.                                                                                                                                                                                                                                                                                                                                                                                                          |
+| Enumeration Member                                                                      | Value | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| --------------------------------------------------------------------------------------- | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a id="api-enumeration-member-accepted202"></a> `ACCEPTED202`                           | `202` | The request has been received but not yet acted upon. It is non-committal, meaning that there is no way in HTTP to later send an asynchronous response indicating the outcome of processing the request. It is intended for cases where another process or server handles the request, or for batch processing.                                                                                                                                                                                                                                                                               |
+| <a id="api-enumeration-member-bad_gateway502"></a> `BAD_GATEWAY502`                     | `502` | This error response means that the server, while working as a gateway to get a response needed to handle the request, got an invalid response.                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| <a id="api-enumeration-member-bad_request400"></a> `BAD_REQUEST400`                     | `400` | This response means that server could not understand the request due to invalid syntax.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| <a id="api-enumeration-member-conflict409"></a> `CONFLICT409`                           | `409` | This response is sent when a request conflicts with the current state of the server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| <a id="api-enumeration-member-created201"></a> `CREATED201`                             | `201` | The request has succeeded and a new resource has been created as a result of it. This is typically the response sent after a PUT request.                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| <a id="api-enumeration-member-forbidden403"></a> `FORBIDDEN403`                         | `403` | The client does not have access rights to the content, i.e. they are unauthorized, so server is rejecting to give proper response. Unlike 401, the client's identity is known to the server.                                                                                                                                                                                                                                                                                                                                                                                                  |
+| <a id="api-enumeration-member-gateway_timeout504"></a> `GATEWAY_TIMEOUT504`             | `504` | This error response is given when the server is acting as a gateway and cannot get a response in time.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| <a id="api-enumeration-member-internal_server_error500"></a> `INTERNAL_SERVER_ERROR500` | `500` | The server encountered an unexpected condition that prevented it from fulfilling the request.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| <a id="api-enumeration-member-method_not_allowed405"></a> `METHOD_NOT_ALLOWED405`       | `405` | The request method is known by the server but has been disabled and cannot be used. For example, an API may forbid DELETE-ing a resource. The two mandatory methods, GET and HEAD, must never be disabled and should not return this error code.                                                                                                                                                                                                                                                                                                                                              |
+| <a id="api-enumeration-member-moved_permanently301"></a> `MOVED_PERMANENTLY301`         | `301` | This response code means that URI of requested resource has been changed. Probably, new URI would be given in the response.                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| <a id="api-enumeration-member-moved_temporarily302"></a> `MOVED_TEMPORARILY302`         | `302` | This response code means that URI of requested resource has been changed temporarily. New changes in the URI might be made in the future. Therefore, this same URI should be used by the client in future requests.                                                                                                                                                                                                                                                                                                                                                                           |
+| <a id="api-enumeration-member-no_content204"></a> `NO_CONTENT204`                       | `204` | There is no content to send for this request, but the headers may be useful. The user-agent may update its cached headers for this resource with the new ones.                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| <a id="api-enumeration-member-not_found404"></a> `NOT_FOUND404`                         | `404` | The server can not find requested resource. In the browser, this means the URL is not recognized. In an API, this can also mean that the endpoint is valid but the resource itself does not exist. Servers may also send this response instead of 403 to hide the existence of a resource from an unauthorized client. This response code is probably the most famous one due to its frequent occurence on the web.                                                                                                                                                                           |
+| <a id="api-enumeration-member-not_implemented501"></a> `NOT_IMPLEMENTED501`             | `501` | The request method is not supported by the server and cannot be handled. The only methods that servers are required to support (and therefore that must not return this code) are GET and HEAD.                                                                                                                                                                                                                                                                                                                                                                                               |
+| <a id="api-enumeration-member-ok200"></a> `OK200`                                       | `200` | The request has succeeded. The meaning of a success varies depending on the HTTP method: GET: The resource has been fetched and is transmitted in the message body. HEAD: The entity headers are in the message body. POST: The resource describing the result of the action is transmitted in the message body. TRACE: The message body contains the request message as received by the server                                                                                                                                                                                               |
+| <a id="api-enumeration-member-permanent_redirect308"></a> `PERMANENT_REDIRECT308`       | `308` | This means that the resource is now permanently located at another URI, specified by the Location: HTTP Response header. This has the same semantics as the 301 Moved Permanently HTTP response code, with the exception that the user agent must not change the HTTP method used: if a POST was used in the first request, a POST must be used in the second request.                                                                                                                                                                                                                        |
+| <a id="api-enumeration-member-request_timeout408"></a> `REQUEST_TIMEOUT408`             | `408` | This response is sent on an idle connection by some servers, even without any previous request by the client. It means that the server would like to shut down this unused connection. This response is used much more since some browsers, like Chrome, Firefox 27+, or IE9, use HTTP pre-connection mechanisms to speed up surfing. Also note that some servers merely shut down the connection without sending this message.                                                                                                                                                               |
+| <a id="api-enumeration-member-see_other303"></a> `SEE_OTHER303`                         | `303` | Server sent this response to directing client to get requested resource to another URI with an GET request.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| <a id="api-enumeration-member-service_unavailable503"></a> `SERVICE_UNAVAILABLE503`     | `503` | The server is not ready to handle the request. Common causes are a server that is down for maintenance or that is overloaded. Note that together with this response, a user-friendly page explaining the problem should be sent. This responses should be used for temporary conditions and the Retry-After: HTTP header should, if possible, contain the estimated time before the recovery of the service. The webmaster must also take care about the caching-related headers that are sent along with this response, as these temporary condition responses should usually not be cached. |
+| <a id="api-enumeration-member-temporary_redirect307"></a> `TEMPORARY_REDIRECT307`       | `307` | Server sent this response to directing client to get requested resource to another URI with same method that used prior request. This has the same semantic than the 302 Found HTTP response code, with the exception that the user agent must not change the HTTP method used: if a POST was used in the first request, a POST must be used in the second request.                                                                                                                                                                                                                           |
+| <a id="api-enumeration-member-too_many_requests429"></a> `TOO_MANY_REQUESTS429`         | `429` | The user has sent too many requests in a given amount of time ("rate limiting").                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| <a id="api-enumeration-member-unauthorized401"></a> `UNAUTHORIZED401`                   | `401` | Although the HTTP standard specifies "unauthorized", semantically this response means "unauthenticated". That is, the client must authenticate itself to get the requested response.                                                                                                                                                                                                                                                                                                                                                                                                          |
 
 ### Variables
 
@@ -1014,30 +1014,30 @@ Some (not all) HTTP status messages matching their codes
 
 ##### Type Declaration
 
-| Name                       | Type     | Default value             |
-| -------------------------- | -------- | ------------------------- |
-| <a id="api-200"></a> `200` | `string` | `'OK'`                    |
-| <a id="api-201"></a> `201` | `string` | `'Created'`               |
-| <a id="api-202"></a> `202` | `string` | `'Accepted'`              |
-| <a id="api-204"></a> `204` | `string` | `'No Content'`            |
-| <a id="api-301"></a> `301` | `string` | `'Moved Permanently'`     |
-| <a id="api-302"></a> `302` | `string` | `'Moved Temporarily'`     |
-| <a id="api-303"></a> `303` | `string` | `'See Other'`             |
-| <a id="api-307"></a> `307` | `string` | `'Temporary Redirect'`    |
-| <a id="api-308"></a> `308` | `string` | `'Permanent Redirect'`    |
-| <a id="api-400"></a> `400` | `string` | `'Bad Request'`           |
-| <a id="api-401"></a> `401` | `string` | `'Unauthorized'`          |
-| <a id="api-403"></a> `403` | `string` | `'Forbidden'`             |
-| <a id="api-404"></a> `404` | `string` | `'Not Found'`             |
-| <a id="api-405"></a> `405` | `string` | `'Method Not Allowed'`    |
-| <a id="api-408"></a> `408` | `string` | `'Request Timeout'`       |
-| <a id="api-409"></a> `409` | `string` | `'Conflict'`              |
-| <a id="api-429"></a> `429` | `string` | `'Too Many Requests'`     |
-| <a id="api-500"></a> `500` | `string` | `'Internal Server Error'` |
-| <a id="api-501"></a> `501` | `string` | `'Not Implemented'`       |
-| <a id="api-502"></a> `502` | `string` | `'Bad Gateway'`           |
-| <a id="api-503"></a> `503` | `string` | `'Service Unavailable'`   |
-| <a id="api-504"></a> `504` | `string` | `'Gateway Timeout'`       |
+| Name                                | Type     | Default value             |
+| ----------------------------------- | -------- | ------------------------- |
+| <a id="api-property-200"></a> `200` | `string` | `'OK'`                    |
+| <a id="api-property-201"></a> `201` | `string` | `'Created'`               |
+| <a id="api-property-202"></a> `202` | `string` | `'Accepted'`              |
+| <a id="api-property-204"></a> `204` | `string` | `'No Content'`            |
+| <a id="api-property-301"></a> `301` | `string` | `'Moved Permanently'`     |
+| <a id="api-property-302"></a> `302` | `string` | `'Moved Temporarily'`     |
+| <a id="api-property-303"></a> `303` | `string` | `'See Other'`             |
+| <a id="api-property-307"></a> `307` | `string` | `'Temporary Redirect'`    |
+| <a id="api-property-308"></a> `308` | `string` | `'Permanent Redirect'`    |
+| <a id="api-property-400"></a> `400` | `string` | `'Bad Request'`           |
+| <a id="api-property-401"></a> `401` | `string` | `'Unauthorized'`          |
+| <a id="api-property-403"></a> `403` | `string` | `'Forbidden'`             |
+| <a id="api-property-404"></a> `404` | `string` | `'Not Found'`             |
+| <a id="api-property-405"></a> `405` | `string` | `'Method Not Allowed'`    |
+| <a id="api-property-408"></a> `408` | `string` | `'Request Timeout'`       |
+| <a id="api-property-409"></a> `409` | `string` | `'Conflict'`              |
+| <a id="api-property-429"></a> `429` | `string` | `'Too Many Requests'`     |
+| <a id="api-property-500"></a> `500` | `string` | `'Internal Server Error'` |
+| <a id="api-property-501"></a> `501` | `string` | `'Not Implemented'`       |
+| <a id="api-property-502"></a> `502` | `string` | `'Bad Gateway'`           |
+| <a id="api-property-503"></a> `503` | `string` | `'Service Unavailable'`   |
+| <a id="api-property-504"></a> `504` | `string` | `'Gateway Timeout'`       |
 
 ## Index
 
@@ -1649,7 +1649,7 @@ this.output.warn('Configuration file not found, default configuration would be u
 
 ###### Constructor
 
-> **new LineLogger**\<`DEBUG_FUNC`, `INFO_FUNC`, `WARN_FUNC`, `ERROR_FUNC`\>(`debugFunction`, `infoFunction`, `warnFunction`, `errorFunction`, `isDebug`, `isQuiet`): `LineLogger`\<`DEBUG_FUNC`, `INFO_FUNC`, `WARN_FUNC`, `ERROR_FUNC`\>
+> **new LineLogger**\<`DEBUG_FUNC`, `INFO_FUNC`, `WARN_FUNC`, `ERROR_FUNC`\>(`debugFunction`, `infoFunction`, `warnFunction`, `errorFunction`, `isDebug?`, `isQuiet?`): `LineLogger`\<`DEBUG_FUNC`, `INFO_FUNC`, `WARN_FUNC`, `ERROR_FUNC`\>
 
 Constructor
 
@@ -1670,15 +1670,15 @@ Constructor
 
 ##### Properties
 
-| Property                                 | Modifier | Type         | Default value | Description                                                                                              |
-| ---------------------------------------- | -------- | ------------ | ------------- | -------------------------------------------------------------------------------------------------------- |
-| <a id="api-debug"></a> `debug`           | `public` | `DEBUG_FUNC` | `undefined`   | -                                                                                                        |
-| <a id="api-error"></a> `error`           | `public` | `ERROR_FUNC` | `undefined`   | -                                                                                                        |
-| <a id="api-info"></a> `info`             | `public` | `INFO_FUNC`  | `undefined`   | -                                                                                                        |
-| <a id="api-isdebug"></a> `isDebug`       | `public` | `boolean`    | `false`       | is debug output enabled or not, it could be overriden by isQuiet                                         |
-| <a id="api-isquiet"></a> `isQuiet`       | `public` | `boolean`    | `false`       | is quiet mode enabled or not. When quiet mode is enabled, both debug and info output would be discarded. |
-| <a id="api-warn"></a> `warn`             | `public` | `WARN_FUNC`  | `undefined`   | -                                                                                                        |
-| <a id="api-no_op_func"></a> `NO_OP_FUNC` | `static` | () => `void` | `undefined`   | -                                                                                                        |
+| Property                                          | Modifier | Type         | Default value | Description                                                                                              |
+| ------------------------------------------------- | -------- | ------------ | ------------- | -------------------------------------------------------------------------------------------------------- |
+| <a id="api-property-debug"></a> `debug`           | `public` | `DEBUG_FUNC` | `undefined`   | -                                                                                                        |
+| <a id="api-property-error"></a> `error`           | `public` | `ERROR_FUNC` | `undefined`   | -                                                                                                        |
+| <a id="api-property-info"></a> `info`             | `public` | `INFO_FUNC`  | `undefined`   | -                                                                                                        |
+| <a id="api-property-isdebug"></a> `isDebug`       | `public` | `boolean`    | `false`       | is debug output enabled or not, it could be overriden by isQuiet                                         |
+| <a id="api-property-isquiet"></a> `isQuiet`       | `public` | `boolean`    | `false`       | is quiet mode enabled or not. When quiet mode is enabled, both debug and info output would be discarded. |
+| <a id="api-property-warn"></a> `warn`             | `public` | `WARN_FUNC`  | `undefined`   | -                                                                                                        |
+| <a id="api-property-no_op_func"></a> `NO_OP_FUNC` | `static` | () => `void` | `undefined`   | -                                                                                                        |
 
 ##### Methods
 
@@ -1686,7 +1686,7 @@ Constructor
 
 ###### console()
 
-> `static` **console**\<`FLAGS`\>(`flags`, `debugFlagName`, `quietFlagName`): `LineLogger`\<(`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`\>
+> `static` **console**\<`FLAGS`\>(`flags?`, `debugFlagName?`, `quietFlagName?`): `LineLogger`\<(...`data`) => `void`, (...`data`) => `void`, (...`data`) => `void`, (...`data`) => `void`\>
 
 Build an instance with console.log/info/warn/error.
 
@@ -1706,7 +1706,7 @@ Build an instance with console.log/info/warn/error.
 
 ####### Returns
 
-`LineLogger`\<(`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`\>
+`LineLogger`\<(...`data`) => `void`, (...`data`) => `void`, (...`data`) => `void`, (...`data`) => `void`\>
 
 An instance that uses console.log/info/warn/error.
 
@@ -1739,7 +1739,7 @@ instance of LineLogger that is actually ConsoleLineLogger type
 
 ###### consoleWithColour()
 
-> `static` **consoleWithColour**\<`FLAGS`, `COLOURER`\>(`flags`, `colourer`, `debugColourFuncName`, `infoColourFuncName?`, `warnColourFuncName?`, `errorColourFuncName?`, `debugFlagName?`, `quietFlagName?`): `LineLogger`\<(`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`\>
+> `static` **consoleWithColour**\<`FLAGS`, `COLOURER`\>(`flags`, `colourer`, `debugColourFuncName?`, `infoColourFuncName?`, `warnColourFuncName?`, `errorColourFuncName?`, `debugFlagName?`, `quietFlagName?`): `LineLogger`\<(`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`\>
 
 Build an instance with console.log/info/warn/error and chalk/colors/cli-color.
 This package does not depend on chalk or colors or cli-color,
@@ -1786,7 +1786,7 @@ It has the same function signatures as console.log/info/warn/error.
 
 <a id="line-loggervariablesconsolelikemd"></a>
 
-#### Variable: consoleLike()
+#### Variable: consoleLike
 
 > `const` **consoleLike**: (`log`) => [`LineLogger`](#line-loggerclasseslineloggermd)\<(`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`\> = `LineLogger.consoleLike`
 
@@ -1810,6 +1810,8 @@ instance of LineLogger that is actually ConsoleLineLogger type
 
 ##### Param
 
+**log**
+
 instance of the logger
 
 ##### Returns
@@ -1818,7 +1820,7 @@ instance of LineLogger that is actually ConsoleLineLogger type
 
 <a id="line-loggervariablesconsolewithcolourmd"></a>
 
-#### Variable: consoleWithColour()
+#### Variable: consoleWithColour
 
 > `const` **consoleWithColour**: \<`FLAGS`, `COLOURER`\>(`flags`, `colourer`, `debugColourFuncName`, `infoColourFuncName?`, `warnColourFuncName`, `errorColourFuncName`, `debugFlagName`, `quietFlagName`) => [`LineLogger`](#line-loggerclasseslineloggermd)\<(`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`\> = `LineLogger.consoleWithColour`
 
@@ -1856,35 +1858,51 @@ An instance that uses console.log/info/warn/error and also adds colour to the me
 
 ##### Param
 
+**flags**
+
 The flag object that contains fields for knowning whether debug is enabled and whether quiet mode is enabled.
 Values of those fields are evaluated only once within this function.
 They are not evaluated when debug/info/warn/error functions are called.
 
 ##### Param
 
+**colourer**
+
 Supplier of the colouring function, such as chalk or colors or cli-color
 
 ##### Param
+
+**debugColourFuncName**
 
 Name of the function within colourer that will be used to add colour to debug messages, or null if colouring is not desired.
 
 ##### Param
 
+**infoColourFuncName**
+
 Name of the function within colourer that will be used to add colour to info messages, or null if colouring is not desired.
 
 ##### Param
+
+**warnColourFuncName**
 
 Name of the function within colourer that will be used to add colour to warn messages, or null if colouring is not desired.
 
 ##### Param
 
+**errorColourFuncName**
+
 Name of the function within colourer that will be used to add colour to error messages, or null if colouring is not desired.
 
 ##### Param
 
+**debugFlagName**
+
 Name of the debug field in the flags object
 
 ##### Param
+
+**quietFlagName**
 
 Name of the quiet field in the flags object. Quiet flag can override debug flag.
 
@@ -1894,9 +1912,9 @@ An LineLogger instance that uses console.log/info/warn/error and also adds colou
 
 <a id="line-loggervariablesconsolewithoutcolourmd"></a>
 
-#### Variable: consoleWithoutColour()
+#### Variable: consoleWithoutColour
 
-> `const` **consoleWithoutColour**: \<`FLAGS`\>(`flags`, `debugFlagName`, `quietFlagName`) => [`LineLogger`](#line-loggerclasseslineloggermd)\<(`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`\> = `LineLogger.console`
+> `const` **consoleWithoutColour**: \<`FLAGS`\>(`flags`, `debugFlagName`, `quietFlagName`) => [`LineLogger`](#line-loggerclasseslineloggermd)\<(...`data`) => `void`, (...`data`) => `void`, (...`data`) => `void`, (...`data`) => `void`\> = `LineLogger.console`
 
 Build an encapsulation of console output functions with console.log/info/warn/error.
 
@@ -1918,11 +1936,13 @@ Build an instance with console.log/info/warn/error.
 
 ##### Returns
 
-[`LineLogger`](#line-loggerclasseslineloggermd)\<(`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`, (`message?`, ...`optionalParams`) => `void`\>
+[`LineLogger`](#line-loggerclasseslineloggermd)\<(...`data`) => `void`, (...`data`) => `void`, (...`data`) => `void`, (...`data`) => `void`\>
 
 An instance that uses console.log/info/warn/error.
 
 ##### Param
+
+**flags**
 
 The flag object that contains fields for knowning whether debug is enabled and whether quiet mode is enabled.
 Values of those fields are evaluated only once within this function.
@@ -1930,9 +1950,13 @@ They are not evaluated when debug/info/warn/error functions are called.
 
 ##### Param
 
+**debugFlagName**
+
 Name of the debug field in the flags object
 
 ##### Param
+
+**quietFlagName**
 
 Name of the quiet field in the flags object. Quiet flag can override debug flag.
 
@@ -1963,7 +1987,7 @@ An LineLogger instance that uses console.log/info/warn/error.
 
 #### Function: mask()
 
-> **mask**\<`T`\>(`input`, `keepLeft`, `keepRight`, `minLength`, `maskLengthOrMaskString`, `maskPattern`): `T`
+> **mask**\<`T`\>(`input`, `keepLeft?`, `keepRight?`, `minLength?`, `maskLengthOrMaskString?`, `maskPattern?`): `T`
 
 Mask the content of a string
 
@@ -2122,17 +2146,7 @@ Create a mask function with pre-set parameters.
 
 A mask function that has specified parameters as pre-set
 
-> (`input`): `T`
-
-###### Parameters
-
-| Parameter | Type |
-| --------- | ---- |
-| `input`   | `T`  |
-
-###### Returns
-
-`T`
+(`input`) => `T`
 
 ##### Example
 
@@ -2200,11 +2214,11 @@ Options to customize the merge behavior.
 
 ##### Properties
 
-| Property                                | Type                                   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| --------------------------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <a id="api-array"></a> `array?`         | `"replace"` \| `"append"` \| `"merge"` | Defines how to handle arrays during the merge. - `replace`: The source array completely replaces the destination array. - `append`: The source array's elements are added to the end of the destination array. - `merge`: (Default) Mimics Lodash's behavior. It overwrites elements at the same index. If an element is an object, it merges them recursively. If the source array is longer, its additional elements are appended. **Default** `'merge'` |
-| <a id="api-immutable"></a> `immutable?` | `boolean`                              | If `true`, the merge will be immutable, creating a new object. If `false` or not provided, the destination object will be mutated. **Default** `false`                                                                                                                                                                                                                                                                                                     |
-| <a id="api-set"></a> `set?`             | `"replace"` \| `"merge"`               | Defines how to handle `Set` objects during the merge. - `replace`: (Default) The source `Set` completely replaces the destination `Set`. - `merge`: A new `Set` is created containing all elements from both the destination and source `Set`s. **Default** `'replace'`                                                                                                                                                                                    |
+| Property                                         | Type                                   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ------------------------------------------------ | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a id="api-property-array"></a> `array?`         | `"replace"` \| `"append"` \| `"merge"` | Defines how to handle arrays during the merge. - `replace`: The source array completely replaces the destination array. - `append`: The source array's elements are added to the end of the destination array. - `merge`: (Default) Mimics Lodash's behavior. It overwrites elements at the same index. If an element is an object, it merges them recursively. If the source array is longer, its additional elements are appended. **Default** `'merge'` |
+| <a id="api-property-immutable"></a> `immutable?` | `boolean`                              | If `true`, the merge will be immutable, creating a new object. If `false` or not provided, the destination object will be mutated. **Default** `false`                                                                                                                                                                                                                                                                                                     |
+| <a id="api-property-set"></a> `set?`             | `"replace"` \| `"merge"`               | Defines how to handle `Set` objects during the merge. - `replace`: (Default) The source `Set` completely replaces the destination `Set`. - `merge`: A new `Set` is created containing all elements from both the destination and source `Set`s. **Default** `'replace'`                                                                                                                                                                                    |
 
 ## Number
 
@@ -2324,7 +2338,7 @@ The intersection as a tuple [min, max], or undefined if there is no intersection
 
 ###### roundTo()
 
-> `static` **roundTo**(`num`, `precision`): `number`
+> `static` **roundTo**(`num`, `precision?`): `number`
 
 Rounds a number to a specified number of decimal places.
 
@@ -2345,7 +2359,7 @@ Rounded number
 
 <a id="numbervariablesclampmd"></a>
 
-#### Variable: clamp()
+#### Variable: clamp
 
 > `const` **clamp**: (`num`, `min`, `max`) => `number` = `NumberUtils.clamp`
 
@@ -2369,13 +2383,19 @@ The clamped value
 
 ##### Param
 
+**num**
+
 The number to clamp
 
 ##### Param
 
+**min**
+
 The minimum value
 
 ##### Param
+
+**max**
 
 The maximum value
 
@@ -2385,7 +2405,7 @@ The clamped value
 
 <a id="numbervariablesisinrangemd"></a>
 
-#### Variable: isInRange()
+#### Variable: isInRange
 
 > `const` **isInRange**: (`num`, `min`, `max`) => `boolean` = `NumberUtils.isInRange`
 
@@ -2409,13 +2429,19 @@ True if the number is within range
 
 ##### Param
 
+**num**
+
 The number to check
 
 ##### Param
 
+**min**
+
 The minimum value
 
 ##### Param
+
+**max**
 
 The maximum value
 
@@ -2425,7 +2451,7 @@ True if the number is within range
 
 <a id="numbervariablesrangeintersectionmd"></a>
 
-#### Variable: rangeIntersection()
+#### Variable: rangeIntersection
 
 > `const` **rangeIntersection**: (`min1`, `max1`, `min2`, `max2`) => \[`number`, `number`\] \| `undefined` = `NumberUtils.rangeIntersection`
 
@@ -2450,17 +2476,25 @@ The intersection as a tuple [min, max], or undefined if there is no intersection
 
 ##### Param
 
+**min1**
+
 Minimum value of the first range
 
 ##### Param
+
+**max1**
 
 Maximum value of the first range
 
 ##### Param
 
+**min2**
+
 Minimum value of the second range
 
 ##### Param
+
+**max2**
 
 Maximum value of the second range
 
@@ -2470,7 +2504,7 @@ The intersection as a tuple [min, max], or undefined if there is no intersection
 
 <a id="numbervariablesroundtomd"></a>
 
-#### Variable: roundTo()
+#### Variable: roundTo
 
 > `const` **roundTo**: (`num`, `precision`) => `number` = `NumberUtils.roundTo`
 
@@ -2493,9 +2527,13 @@ Rounded number
 
 ##### Param
 
+**num**
+
 The number to round
 
 ##### Param
+
+**precision**
 
 The number of decimal places (default: 0)
 
@@ -2528,7 +2566,7 @@ Rounded number
 
 #### Function: gaussianRandom()
 
-> **gaussianRandom**(`mean`, `stdev`): `number`
+> **gaussianRandom**(`mean?`, `stdev?`): `number`
 
 Generates a random number following a normal (Gaussian) distribution using Box-Muller transform.
 
@@ -2549,7 +2587,7 @@ A random number.
 
 #### Function: generateRandomBoolean()
 
-> **generateRandomBoolean**(`probabilityOfTrue`): `boolean`
+> **generateRandomBoolean**(`probabilityOfTrue?`): `boolean`
 
 Generates a random boolean value.
 
@@ -2590,7 +2628,7 @@ A random integer between min (inclusive) and max (exclusive).
 
 #### Function: generateRandomNumber()
 
-> **generateRandomNumber**(`probabilityTransformerFunction`): `number`
+> **generateRandomNumber**(`probabilityTransformerFunction?`): `number`
 
 Generates a random number based on a distribution function.
 
@@ -2610,7 +2648,7 @@ A generated random number.
 
 #### Function: generateRandomStringFromChars()
 
-> **generateRandomStringFromChars**(`length`, `chars`): `string`
+> **generateRandomStringFromChars**(`length`, `chars?`): `string`
 
 Generates a random string using the characters provided.
 
@@ -2671,11 +2709,7 @@ Creates a seeded pseudo-random number generator (LCG).
 
 A function that generates random numbers in [0, 1).
 
-> (): `number`
-
-###### Returns
-
-`number`
+() => `number`
 
 <a id="randomfunctionsweightedpickrandomelementmd"></a>
 
@@ -2997,7 +3031,7 @@ camelCase string
 
 ###### truncate()
 
-> `static` **truncate**(`str`, `length`, `suffix`): `string`
+> `static` **truncate**(`str`, `length`, `suffix?`): `string`
 
 Truncates a string to a specified length, optionally adding a suffix.
 
@@ -3048,7 +3082,7 @@ The unescaped string
 
 <a id="stringvariablesapplywordcasingmd"></a>
 
-#### Variable: applyWordCasing()
+#### Variable: applyWordCasing
 
 > `const` **applyWordCasing**: (`casingTemplate`, `word`) => `string` = `StringUtils.applyWordCasing`
 
@@ -3093,9 +3127,13 @@ The `word` adjusted to match the template's basic casing
 
 ##### Param
 
+**casingTemplate**
+
 A word whose casing should be copied (e.g. 'Cat' or 'CAT')
 
 ##### Param
+
+**word**
 
 The word to apply casing to (usually a transformed/lowercased form)
 
@@ -3105,7 +3143,7 @@ The `word` adjusted to match the template's basic casing
 
 <a id="stringvariablescameltosnakemd"></a>
 
-#### Variable: camelToSnake()
+#### Variable: camelToSnake
 
 > `const` **camelToSnake**: (`str`) => `string` = `StringUtils.camelToSnake`
 
@@ -3127,6 +3165,8 @@ snake_case string
 
 ##### Param
 
+**str**
+
 The camelCase string to convert
 
 ##### Returns
@@ -3135,7 +3175,7 @@ snake_case string
 
 <a id="stringvariablescapitalisemd"></a>
 
-#### Variable: capitalise()
+#### Variable: capitalise
 
 > `const` **capitalise**: (`str`) => `string` = `StringUtils.capitalise`
 
@@ -3157,6 +3197,8 @@ Capitalised string
 
 ##### Param
 
+**str**
+
 The string to capitalise
 
 ##### Returns
@@ -3165,7 +3207,7 @@ Capitalised string
 
 <a id="stringvariablescapitalizemd"></a>
 
-#### Variable: capitalize()
+#### Variable: capitalize
 
 > `const` **capitalize**: (`str`) => `string` = `StringUtils.capitalize`
 
@@ -3187,6 +3229,8 @@ Capitalized string
 
 ##### Param
 
+**str**
+
 The string to capitalize
 
 ##### Returns
@@ -3195,7 +3239,7 @@ Capitalized string
 
 <a id="stringvariablesescapexmlmd"></a>
 
-#### Variable: escapeXml()
+#### Variable: escapeXml
 
 > `const` **escapeXml**: \<`T`\>(`str`) => `T` = `StringUtils.escapeXml`
 
@@ -3227,6 +3271,8 @@ The escaped XML string
 
 ##### Param
 
+**str**
+
 The string to escape for XML
 
 ##### Returns
@@ -3235,7 +3281,7 @@ The escaped XML string
 
 <a id="stringvariablespluralisemd"></a>
 
-#### Variable: pluralise()
+#### Variable: pluralise
 
 > `const` **pluralise**: (`word`, `count`) => `string` = `StringUtils.pluralise`
 
@@ -3282,9 +3328,13 @@ The pluralized word with basic casing preserved
 
 ##### Param
 
+**word**
+
 The single English word to pluralize (may be mixed case)
 
 ##### Param
+
+**count**
 
 The numeric count; if equal to 1 the original word is returned
 
@@ -3294,7 +3344,7 @@ The pluralized word with basic casing preserved
 
 <a id="stringvariablespluralizemd"></a>
 
-#### Variable: pluralize()
+#### Variable: pluralize
 
 > `const` **pluralize**: (`word`, `count`) => `string` = `StringUtils.pluralize`
 
@@ -3361,9 +3411,13 @@ The pluralized word with basic casing preserved
 
 ##### Param
 
+**word**
+
 The single English word to pluralize (may be mixed case)
 
 ##### Param
+
+**count**
 
 The numeric count; if equal to 1 the original word is returned
 
@@ -3373,7 +3427,7 @@ The pluralized word with basic casing preserved
 
 <a id="stringvariablessnaketocamelmd"></a>
 
-#### Variable: snakeToCamel()
+#### Variable: snakeToCamel
 
 > `const` **snakeToCamel**: (`str`) => `string` = `StringUtils.snakeToCamel`
 
@@ -3395,6 +3449,8 @@ camelCase string
 
 ##### Param
 
+**str**
+
 The snake_case string to convert
 
 ##### Returns
@@ -3403,7 +3459,7 @@ camelCase string
 
 <a id="stringvariablestruncatemd"></a>
 
-#### Variable: truncate()
+#### Variable: truncate
 
 > `const` **truncate**: (`str`, `length`, `suffix`) => `string` = `StringUtils.truncate`
 
@@ -3427,13 +3483,19 @@ Truncated string
 
 ##### Param
 
+**str**
+
 The string to truncate
 
 ##### Param
 
+**length**
+
 Maximum length of the resulting string (including suffix if provided)
 
 ##### Param
+
+**suffix**
 
 Optional suffix to add to truncated string (default: '...')
 
@@ -3443,7 +3505,7 @@ Truncated string
 
 <a id="stringvariablesunescapexmlmd"></a>
 
-#### Variable: unescapeXml()
+#### Variable: unescapeXml
 
 > `const` **unescapeXml**: \<`T`\>(`str`) => `T` = `StringUtils.unescapeXml`
 
@@ -3472,6 +3534,8 @@ Converts &amp;, &lt;, &gt;, &quot;, &apos; back to their original characters.
 The unescaped string
 
 ##### Param
+
+**str**
 
 The string to unescape from XML
 
@@ -3569,7 +3633,7 @@ console.log(
 
 <a id="stringify-replacertype-aliasesjsonstringifyreplacermd"></a>
 
-#### Type Alias: JsonStringifyReplacer()
+#### Type Alias: JsonStringifyReplacer
 
 > **JsonStringifyReplacer** = (`this`, `key`, `value`) => `any`
 
@@ -3604,7 +3668,7 @@ Those rules are stored in the `rules` property in case of need.
 
 <a id="stringify-replacertype-aliasespathawarereplacermd"></a>
 
-#### Type Alias: PathAwareReplacer()
+#### Type Alias: PathAwareReplacer
 
 > **PathAwareReplacer** = (`key`, `value`, `path`, `parent`, `pathArray`, `ancestors`) => `any`
 
