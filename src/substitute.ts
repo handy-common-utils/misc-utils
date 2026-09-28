@@ -13,7 +13,11 @@
  *        In such case, the `lastIndex` of the `searchPattern` will not be reset to zero.
  * @returns The resulting string after performing all substitutions.
  */
-export function substituteAll<T extends string|null|undefined>(input: T, searchPattern: RegExp, substitute: (match: string, matchResult: NonNullable<ReturnType<RegExp['exec']>>) => string|null): T {
+export function substituteAll<T extends string | null | undefined>(
+  input: T,
+  searchPattern: RegExp,
+  substitute: (match: string, matchResult: NonNullable<ReturnType<RegExp['exec']>>) => string | null,
+): T {
   if (input == null) {
     return input;
   }
@@ -27,7 +31,8 @@ export function substituteAll<T extends string|null|undefined>(input: T, searchP
   let previousLastIndex = 0;
   while ((result = searchPattern.exec(input)) !== null) {
     const substitution = substitute(result[0], result);
-    if (substitution == null) { // append the remaining and exit
+    if (substitution == null) {
+      // append the remaining and exit
       segments.push(input.slice(previousLastIndex));
       previousLastIndex = input.length;
       break;
@@ -35,10 +40,12 @@ export function substituteAll<T extends string|null|undefined>(input: T, searchP
     segments.push(input.slice(previousLastIndex, searchPattern.lastIndex - result[0].length), substitution);
     previousLastIndex = searchPattern.lastIndex;
   }
-  if (segments.length === 0) {  // no matching at all
+  if (segments.length === 0) {
+    // no matching at all
     return input as T;
   }
-  if (previousLastIndex < input.length) { // remaining part
+  if (previousLastIndex < input.length) {
+    // remaining part
     segments.push(input.slice(previousLastIndex));
   }
   return segments.join('') as T;

@@ -18,7 +18,14 @@
  *                    Default value is '*'.
  * @returns String with masked content
  */
-export function mask<T extends string|undefined|null>(input: T, keepLeft = 1, keepRight = 0, minLength = 3, maskLengthOrMaskString: number|string|undefined|null = null, maskPattern = '*'): T {
+export function mask<T extends string | undefined | null>(
+  input: T,
+  keepLeft = 1,
+  keepRight = 0,
+  minLength = 3,
+  maskLengthOrMaskString: number | string | undefined | null = null,
+  maskPattern = '*',
+): T {
   if (minLength <= keepLeft + keepRight) {
     throw new Error(`Invalid parameter: expected minLength > keepLeft + keepRight, but got ${minLength}, ${keepLeft}, ${keepRight}`);
   }
@@ -37,8 +44,9 @@ export function mask<T extends string|undefined|null>(input: T, keepLeft = 1, ke
   if (typeof maskLengthOrMaskString === 'string') {
     maskString = maskLengthOrMaskString;
   } else {
-    const maskLength = maskLengthOrMaskString == null ? (input.length - keepLeft - keepRight) : maskLengthOrMaskString;
-    maskString = maskPattern.length === 1 ? maskPattern.repeat(maskLength) : maskPattern.repeat(maskLength / maskPattern.length + 1).substring(0, maskLength);
+    const maskLength = maskLengthOrMaskString ?? input.length - keepLeft - keepRight;
+    maskString =
+      maskPattern.length === 1 ? maskPattern.repeat(maskLength) : maskPattern.repeat(maskLength / maskPattern.length + 1).substring(0, maskLength);
   }
 
   return `${input.substring(0, keepLeft)}${maskString}${input.substring(input.length - keepRight, input.length)}` as T;
@@ -65,8 +73,14 @@ export function mask<T extends string|undefined|null>(input: T, keepLeft = 1, ke
  *                    Default value is '*'.
  * @returns A mask function that has specified parameters as pre-set
  */
-export function masker<T extends string|undefined|null = string>(keepLeft?: number, keepRight?: number, minLength?: number, maskLengthOrMaskString?: number|string|undefined|null, maskPattern?: string): (input: T) => T {
-  return input => mask(input, keepLeft, keepRight, minLength, maskLengthOrMaskString, maskPattern);
+export function masker<T extends string | undefined | null = string>(
+  keepLeft?: number,
+  keepRight?: number,
+  minLength?: number,
+  maskLengthOrMaskString?: number | string | undefined | null,
+  maskPattern?: string,
+): (input: T) => T {
+  return (input) => mask(input, keepLeft, keepRight, minLength, maskLengthOrMaskString, maskPattern);
 }
 
 /**
@@ -74,7 +88,7 @@ export function masker<T extends string|undefined|null = string>(keepLeft?: numb
  * @param email the email address which could also be null or undefined
  * @returns masked email address
  */
-export function maskEmail<T extends string|undefined|null>(email: T): T {
+export function maskEmail<T extends string | undefined | null>(email: T): T {
   // pass through for undefined and null
   if (email == null) {
     return email;
@@ -83,7 +97,7 @@ export function maskEmail<T extends string|undefined|null>(email: T): T {
   const segments = email.split('@');
   if (segments.length === 2 && segments[0].length > 0) {
     const parts = segments[0].split('.');
-    segments[0] = parts.map(s => mask(s, 1)).join('.');
+    segments[0] = parts.map((s) => mask(s, 1)).join('.');
     return segments.join('@') as T;
   }
 
@@ -96,14 +110,14 @@ export function maskEmail<T extends string|undefined|null>(email: T): T {
  * @param name the full name which could also be null or undefined
  * @returns masked full name
  */
-export function maskFullName<T extends string|undefined|null>(name: T): T {
+export function maskFullName<T extends string | undefined | null>(name: T): T {
   // pass through for undefined and null
   if (name == null) {
     return name;
   }
 
   const segments = name.split(' ');
-  return segments.map(s => mask(s, 1)).join(' ') as T;
+  return segments.map((s) => mask(s, 1)).join(' ') as T;
 }
 
 /**
@@ -111,7 +125,7 @@ export function maskFullName<T extends string|undefined|null>(name: T): T {
  * @param input a string or null or undefined
  * @returns masked string or null or undefined
  */
-export function maskAll<T extends string|undefined|null>(input: T): T {
+export function maskAll<T extends string | undefined | null>(input: T): T {
   return mask(input, 0);
 }
 
@@ -120,10 +134,6 @@ export function maskAll<T extends string|undefined|null>(input: T): T {
  * @param input credit card number string which could also be null or undefined
  * @returns Something like ****-****-****-1234, or null/undefined if the input is null/undefined
  */
-export function maskCreditCard<T extends string|undefined|null>(input: T): T {
-  if (input == null) {
-    return input;
-  }
-
-  return '****-****-****-' + input.padStart(4, '*').slice(-4) as T;
+export function maskCreditCard<T extends string | undefined | null>(input: T): T {
+  return input == null ? input : (('****-****-****-' + input.padStart(4, '*').slice(-4)) as T);
 }

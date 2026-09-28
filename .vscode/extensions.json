@@ -1,8 +1,3 @@
 {
-  "recommendations": [
-    "streetsidesoftware.code-spell-checker",
-    "adam-bender.commit-message-editor",
-    "dbaeumer.vscode-eslint",
-    "eamodio.gitlens"
-  ]
+  "recommendations": ["streetsidesoftware.code-spell-checker", "adam-bender.commit-message-editor", "dbaeumer.vscode-eslint", "eamodio.gitlens"]
 }

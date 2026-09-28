@@ -1,10 +1,6 @@
 import { expect } from 'chai';
 
-import {
-  couldBeNetworkingTimeoutError,
-  couldBeServerError,
-  couldBeTemporaryNetworkingError,
-} from '../src/errors';
+import { couldBeNetworkingTimeoutError, couldBeServerError, couldBeTemporaryNetworkingError } from '../src/errors';
 
 describe('couldBeNetworkingTimeoutError', () => {
   it('should return true for statusCode 504', () => {

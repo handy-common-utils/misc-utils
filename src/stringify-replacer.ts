@@ -1,4 +1,4 @@
-type Parent = Record<string|number|symbol, unknown>|Array<unknown>;
+type Parent = Record<string | number | symbol, unknown> | Array<unknown>;
 /**
  * The original replacer expected by JSON.stringify(...)
  */
@@ -28,11 +28,12 @@ export type PathAwareReplacer = (key: string, value: any, path: string, parent: 
  * @param options.ancestors When false, ancestors would be an empty array.
  * @returns The replacer function that can be passed to JSON.stringify(...).
  */
-export function pathAwareReplacer(replacer: PathAwareReplacer, options?: {pathArray?: boolean, ancestors?: boolean}): JsonStringifyReplacer {
+export function pathAwareReplacer(replacer: PathAwareReplacer, options?: { pathArray?: boolean; ancestors?: boolean }): JsonStringifyReplacer {
   const currentPath: any[] = [];
   const ancestors: any[] = [];
   return function (this: any, key: string, value: any): any {
-    if (typeof key === 'string' && key === '') {   // root object
+    if (typeof key === 'string' && key === '') {
+      // root object
       currentPath.length = 0;
       ancestors.length = 0;
     } else {
@@ -83,16 +84,19 @@ export type JsonStringifyReplacerFromPathBasedRules = JsonStringifyReplacer & { 
  * @returns The replacer function built from those path based rules. It also has a `rules` property storing all the path based rules provided as inputs.
  */
 export function pathBasedReplacer(rules: JsonStringifyReplacerFromPathBasedRules['rules']): JsonStringifyReplacerFromPathBasedRules {
-  const replacer =  pathAwareReplacer(function (_key: string, value: any, path: string): any {
-    for (const [regexp, replace] of rules) {
-      if (regexp.test(path)) {
-        return replace(value);
+  const replacer = pathAwareReplacer(
+    function (_key: string, value: any, path: string): any {
+      for (const [regexp, replace] of rules) {
+        if (regexp.test(path)) {
+          return replace(value);
+        }
       }
-    }
-    return value;
-  }, {
-    pathArray: false,
-    ancestors: false,
-  });
+      return value;
+    },
+    {
+      pathArray: false,
+      ancestors: false,
+    },
+  );
   return Object.assign(replacer, { rules });
 }

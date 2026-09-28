@@ -1,3 +1,7 @@
+// Methods below intentionally call `StringUtils.xxx` (not `this.xxx`) because they are also exported as standalone
+// const functions (e.g. `export const capitalise = StringUtils.capitalise`), which detaches them from the class and
+// leaves `this` unbound when called that way.
+/* eslint-disable unicorn/class-reference-in-static-methods */
 export class StringUtils {
   /**
    * Preserve basic casing from a template single word and apply it to another word.
@@ -18,10 +22,9 @@ export class StringUtils {
    */
   static applyWordCasing(casingTemplate: string, word: string): string {
     if (casingTemplate === casingTemplate.toUpperCase()) return word.toUpperCase();
-    if (casingTemplate[0] === casingTemplate[0].toUpperCase() && casingTemplate.slice(1) === casingTemplate.slice(1).toLowerCase()) {
-      return word[0].toUpperCase() + word.slice(1).toLowerCase();
-    }
-    return word;
+    return casingTemplate[0] === casingTemplate[0].toUpperCase() && casingTemplate.slice(1) === casingTemplate.slice(1).toLowerCase()
+      ? word[0].toUpperCase() + word.slice(1).toLowerCase()
+      : word;
   }
 
   /**
@@ -52,8 +55,7 @@ export class StringUtils {
    * @returns Capitalized string
    */
   static capitalize(str: string): string {
-    if (!str) return str;
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    return str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : str;
   }
 
   /**
@@ -63,13 +65,15 @@ export class StringUtils {
    */
   static camelToSnake(str: string): string {
     if (!str) return str;
-    return str
-      // eslint-disable-next-line unicorn/prefer-string-replace-all
-      .replace(/([\da-z])([A-Z])/g, '$1_$2')
-      // eslint-disable-next-line unicorn/prefer-string-replace-all
-      .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
-      .toLowerCase()
-      .replace(/^_/, '');
+    return (
+      str
+        // eslint-disable-next-line unicorn/prefer-string-replace-all
+        .replace(/([\da-z])([A-Z])/g, '$1_$2')
+        // eslint-disable-next-line unicorn/prefer-string-replace-all
+        .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
+        .toLowerCase()
+        .replace(/^_/, '')
+    );
   }
 
   /**
@@ -79,10 +83,12 @@ export class StringUtils {
    */
   static snakeToCamel(str: string): string {
     if (!str) return str;
-    return str
-      .toLowerCase()
-      // eslint-disable-next-line unicorn/prefer-string-replace-all
-      .replace(/_+([a-z])/g, (_: string, letter: string) => letter.toUpperCase());
+    return (
+      str
+        .toLowerCase()
+        // eslint-disable-next-line unicorn/prefer-string-replace-all
+        .replace(/_+([a-z])/g, (_: string, letter: string) => letter.toUpperCase())
+    );
   }
 
   /**
@@ -196,9 +202,6 @@ export class StringUtils {
       return StringUtils.applyWordCasing(word, irregulars[lower]);
     }
 
-    // Words that form plural by adding 'es' when ending with o
-    const oEsExceptions = new Set(['echo', 'hero', 'potato', 'tomato', 'torpedo']);
-
     // Rules-based pluralization
     // f/fe -> ves (knife -> knives)
     if (/([a-z])(?:fe|f)$/.test(lower)) {
@@ -217,8 +220,9 @@ export class StringUtils {
 
     // words ending with 'o' -> usually add 's', but some add 'es'
     if (lower.endsWith('o')) {
-      if (oEsExceptions.has(lower)) return StringUtils.applyWordCasing(word, lower + 'es');
-      return StringUtils.applyWordCasing(word, lower + 's');
+      // Words that form plural by adding 'es' when ending with o
+      const oEsExceptions = new Set(['echo', 'hero', 'potato', 'tomato', 'torpedo']);
+      return oEsExceptions.has(lower) ? StringUtils.applyWordCasing(word, lower + 'es') : StringUtils.applyWordCasing(word, lower + 's');
     }
 
     // Default: just add 's'
@@ -243,7 +247,7 @@ export class StringUtils {
     };
     // Use replaceAll for each entity for lint compliance
     // eslint-disable-next-line unicorn/prefer-string-replace-all
-    return str.replace(/[&<>'"]/g, ch => xmlEntities[ch]) as T;
+    return str.replace(/[&<>'"]/g, (ch) => xmlEntities[ch]) as T;
   }
 
   /**
@@ -263,7 +267,7 @@ export class StringUtils {
     };
     // Replace all XML entities using a regex
     // eslint-disable-next-line unicorn/prefer-string-replace-all
-    return str.replace(/&(amp|lt|gt|quot|apos);/g, entity => xmlEntities[entity]) as T;
+    return str.replace(/&(amp|lt|gt|quot|apos);/g, (entity) => xmlEntities[entity]) as T;
   }
 }
 

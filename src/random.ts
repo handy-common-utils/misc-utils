@@ -4,7 +4,7 @@
  *                If not provided, the identity function F(x) = x will be used.
  * @returns A generated random number.
  */
-export function generateRandomNumber(probabilityTransformerFunction: ((x: number) => number) = x => x): number {
+export function generateRandomNumber(probabilityTransformerFunction: (x: number) => number = (x) => x): number {
   return probabilityTransformerFunction(Math.random());
 }
 
@@ -45,7 +45,10 @@ export function pickRandomElement<T>(array: Array<T>): T | undefined {
  * @param chars The characters to use. Defaults to alphanumeric characters.
  * @returns A random string.
  */
-export function generateRandomStringFromChars(length: number, chars: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'): string {
+export function generateRandomStringFromChars(
+  length: number,
+  chars: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+): string {
   let result = '';
   for (let i = 0; i < length; i++) {
     result += chars.charAt(Math.floor(Math.random() * chars.length));

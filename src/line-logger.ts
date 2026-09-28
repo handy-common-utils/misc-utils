@@ -52,7 +52,11 @@ export class LineLogger<DEBUG_FUNC extends Function, INFO_FUNC extends Function,
    * @param quietFlagName   Name of the quiet field in the flags object
    * @returns An instance that uses console.log/info/warn/error.
    */
-  static console<FLAGS extends Record<string, any>>(flags: FLAGS = {} as any, debugFlagName: keyof FLAGS = 'debug', quietFlagName: keyof FLAGS = 'quiet') {
+  static console<FLAGS extends Record<string, any>>(
+    flags: FLAGS = {} as any,
+    debugFlagName: keyof FLAGS = 'debug',
+    quietFlagName: keyof FLAGS = 'quiet',
+  ) {
     return new LineLogger(console.log, console.info, console.warn, console.error, flags[debugFlagName], flags[quietFlagName]);
   }
 
@@ -73,30 +77,48 @@ export class LineLogger<DEBUG_FUNC extends Function, INFO_FUNC extends Function,
    * @param quietFlagName   Name of the quiet field in the flags object
    * @returns An instance that uses console.log/info/warn/error and also adds colour to the messages using chalk/colors/cli-color.
    */
-  static consoleWithColour<FLAGS extends Record<string, any>, COLOURER extends Record<string, any>>(flags: FLAGS,
-    colourer: COLOURER, debugColourFuncName: keyof COLOURER = 'grey', infoColourFuncName?: keyof COLOURER | undefined, warnColourFuncName: keyof COLOURER = 'yellow', errorColourFuncName: keyof COLOURER = 'red',
-    debugFlagName: keyof FLAGS = 'debug', quietFlagName: keyof FLAGS = 'quiet',
+  static consoleWithColour<FLAGS extends Record<string, any>, COLOURER extends Record<string, any>>(
+    flags: FLAGS,
+    colourer: COLOURER,
+    debugColourFuncName: keyof COLOURER = 'grey',
+    infoColourFuncName?: keyof COLOURER | undefined,
+    warnColourFuncName: keyof COLOURER = 'yellow',
+    errorColourFuncName: keyof COLOURER = 'red',
+    debugFlagName: keyof FLAGS = 'debug',
+    quietFlagName: keyof FLAGS = 'quiet',
   ) {
     return new LineLogger(
       // debug
       (message?: any, ...optionalParams: any[]) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-        console.log(debugColourFuncName == null || typeof message !== 'string' ? message : (colourer[debugColourFuncName] as any as Function)(message), ...optionalParams);
+        console.log(
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+          debugColourFuncName == null || typeof message !== 'string' ? message : (colourer[debugColourFuncName] as any as Function)(message),
+          ...optionalParams,
+        );
       },
       // info
       (message?: any, ...optionalParams: any[]) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-        console.info(infoColourFuncName == null || typeof message !== 'string' ? message : (colourer[infoColourFuncName] as any as Function)(message), ...optionalParams);
+        console.info(
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+          infoColourFuncName == null || typeof message !== 'string' ? message : (colourer[infoColourFuncName] as any as Function)(message),
+          ...optionalParams,
+        );
       },
       // warn
       (message?: any, ...optionalParams: any[]) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-        console.warn(warnColourFuncName == null || typeof message !== 'string' ? message : (colourer[warnColourFuncName] as any as Function)(message), ...optionalParams);
+        console.warn(
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+          warnColourFuncName == null || typeof message !== 'string' ? message : (colourer[warnColourFuncName] as any as Function)(message),
+          ...optionalParams,
+        );
       },
       // error
       (message?: any, ...optionalParams: any[]) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-        console.error(errorColourFuncName == null || typeof message !== 'string' ? message : (colourer[errorColourFuncName] as any as Function)(message), ...optionalParams);
+        console.error(
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+          errorColourFuncName == null || typeof message !== 'string' ? message : (colourer[errorColourFuncName] as any as Function)(message),
+          ...optionalParams,
+        );
       },
       flags[debugFlagName],
       flags[quietFlagName],
@@ -146,13 +168,18 @@ export class LineLogger<DEBUG_FUNC extends Function, INFO_FUNC extends Function,
    * @param isDebug         is debug output enabled or not, it could be overriden by isQuiet
    * @param isQuiet         is quiet mode enabled or not. When quiet mode is enabled, both debug and info output would be discarded.
    */
-  constructor(debugFunction: DEBUG_FUNC, infoFunction: INFO_FUNC, warnFunction: WARN_FUNC, errorFunction: ERROR_FUNC,
-              public isDebug: boolean = false, public isQuiet: boolean = false,
+  constructor(
+    debugFunction: DEBUG_FUNC,
+    infoFunction: INFO_FUNC,
+    warnFunction: WARN_FUNC,
+    errorFunction: ERROR_FUNC,
+    public isDebug: boolean = false,
+    public isQuiet: boolean = false,
   ) {
-    if (isDebug === true && isQuiet !== true) {
+    if (isDebug && !isQuiet) {
       this.debug = debugFunction;
     }
-    if (isQuiet !== true) {
+    if (!isQuiet) {
       this.info = infoFunction;
     }
     this.warn = warnFunction;

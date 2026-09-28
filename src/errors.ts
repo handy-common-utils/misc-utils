@@ -27,7 +27,15 @@ export function couldBeTemporaryNetworkingError(err: unknown): boolean {
     return false;
   }
   const { message, statusCode } = getErrorDetails(err);
-  return statusCode === '504' || message.includes('ECONNREFUSED') || message.includes('ETIMEDOUT') || message.includes('EAI_AGAIN') || message.includes('socket hang up') || message.includes('EPIPE') || message.includes('ECONNRESET');
+  return (
+    statusCode === '504' ||
+    message.includes('ECONNREFUSED') ||
+    message.includes('ETIMEDOUT') ||
+    message.includes('EAI_AGAIN') ||
+    message.includes('socket hang up') ||
+    message.includes('EPIPE') ||
+    message.includes('ECONNRESET')
+  );
 }
 
 /**

@@ -57,11 +57,7 @@ const isPlainObject = (value: any): value is Record<string, any> => {
  * @param sources - The source objects.
  * @returns The merged object.
  */
-export function merge<T extends object, U extends any[]>(
-  options: MergeOptions | null | undefined,
-  destination: T,
-  ...sources: U
-): T & (U[number]) {
+export function merge<T extends object, U extends any[]>(options: MergeOptions | null | undefined, destination: T, ...sources: U): T & U[number] {
   const finalOptions: Required<MergeOptions> = {
     immutable: false,
     array: 'merge',
@@ -103,19 +99,17 @@ export function merge<T extends object, U extends any[]>(
       return;
     }
 
-    Object.keys(source).forEach(key => {
-      const targetValue = target[key];
-      const sourceValue = source[key];
-
+    for (const [key, sourceValue] of Object.entries(source)) {
       if (sourceValue === undefined) {
-        return;
+        continue;
       }
+
+      const targetValue = target[key];
 
       // Handle Sets
       if (targetValue instanceof Set && sourceValue instanceof Set) {
-        // eslint-disable-next-line perfectionist/sort-sets
         target[key] = finalOptions.set === 'merge' ? new Set([...targetValue, ...sourceValue]) : sourceValue;
-        return;
+        continue;
       }
 
       // Handle Arrays
@@ -124,8 +118,9 @@ export function merge<T extends object, U extends any[]>(
           target[key] = sourceValue;
         } else if (finalOptions.array === 'append') {
           target[key] = targetValue.concat(sourceValue);
-        } else { // 'merge'
-          sourceValue.forEach((item, index) => {
+        } else {
+          // 'merge'
+          for (const [index, item] of sourceValue.entries()) {
             if (isPlainObject(targetValue[index]) && isPlainObject(item)) {
               baseMerge(targetValue[index], item);
             } else if (index < targetValue.length) {
@@ -133,20 +128,20 @@ export function merge<T extends object, U extends any[]>(
             } else {
               targetValue.push(item);
             }
-          });
+          }
         }
-        return;
+        continue;
       }
 
       // Handle plain objects
       if (isPlainObject(targetValue) && isPlainObject(sourceValue)) {
         baseMerge(targetValue, sourceValue);
-        return;
+        continue;
       }
 
       // For all other cases (primitives, non-plain objects, etc.), replace the value.
       target[key] = sourceValue;
-    });
+    }
   };
 
   for (const source of sources) {

@@ -46,10 +46,7 @@ const sample = downSampleRandomly(items, 3);
 ### Encoding of Strings
 
 ```typescript
-import { 
-  shortBase64UrlFromUInt32,
-  generateRandomString 
-} from '@handy-common-utils/misc-utils';
+import { shortBase64UrlFromUInt32, generateRandomString } from '@handy-common-utils/misc-utils';
 
 // Convert number to URL-safe base64
 const urlSafeId = shortBase64UrlFromUInt32(12345);
@@ -63,11 +60,7 @@ const randomId2 = generateRandomStringQuickly(16);
 ### Error Classification
 
 ```typescript
-import {
-  couldBeNetworkingTimeoutError,
-  couldBeServerError,
-  couldBeTemporaryNetworkingError
-} from '@handy-common-utils/misc-utils';
+import { couldBeNetworkingTimeoutError, couldBeServerError, couldBeTemporaryNetworkingError } from '@handy-common-utils/misc-utils';
 
 try {
   await fetchData();
@@ -84,28 +77,31 @@ try {
 ### Line Logger
 
 ```typescript
- // use chalk (chalk is not a dependency of this package, you need to add chalk as a dependency separately)
- import chalk from 'chalk';
- import { LineLogger } from '@handy-common-utils/misc-utils';
+// use chalk (chalk is not a dependency of this package, you need to add chalk as a dependency separately)
+import chalk from 'chalk';
+import { LineLogger } from '@handy-common-utils/misc-utils';
 
- // this.flags is an object with properties "debug" and "quiet"
- this.output = LineLogger.consoleWithColour(this.flags, chalk);
- this.output.warn('Configuration file not found, default configuration would be used.');  // it would be printed out in yellow
+// this.flags is an object with properties "debug" and "quiet"
+this.output = LineLogger.consoleWithColour(this.flags, chalk);
+this.output.warn('Configuration file not found, default configuration would be used.'); // it would be printed out in yellow
 ```
 
-### String Masking 
+### String Masking
 
 ```typescript
 import { mask, maskAll, maskEmail, maskFullName, pathBasedReplacer } from '@handy-common-utils/misc-utils';
 
-const masked = JSON.stringify(obj, pathBasedReplacer([
-  [/(^|\.)x-api-key$/i, maskAll],
-  [/(^|\.)customer\.name$/i, maskFullName],
-  [/(^|\.)customer\..*[eE]mail$/i, maskEmail],
-  [/(^|\.)zip$/i, (value: string) => value.slice(0, 3) + 'XX'],
-  [/(^|\.)cc$/i, () => undefined],
-  [/(^|\.)ssn$/i, mask],
-]));
+const masked = JSON.stringify(
+  obj,
+  pathBasedReplacer([
+    [/(^|\.)x-api-key$/i, maskAll],
+    [/(^|\.)customer\.name$/i, maskFullName],
+    [/(^|\.)customer\..*[eE]mail$/i, maskEmail],
+    [/(^|\.)zip$/i, (value: string) => value.slice(0, 3) + 'XX'],
+    [/(^|\.)cc$/i, () => undefined],
+    [/(^|\.)ssn$/i, mask],
+  ]),
+);
 ```
 
 ### JSON Stringify with Replacers
@@ -118,15 +114,15 @@ const data = {
     name: 'John Smith',
     email: 'john@example.com',
     ssn: '123-45-6789',
-    creditCard: '4111-1111-1111-1111'
-  }
+    creditCard: '4111-1111-1111-1111',
+  },
 };
 
 const replacer = pathBasedReplacer([
   [/\.name$/, maskFullName],
   [/\.email$/, maskEmail],
   [/\.ssn$/, maskAll],
-  [/\.creditCard$/, maskCreditCard]
+  [/\.creditCard$/, maskCreditCard],
 ]);
 
 console.log(JSON.stringify(data, replacer, 2));
@@ -149,16 +145,7 @@ const result = substituteAll(template, /{([^{}]+)}/g, (_, groups) => {
 ### String Utilities
 
 ```typescript
-import {
-  truncate,
-  capitalize,
-  capitalise,
-  camelToSnake,
-  snakeToCamel,
-  pluralize,
-  pluralise,
-  applyWordCasing
-} from '@handy-common-utils/misc-utils';
+import { truncate, capitalize, capitalise, camelToSnake, snakeToCamel, pluralize, pluralise, applyWordCasing } from '@handy-common-utils/misc-utils';
 
 // Truncate a string
 truncate('hello world', 8); // 'hello...'
@@ -211,7 +198,7 @@ In software development, it's often necessary to hide sensitive information
 to protect user privacy or comply with regulations.
 Masking is a common technique used to replace part of a sensitive value with a different,
 non-sensitive value.
-For example, you might mask credit card numbers, passwords, or email addresses. 
+For example, you might mask credit card numbers, passwords, or email addresses.
 
 The `mask(input, keepLeft = 1, keepRight = 0, minLength = 3, maskLengthOrMaskString = null, maskPattern = '*')` function
 can be used to mask the content of a string, replacing a part of the input string with a mask string.
@@ -308,7 +295,7 @@ It provides flexibility in handling complex substitution scenarios through the `
 
 ### Example Usage Scenarios:
 
-- __Templating__: Replace placeholder variables in a template string with dynamic values. For example, transforming the template "Hello, {name}! How are you, {name}? I am {me}." into "Hello, John! How are you, John? I am James." by substituting `{name}` with the value "John" and `{me}` with value "James".
+- **Templating**: Replace placeholder variables in a template string with dynamic values. For example, transforming the template "Hello, {name}! How are you, {name}? I am {me}." into "Hello, John! How are you, John? I am James." by substituting `{name}` with the value "John" and `{me}` with value "James".
 
 ```typescript
 const input = 'Hello, {name}! How are you, {name}? I am {me}.';
@@ -322,10 +309,9 @@ const substitute: Parameters<typeof substituteAll>[2] = (_match, result) => {
   return dict[key] ?? `{NOT FOUND: ${key}}`;
 };
 const result = substituteAll(input, searchPattern, substitute);
-
 ```
 
-- __Text Transformation__: Modify specific segments of a string based on predefined patterns. For instance, converting dates written in a non-standard format, such as "MM/DD/YY", to a standardized format, like "YYYY-MM-DD", using a suitable regular expression pattern and substitution logic.
+- **Text Transformation**: Modify specific segments of a string based on predefined patterns. For instance, converting dates written in a non-standard format, such as "MM/DD/YY", to a standardized format, like "YYYY-MM-DD", using a suitable regular expression pattern and substitution logic.
 
 ```typescript
 const input = 'Event date: 12/31/21';
@@ -337,36 +323,35 @@ const substitute = (_: string, result: any) => {
 };
 
 const result = substituteAll(input, searchPattern, substitute);
-
 ```
 
 # API
 
 <!-- API start -->
+
 <a name="readmemd"></a>
 
 ## @handy-common-utils/misc-utils
 
 ### Modules
 
-| Module | Description |
-| ------ | ------ |
-| [array](#arrayreadmemd) | - |
-| [codec](#codecreadmemd) | - |
-| [errors](#errorsreadmemd) | - |
-| [http-status](http-status/README.md) | - |
-| [index](#indexreadmemd) | - |
-| [line-logger](#line-loggerreadmemd) | - |
-| [mask](#maskreadmemd) | - |
-| [merge](#mergereadmemd) | - |
-| [number](#numberreadmemd) | - |
-| [random](#randomreadmemd) | - |
-| [string](#stringreadmemd) | - |
-| [stringify-replacer](#stringify-replacerreadmemd) | - |
-| [substitute](#substitutereadmemd) | - |
+| Module                                            | Description |
+| ------------------------------------------------- | ----------- |
+| [array](#arrayreadmemd)                           | -           |
+| [codec](#codecreadmemd)                           | -           |
+| [errors](#errorsreadmemd)                         | -           |
+| [http-status](http-status/README.md)              | -           |
+| [index](#indexreadmemd)                           | -           |
+| [line-logger](#line-loggerreadmemd)               | -           |
+| [mask](#maskreadmemd)                             | -           |
+| [merge](#mergereadmemd)                           | -           |
+| [number](#numberreadmemd)                         | -           |
+| [random](#randomreadmemd)                         | -           |
+| [string](#stringreadmemd)                         | -           |
+| [stringify-replacer](#stringify-replacerreadmemd) | -           |
+| [substitute](#substitutereadmemd)                 | -           |
 
 ## Array
-
 
 <a id="arrayreadmemd"></a>
 
@@ -374,20 +359,19 @@ const result = substituteAll(input, searchPattern, substitute);
 
 #### Functions
 
-| Function | Description |
-| ------ | ------ |
-| [chunk](#arrayfunctionschunkmd) | Splits an array into chunks of a specified size. |
-| [distributeRoundRobin](#arrayfunctionsdistributeroundrobinmd) | Distributes an array into a number of groups in a round robin fashion. This function has been tuned for performance. |
-| [downSampleRandomly](#arrayfunctionsdownsamplerandomlymd) | Down samples the input array randomly. |
-| [findIndexInSorted](#arrayfunctionsfindindexinsortedmd) | Finds the index of an element in a sorted array using a golden ratio split (0.6180339887). |
-| [findInsertionIndexInSorted](#arrayfunctionsfindinsertionindexinsortedmd) | Finds the index where an item should be inserted into a sorted array to maintain order, using a golden ratio split (0.6180339887) for consistent performance. |
-| [findInSorted](#arrayfunctionsfindinsortedmd) | Finds an element in a sorted array using a golden ratio split (0.618) which statistically performs better than a "standard" binary search. |
-| [findWithinRangeInSorted](#arrayfunctionsfindwithinrangeinsortedmd) | Finds all elements within a specified range in a sorted array. |
-| [partition](#arrayfunctionspartitionmd) | Partitions an array into multiple groups based on a classifier function. Please note that by default the returned array could have length of zero if the input array is empty, or length of 1 if the classifier always returns the same value, or length of any number depending on the classifier function. For your use case, you may want to specify `initialCapacity` to make sure that the returned array always contains the specified number of elements or to avoid the overhead of resizing the result array. |
-| [shuffle](#arrayfunctionsshufflemd) | Shuffles the elements of an array randomly using the Fisher-Yates algorithm. |
+| Function                                                                  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [chunk](#arrayfunctionschunkmd)                                           | Splits an array into chunks of a specified size.                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| [distributeRoundRobin](#arrayfunctionsdistributeroundrobinmd)             | Distributes an array into a number of groups in a round robin fashion. This function has been tuned for performance.                                                                                                                                                                                                                                                                                                                                                                                                   |
+| [downSampleRandomly](#arrayfunctionsdownsamplerandomlymd)                 | Down samples the input array randomly.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| [findIndexInSorted](#arrayfunctionsfindindexinsortedmd)                   | Finds the index of an element in a sorted array using a golden ratio split (0.6180339887).                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| [findInsertionIndexInSorted](#arrayfunctionsfindinsertionindexinsortedmd) | Finds the index where an item should be inserted into a sorted array to maintain order, using a golden ratio split (0.6180339887) for consistent performance.                                                                                                                                                                                                                                                                                                                                                          |
+| [findInSorted](#arrayfunctionsfindinsortedmd)                             | Finds an element in a sorted array using a golden ratio split (0.618) which statistically performs better than a "standard" binary search.                                                                                                                                                                                                                                                                                                                                                                             |
+| [findWithinRangeInSorted](#arrayfunctionsfindwithinrangeinsortedmd)       | Finds all elements within a specified range in a sorted array.                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| [partition](#arrayfunctionspartitionmd)                                   | Partitions an array into multiple groups based on a classifier function. Please note that by default the returned array could have length of zero if the input array is empty, or length of 1 if the classifier always returns the same value, or length of any number depending on the classifier function. For your use case, you may want to specify `initialCapacity` to make sure that the returned array always contains the specified number of elements or to avoid the overhead of resizing the result array. |
+| [shuffle](#arrayfunctionsshufflemd)                                       | Shuffles the elements of an array randomly using the Fisher-Yates algorithm.                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 
 ### Functions
-
 
 <a id="arrayfunctionschunkmd"></a>
 
@@ -400,22 +384,21 @@ Splits an array into chunks of a specified size.
 ##### Type Parameters
 
 | Type Parameter |
-| ------ |
-| `T` |
+| -------------- |
+| `T`            |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `array` | `T`[] | The input array. |
-| `size` | `number` | The size of each chunk. |
+| Parameter | Type     | Description             |
+| --------- | -------- | ----------------------- |
+| `array`   | `T`[]    | The input array.        |
+| `size`    | `number` | The size of each chunk. |
 
 ##### Returns
 
 `T`[][]
 
 An array of chunks.
-
 
 <a id="arrayfunctionsdistributeroundrobinmd"></a>
 
@@ -429,22 +412,21 @@ This function has been tuned for performance.
 ##### Type Parameters
 
 | Type Parameter |
-| ------ |
-| `T` |
+| -------------- |
+| `T`            |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `array` | `T`[] | The input array |
-| `groups` | `number` | Number of groups the elements in the input array need to be distributed into. |
+| Parameter | Type     | Description                                                                   |
+| --------- | -------- | ----------------------------------------------------------------------------- |
+| `array`   | `T`[]    | The input array                                                               |
+| `groups`  | `number` | Number of groups the elements in the input array need to be distributed into. |
 
 ##### Returns
 
 `T`[][]
 
 The result as an array of arrays which each represents a group
-
 
 <a id="arrayfunctionsdownsamplerandomlymd"></a>
 
@@ -457,15 +439,15 @@ Down samples the input array randomly.
 ##### Type Parameters
 
 | Type Parameter |
-| ------ |
-| `T` |
+| -------------- |
+| `T`            |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `array` | `T`[] | The input array |
-| `numSamples` | `number` | Number of samples to be taken from the input array. If the number of samples is greater than or equal to the length of the input array, the output array will contain all the elements in the input array. |
+| Parameter                        | Type              | Description                                                                                                                                                                                                                                          |
+| -------------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `array`                          | `T`[]             | The input array                                                                                                                                                                                                                                      |
+| `numSamples`                     | `number`          | Number of samples to be taken from the input array. If the number of samples is greater than or equal to the length of the input array, the output array will contain all the elements in the input array.                                           |
 | `probabilityTransformerFunction` | (`x`) => `number` | A function that turns a random number within [0, 1) to another number within [0, 1). If not provided, the identity function F(x) = x will be used. The probability of an element being selected from the input array is determined by this function. |
 
 ##### Returns
@@ -473,8 +455,7 @@ Down samples the input array randomly.
 `T`[]
 
 A new array with the down sampled elements from the input array.
-         The order of the elements in the output array is the same as the input array.
-
+The order of the elements in the output array is the same as the input array.
 
 <a id="arrayfunctionsfindinsortedmd"></a>
 
@@ -487,22 +468,21 @@ Finds an element in a sorted array using a golden ratio split (0.618) which stat
 ##### Type Parameters
 
 | Type Parameter |
-| ------ |
-| `T` |
+| -------------- |
+| `T`            |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `array` | `T`[] \| `null` \| `undefined` | The sorted input array. If it is not sorted, the result would be incorrect. |
-| `compareFn` | (`item`) => `number` | A function that returns: - 0 if the element is the exact match. - A negative number if the element comes before the target. - A positive number if the element comes after the target. |
+| Parameter   | Type                           | Description                                                                                                                                                                            |
+| ----------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `array`     | `T`[] \| `null` \| `undefined` | The sorted input array. If it is not sorted, the result would be incorrect.                                                                                                            |
+| `compareFn` | (`item`) => `number`           | A function that returns: - 0 if the element is the exact match. - A negative number if the element comes before the target. - A positive number if the element comes after the target. |
 
 ##### Returns
 
 `T` \| `undefined`
 
 The found element or undefined if not found or the array is null/empty.
-
 
 <a id="arrayfunctionsfindindexinsortedmd"></a>
 
@@ -515,22 +495,21 @@ Finds the index of an element in a sorted array using a golden ratio split (0.61
 ##### Type Parameters
 
 | Type Parameter |
-| ------ |
-| `T` |
+| -------------- |
+| `T`            |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `array` | `T`[] \| `null` \| `undefined` | The sorted input array. |
-| `compareFn` | (`item`) => `number` | A function that returns: - 0 if the element is the exact match. - A negative number if the element comes before the target. - A positive number if the element comes after the target. |
+| Parameter   | Type                           | Description                                                                                                                                                                            |
+| ----------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `array`     | `T`[] \| `null` \| `undefined` | The sorted input array.                                                                                                                                                                |
+| `compareFn` | (`item`) => `number`           | A function that returns: - 0 if the element is the exact match. - A negative number if the element comes before the target. - A positive number if the element comes after the target. |
 
 ##### Returns
 
 `number` \| `undefined`
 
 The index of the found element, or undefined if not found or the array is null/empty.
-
 
 <a id="arrayfunctionsfindinsertionindexinsortedmd"></a>
 
@@ -544,16 +523,16 @@ using a golden ratio split (0.6180339887) for consistent performance.
 ##### Type Parameters
 
 | Type Parameter | Default type |
-| ------ | ------ |
-| `T` | - |
-| `I` | `T` |
+| -------------- | ------------ |
+| `T`            | -            |
+| `I`            | `T`          |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `array` | `T`[] | The sorted input array. |
-| `item` | `I` | The item to be inserted. Please note that it does not have to be of the same type as the elements in the array. |
+| Parameter   | Type                   | Description                                                                                                                                                                                                                                                                                                                   |
+| ----------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `array`     | `T`[]                  | The sorted input array.                                                                                                                                                                                                                                                                                                       |
+| `item`      | `I`                    | The item to be inserted. Please note that it does not have to be of the same type as the elements in the array.                                                                                                                                                                                                               |
 | `compareFn` | (`a`, `b`) => `number` | A function to compare the element in the array with the item passed in (standard comparator). Should return a negative number if the element in the array is before the item passed in, 0 if it is at the same position as the item passed in, and a positive number if the element in the array is after the item passed in. |
 
 ##### Returns
@@ -561,7 +540,6 @@ using a golden ratio split (0.6180339887) for consistent performance.
 `number`
 
 The insertion index.
-
 
 <a id="arrayfunctionsfindwithinrangeinsortedmd"></a>
 
@@ -574,28 +552,27 @@ Finds all elements within a specified range in a sorted array.
 ##### Type Parameters
 
 | Type Parameter |
-| ------ |
-| `T` |
-| `B` |
+| -------------- |
+| `T`            |
+| `B`            |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `array` | `T`[] | The sorted input array. |
-| `lowBoundary` | `B` | The lower boundary of the range. |
-| `highBoundary` | `B` | The upper boundary of the range. |
-| `compareFn` | (`a`, `b`) => `number` | A function to compare an element of type T with a boundary of type B. Should return a negative number if `a < b`, 0 if `a === b`, and a positive number if `a > b`. |
-| `options?` | \{ `highInclusive?`: `boolean`; `lowInclusive?`: `boolean`; \} | specify whether boundaries are inclusive or exclusive. By default, both are inclusive. |
-| `options.highInclusive?` | `boolean` | optionally specifying whether the highBoundary is inclusive. Default is true. |
-| `options.lowInclusive?` | `boolean` | optionally specifying whether the lowBoundary is inclusive. Default is true. |
+| Parameter                | Type                                                           | Description                                                                                                                                                         |
+| ------------------------ | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `array`                  | `T`[]                                                          | The sorted input array.                                                                                                                                             |
+| `lowBoundary`            | `B`                                                            | The lower boundary of the range.                                                                                                                                    |
+| `highBoundary`           | `B`                                                            | The upper boundary of the range.                                                                                                                                    |
+| `compareFn`              | (`a`, `b`) => `number`                                         | A function to compare an element of type T with a boundary of type B. Should return a negative number if `a < b`, 0 if `a === b`, and a positive number if `a > b`. |
+| `options?`               | \{ `highInclusive?`: `boolean`; `lowInclusive?`: `boolean`; \} | specify whether boundaries are inclusive or exclusive. By default, both are inclusive.                                                                              |
+| `options.highInclusive?` | `boolean`                                                      | optionally specifying whether the highBoundary is inclusive. Default is true.                                                                                       |
+| `options.lowInclusive?`  | `boolean`                                                      | optionally specifying whether the lowBoundary is inclusive. Default is true.                                                                                        |
 
 ##### Returns
 
 `T`[]
 
 An array containing all elements within the specified range.
-
 
 <a id="arrayfunctionspartitionmd"></a>
 
@@ -612,23 +589,22 @@ specified number of elements or to avoid the overhead of resizing the result arr
 ##### Type Parameters
 
 | Type Parameter |
-| ------ |
-| `T` |
+| -------------- |
+| `T`            |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `array` | `T`[] | The input array. |
-| `classifier` | (`item`) => `number` \| `boolean` | A function that returns a boolean or a non-negative integer. - If boolean: true maps to group 0, false maps to group 1. - If number: the index of the group. Negative numbers map to group 0. |
-| `initialCapacity?` | `number` | The initial capacity of the result array. If not specified, the returned array could contain any number of elements depending on the classifier function. For example, setting it to 2 could be useful for most binary classification use case. |
+| Parameter          | Type                              | Description                                                                                                                                                                                                                                     |
+| ------------------ | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `array`            | `T`[]                             | The input array.                                                                                                                                                                                                                                |
+| `classifier`       | (`item`) => `number` \| `boolean` | A function that returns a boolean or a non-negative integer. - If boolean: true maps to group 0, false maps to group 1. - If number: the index of the group. Negative numbers map to group 0.                                                   |
+| `initialCapacity?` | `number`                          | The initial capacity of the result array. If not specified, the returned array could contain any number of elements depending on the classifier function. For example, setting it to 2 could be useful for most binary classification use case. |
 
 ##### Returns
 
 `T`[][]
 
 An array of arrays, each representing a group.
-
 
 <a id="arrayfunctionsshufflemd"></a>
 
@@ -641,14 +617,14 @@ Shuffles the elements of an array randomly using the Fisher-Yates algorithm.
 ##### Type Parameters
 
 | Type Parameter |
-| ------ |
-| `T` |
+| -------------- |
+| `T`            |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `array` | `T`[] | The input array. |
+| Parameter | Type  | Description      |
+| --------- | ----- | ---------------- |
+| `array`   | `T`[] | The input array. |
 
 ##### Returns
 
@@ -658,27 +634,25 @@ A new array with the elements shuffled.
 
 ## Codec
 
-
 <a id="codecreadmemd"></a>
 
 ### codec
 
 #### Functions
 
-| Function | Description |
-| ------ | ------ |
-| [base64FromUInt32](#codecfunctionsbase64fromuint32md) | Encode an unsigned 32-bit integer into BASE64 string. |
-| [base64UrlFromUInt32](#codecfunctionsbase64urlfromuint32md) | Encode an unsigned 32-bit integer into URL/path safe BASE64 string. |
-| [escapeForRegExp](#codecfunctionsescapeforregexpmd) | Escape a string literal for using it inside of RegExp. (From: https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex) |
-| [escapeForRegExpReplacement](#codecfunctionsescapeforregexpreplacementmd) | Escape replacement string for using it inside of RegExp replacement parameter. (From: https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex) |
-| [generateRandomString](#codecfunctionsgeneraterandomstringmd) | Generate a strong (using crypto.randomFillSync(...)) random string that is URL/path safe. In the generated string, approximately every 6 characters represent randomly generated 32 bits. For example, if you need 128 bits of randomness, you just need to generate a string containing 24 characters. |
-| [generateRandomStringQuickly](#codecfunctionsgeneraterandomstringquicklymd) | Generate a weak (using Math.random()) random string that is URL/path safe. In the generated string, approximately every 6 characters represent randomly generated 32 bits. For example, if you need 128 bits of randomness, you just need to generate a string containing 24 characters. |
-| [shortBase64FromUInt32](#codecfunctionsshortbase64fromuint32md) | Encode an unsigned 32-bit integer into BASE64 string without trailing '='. |
-| [shortBase64UrlFromUInt32](#codecfunctionsshortbase64urlfromuint32md) | Encode an unsigned 32-bit integer into URL/path safe BASE64 string without trailing '='. |
-| [urlSafe](#codecfunctionsurlsafemd) | Make a "normal" (BASE64) string URL/path safe. |
+| Function                                                                    | Description                                                                                                                                                                                                                                                                                             |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [base64FromUInt32](#codecfunctionsbase64fromuint32md)                       | Encode an unsigned 32-bit integer into BASE64 string.                                                                                                                                                                                                                                                   |
+| [base64UrlFromUInt32](#codecfunctionsbase64urlfromuint32md)                 | Encode an unsigned 32-bit integer into URL/path safe BASE64 string.                                                                                                                                                                                                                                     |
+| [escapeForRegExp](#codecfunctionsescapeforregexpmd)                         | Escape a string literal for using it inside of RegExp. (From: https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex)                                                                                                                                                    |
+| [escapeForRegExpReplacement](#codecfunctionsescapeforregexpreplacementmd)   | Escape replacement string for using it inside of RegExp replacement parameter. (From: https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex)                                                                                                                            |
+| [generateRandomString](#codecfunctionsgeneraterandomstringmd)               | Generate a strong (using crypto.randomFillSync(...)) random string that is URL/path safe. In the generated string, approximately every 6 characters represent randomly generated 32 bits. For example, if you need 128 bits of randomness, you just need to generate a string containing 24 characters. |
+| [generateRandomStringQuickly](#codecfunctionsgeneraterandomstringquicklymd) | Generate a weak (using Math.random()) random string that is URL/path safe. In the generated string, approximately every 6 characters represent randomly generated 32 bits. For example, if you need 128 bits of randomness, you just need to generate a string containing 24 characters.                |
+| [shortBase64FromUInt32](#codecfunctionsshortbase64fromuint32md)             | Encode an unsigned 32-bit integer into BASE64 string without trailing '='.                                                                                                                                                                                                                              |
+| [shortBase64UrlFromUInt32](#codecfunctionsshortbase64urlfromuint32md)       | Encode an unsigned 32-bit integer into URL/path safe BASE64 string without trailing '='.                                                                                                                                                                                                                |
+| [urlSafe](#codecfunctionsurlsafemd)                                         | Make a "normal" (BASE64) string URL/path safe.                                                                                                                                                                                                                                                          |
 
 ### Functions
-
 
 <a id="codecfunctionsbase64fromuint32md"></a>
 
@@ -690,22 +664,21 @@ Encode an unsigned 32-bit integer into BASE64 string.
 
 ##### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `T` *extends* `number` \| `null` \| `undefined` |
+| Type Parameter                                  |
+| ----------------------------------------------- |
+| `T` _extends_ `number` \| `null` \| `undefined` |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `ui32` | `T` | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when the value is anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
+| Parameter | Type | Description                                                                                                                                                                                                                                                                                                                                                                              |
+| --------- | ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ui32`    | `T`  | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when the value is anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
 
 ##### Returns
 
 `string` \| `Exclude`\<`T`, `number`\>
 
 BASE64 string representing the integer input, or the original input if it is null or undefined.
-
 
 <a id="codecfunctionsbase64urlfromuint32md"></a>
 
@@ -717,23 +690,22 @@ Encode an unsigned 32-bit integer into URL/path safe BASE64 string.
 
 ##### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `T` *extends* `number` \| `null` \| `undefined` |
+| Type Parameter                                  |
+| ----------------------------------------------- |
+| `T` _extends_ `number` \| `null` \| `undefined` |
 
 ##### Parameters
 
-| Parameter | Type | Default value | Description |
-| ------ | ------ | ------ | ------ |
-| `ui32` | `T` | `undefined` | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when the value is anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
-| `replacements` | `string` | `'_-='` | A string containing replacement characters for "/", "+", and "=". If omitted, default value of '_-=' would be used. |
+| Parameter      | Type     | Default value | Description                                                                                                                                                                                                                                                                                                                                                                              |
+| -------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ui32`         | `T`      | `undefined`   | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when the value is anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
+| `replacements` | `string` | `'_-='`       | A string containing replacement characters for "/", "+", and "=". If omitted, default value of '_-=' would be used.                                                                                                                                                                                                                                                                      |
 
 ##### Returns
 
 `string` \| `Exclude`\<`T`, `number`\>
 
 URL/path safe BASE64 string representing the integer input, or the original input if it is null or undefined.
-
 
 <a id="codecfunctionsescapeforregexpmd"></a>
 
@@ -746,16 +718,15 @@ Escape a string literal for using it inside of RegExp.
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `text` | `string` \| `null` \| `undefined` | the string literal to be escaped |
+| Parameter | Type                              | Description                      |
+| --------- | --------------------------------- | -------------------------------- |
+| `text`    | `string` \| `null` \| `undefined` | the string literal to be escaped |
 
 ##### Returns
 
 `string`
 
 escaped string that can be used inside of RegExp, or an empty string if the input is null or undefined
-
 
 <a id="codecfunctionsescapeforregexpreplacementmd"></a>
 
@@ -768,16 +739,15 @@ Escape replacement string for using it inside of RegExp replacement parameter.
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `text` | `string` \| `null` \| `undefined` | the replacement string to be escaped, or an empty string if the input is null or undefined |
+| Parameter | Type                              | Description                                                                                |
+| --------- | --------------------------------- | ------------------------------------------------------------------------------------------ |
+| `text`    | `string` \| `null` \| `undefined` | the replacement string to be escaped, or an empty string if the input is null or undefined |
 
 ##### Returns
 
 `string`
 
 escaped replacement string that can be used inside of RegExp replacement parameter
-
 
 <a id="codecfunctionsgeneraterandomstringmd"></a>
 
@@ -791,16 +761,15 @@ For example, if you need 128 bits of randomness, you just need to generate a str
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `len` | `number` | length of the string to be generated |
+| Parameter | Type     | Description                          |
+| --------- | -------- | ------------------------------------ |
+| `len`     | `number` | length of the string to be generated |
 
 ##### Returns
 
 `string`
 
 the random string
-
 
 <a id="codecfunctionsgeneraterandomstringquicklymd"></a>
 
@@ -814,16 +783,15 @@ For example, if you need 128 bits of randomness, you just need to generate a str
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `len` | `number` | length of the string to be generated |
+| Parameter | Type     | Description                          |
+| --------- | -------- | ------------------------------------ |
+| `len`     | `number` | length of the string to be generated |
 
 ##### Returns
 
 `string`
 
 the random string
-
 
 <a id="codecfunctionsshortbase64fromuint32md"></a>
 
@@ -835,22 +803,21 @@ Encode an unsigned 32-bit integer into BASE64 string without trailing '='.
 
 ##### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `T` *extends* `number` \| `null` \| `undefined` |
+| Type Parameter                                  |
+| ----------------------------------------------- |
+| `T` _extends_ `number` \| `null` \| `undefined` |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `ui32` | `T` | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when the value is anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
+| Parameter | Type | Description                                                                                                                                                                                                                                                                                                                                                                              |
+| --------- | ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ui32`    | `T`  | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when the value is anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
 
 ##### Returns
 
 `string` \| `Exclude`\<`T`, `number`\>
 
 BASE64 string without trailing '=' representing the integer input, or the original input if it is null or undefined.
-
 
 <a id="codecfunctionsshortbase64urlfromuint32md"></a>
 
@@ -862,23 +829,22 @@ Encode an unsigned 32-bit integer into URL/path safe BASE64 string without trail
 
 ##### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `T` *extends* `number` \| `null` \| `undefined` |
+| Type Parameter                                  |
+| ----------------------------------------------- |
+| `T` _extends_ `number` \| `null` \| `undefined` |
 
 ##### Parameters
 
-| Parameter | Type | Default value | Description |
-| ------ | ------ | ------ | ------ |
-| `ui32` | `T` | `undefined` | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when the value is anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
-| `replacements` | `string` | `'_-'` | A string containing replacement characters for "/" and "+". If omitted, default value of '_-' would be used. |
+| Parameter      | Type     | Default value | Description                                                                                                                                                                                                                                                                                                                                                                              |
+| -------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ui32`         | `T`      | `undefined`   | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when the value is anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
+| `replacements` | `string` | `'_-'`        | A string containing replacement characters for "/" and "+". If omitted, default value of '_-' would be used.                                                                                                                                                                                                                                                                             |
 
 ##### Returns
 
 `string` \| `Exclude`\<`T`, `number`\>
 
 URL/path safe BASE64 string without trailing '=' representing the integer input, or the original input if it is null or undefined.
-
 
 <a id="codecfunctionsurlsafemd"></a>
 
@@ -890,16 +856,16 @@ Make a "normal" (BASE64) string URL/path safe.
 
 ##### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `T` *extends* `string` \| `null` \| `undefined` |
+| Type Parameter                                  |
+| ----------------------------------------------- |
+| `T` _extends_ `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
-| Parameter | Type | Default value | Description |
-| ------ | ------ | ------ | ------ |
-| `base64Input` | `T` | `undefined` | A (BASE64) string which could be null or undefined. |
-| `replacements` | `string` | `'_-='` | A string containing replacement characters for "/", "+", and "=". If omitted, default value of '_-=' would be used. |
+| Parameter      | Type     | Default value | Description                                                                                                         |
+| -------------- | -------- | ------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `base64Input`  | `T`      | `undefined`   | A (BASE64) string which could be null or undefined.                                                                 |
+| `replacements` | `string` | `'_-='`       | A string containing replacement characters for "/", "+", and "=". If omitted, default value of '_-=' would be used. |
 
 ##### Returns
 
@@ -909,21 +875,19 @@ URL/path safe version of the (BASE64) input string, or the original input if it 
 
 ## Errors
 
-
 <a id="errorsreadmemd"></a>
 
 ### errors
 
 #### Functions
 
-| Function | Description |
-| ------ | ------ |
-| [couldBeNetworkingTimeoutError](#errorsfunctionscouldbenetworkingtimeouterrormd) | Checks if the error could be a networking timeout error. |
-| [couldBeServerError](#errorsfunctionscouldbeservererrormd) | Checks if the error could be a server error. |
+| Function                                                                             | Description                                                |
+| ------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| [couldBeNetworkingTimeoutError](#errorsfunctionscouldbenetworkingtimeouterrormd)     | Checks if the error could be a networking timeout error.   |
+| [couldBeServerError](#errorsfunctionscouldbeservererrormd)                           | Checks if the error could be a server error.               |
 | [couldBeTemporaryNetworkingError](#errorsfunctionscouldbetemporarynetworkingerrormd) | Checks if the error could be a temporary networking error. |
 
 ### Functions
-
 
 <a id="errorsfunctionscouldbenetworkingtimeouterrormd"></a>
 
@@ -935,16 +899,15 @@ Checks if the error could be a networking timeout error.
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `err` | `unknown` | The error to check. |
+| Parameter | Type      | Description         |
+| --------- | --------- | ------------------- |
+| `err`     | `unknown` | The error to check. |
 
 ##### Returns
 
 `boolean`
 
 True if the error is a networking timeout error, false otherwise.
-
 
 <a id="errorsfunctionscouldbeservererrormd"></a>
 
@@ -956,16 +919,15 @@ Checks if the error could be a server error.
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `err` | `unknown` | The error to check. |
+| Parameter | Type      | Description         |
+| --------- | --------- | ------------------- |
+| `err`     | `unknown` | The error to check. |
 
 ##### Returns
 
 `boolean`
 
 True if the error is a server error, false otherwise.
-
 
 <a id="errorsfunctionscouldbetemporarynetworkingerrormd"></a>
 
@@ -977,9 +939,9 @@ Checks if the error could be a temporary networking error.
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `err` | `unknown` | The error to check. |
+| Parameter | Type      | Description         |
+| --------- | --------- | ------------------- |
+| `err`     | `unknown` | The error to check. |
 
 ##### Returns
 
@@ -989,25 +951,23 @@ True if the error is a temporary networking error, false otherwise.
 
 ## Http Status
 
-
 <a id="http-statusreadmemd"></a>
 
 ### http-status
 
 #### Enumerations
 
-| Enumeration | Description |
-| ------ | ------ |
+| Enumeration                                                | Description                                 |
+| ---------------------------------------------------------- | ------------------------------------------- |
 | [HttpStatusCode](#http-statusenumerationshttpstatuscodemd) | Some (not all) well known HTTP status codes |
 
 #### Variables
 
-| Variable | Description |
-| ------ | ------ |
+| Variable                                                      | Description                                              |
+| ------------------------------------------------------------- | -------------------------------------------------------- |
 | [HttpStatusMessage](#http-statusvariableshttpstatusmessagemd) | Some (not all) HTTP status messages matching their codes |
 
 ### Enumerations
-
 
 <a id="http-statusenumerationshttpstatuscodemd"></a>
 
@@ -1017,33 +977,32 @@ Some (not all) well known HTTP status codes
 
 ##### Enumeration Members
 
-| Enumeration Member | Value | Description |
-| ------ | ------ | ------ |
-| <a id="api-accepted202"></a> `ACCEPTED202` | `202` | The request has been received but not yet acted upon. It is non-committal, meaning that there is no way in HTTP to later send an asynchronous response indicating the outcome of processing the request. It is intended for cases where another process or server handles the request, or for batch processing. |
-| <a id="api-bad_gateway502"></a> `BAD_GATEWAY502` | `502` | This error response means that the server, while working as a gateway to get a response needed to handle the request, got an invalid response. |
-| <a id="api-bad_request400"></a> `BAD_REQUEST400` | `400` | This response means that server could not understand the request due to invalid syntax. |
-| <a id="api-conflict409"></a> `CONFLICT409` | `409` | This response is sent when a request conflicts with the current state of the server. |
-| <a id="api-created201"></a> `CREATED201` | `201` | The request has succeeded and a new resource has been created as a result of it. This is typically the response sent after a PUT request. |
-| <a id="api-forbidden403"></a> `FORBIDDEN403` | `403` | The client does not have access rights to the content, i.e. they are unauthorized, so server is rejecting to give proper response. Unlike 401, the client's identity is known to the server. |
-| <a id="api-gateway_timeout504"></a> `GATEWAY_TIMEOUT504` | `504` | This error response is given when the server is acting as a gateway and cannot get a response in time. |
-| <a id="api-internal_server_error500"></a> `INTERNAL_SERVER_ERROR500` | `500` | The server encountered an unexpected condition that prevented it from fulfilling the request. |
-| <a id="api-method_not_allowed405"></a> `METHOD_NOT_ALLOWED405` | `405` | The request method is known by the server but has been disabled and cannot be used. For example, an API may forbid DELETE-ing a resource. The two mandatory methods, GET and HEAD, must never be disabled and should not return this error code. |
-| <a id="api-moved_permanently301"></a> `MOVED_PERMANENTLY301` | `301` | This response code means that URI of requested resource has been changed. Probably, new URI would be given in the response. |
-| <a id="api-moved_temporarily302"></a> `MOVED_TEMPORARILY302` | `302` | This response code means that URI of requested resource has been changed temporarily. New changes in the URI might be made in the future. Therefore, this same URI should be used by the client in future requests. |
-| <a id="api-no_content204"></a> `NO_CONTENT204` | `204` | There is no content to send for this request, but the headers may be useful. The user-agent may update its cached headers for this resource with the new ones. |
-| <a id="api-not_found404"></a> `NOT_FOUND404` | `404` | The server can not find requested resource. In the browser, this means the URL is not recognized. In an API, this can also mean that the endpoint is valid but the resource itself does not exist. Servers may also send this response instead of 403 to hide the existence of a resource from an unauthorized client. This response code is probably the most famous one due to its frequent occurence on the web. |
-| <a id="api-not_implemented501"></a> `NOT_IMPLEMENTED501` | `501` | The request method is not supported by the server and cannot be handled. The only methods that servers are required to support (and therefore that must not return this code) are GET and HEAD. |
-| <a id="api-ok200"></a> `OK200` | `200` | The request has succeeded. The meaning of a success varies depending on the HTTP method: GET: The resource has been fetched and is transmitted in the message body. HEAD: The entity headers are in the message body. POST: The resource describing the result of the action is transmitted in the message body. TRACE: The message body contains the request message as received by the server |
-| <a id="api-permanent_redirect308"></a> `PERMANENT_REDIRECT308` | `308` | This means that the resource is now permanently located at another URI, specified by the Location: HTTP Response header. This has the same semantics as the 301 Moved Permanently HTTP response code, with the exception that the user agent must not change the HTTP method used: if a POST was used in the first request, a POST must be used in the second request. |
-| <a id="api-request_timeout408"></a> `REQUEST_TIMEOUT408` | `408` | This response is sent on an idle connection by some servers, even without any previous request by the client. It means that the server would like to shut down this unused connection. This response is used much more since some browsers, like Chrome, Firefox 27+, or IE9, use HTTP pre-connection mechanisms to speed up surfing. Also note that some servers merely shut down the connection without sending this message. |
-| <a id="api-see_other303"></a> `SEE_OTHER303` | `303` | Server sent this response to directing client to get requested resource to another URI with an GET request. |
-| <a id="api-service_unavailable503"></a> `SERVICE_UNAVAILABLE503` | `503` | The server is not ready to handle the request. Common causes are a server that is down for maintenance or that is overloaded. Note that together with this response, a user-friendly page explaining the problem should be sent. This responses should be used for temporary conditions and the Retry-After: HTTP header should, if possible, contain the estimated time before the recovery of the service. The webmaster must also take care about the caching-related headers that are sent along with this response, as these temporary condition responses should usually not be cached. |
-| <a id="api-temporary_redirect307"></a> `TEMPORARY_REDIRECT307` | `307` | Server sent this response to directing client to get requested resource to another URI with same method that used prior request. This has the same semantic than the 302 Found HTTP response code, with the exception that the user agent must not change the HTTP method used: if a POST was used in the first request, a POST must be used in the second request. |
-| <a id="api-too_many_requests429"></a> `TOO_MANY_REQUESTS429` | `429` | The user has sent too many requests in a given amount of time ("rate limiting"). |
-| <a id="api-unauthorized401"></a> `UNAUTHORIZED401` | `401` | Although the HTTP standard specifies "unauthorized", semantically this response means "unauthenticated". That is, the client must authenticate itself to get the requested response. |
+| Enumeration Member                                                   | Value | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| -------------------------------------------------------------------- | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a id="api-accepted202"></a> `ACCEPTED202`                           | `202` | The request has been received but not yet acted upon. It is non-committal, meaning that there is no way in HTTP to later send an asynchronous response indicating the outcome of processing the request. It is intended for cases where another process or server handles the request, or for batch processing.                                                                                                                                                                                                                                                                               |
+| <a id="api-bad_gateway502"></a> `BAD_GATEWAY502`                     | `502` | This error response means that the server, while working as a gateway to get a response needed to handle the request, got an invalid response.                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| <a id="api-bad_request400"></a> `BAD_REQUEST400`                     | `400` | This response means that server could not understand the request due to invalid syntax.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| <a id="api-conflict409"></a> `CONFLICT409`                           | `409` | This response is sent when a request conflicts with the current state of the server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| <a id="api-created201"></a> `CREATED201`                             | `201` | The request has succeeded and a new resource has been created as a result of it. This is typically the response sent after a PUT request.                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| <a id="api-forbidden403"></a> `FORBIDDEN403`                         | `403` | The client does not have access rights to the content, i.e. they are unauthorized, so server is rejecting to give proper response. Unlike 401, the client's identity is known to the server.                                                                                                                                                                                                                                                                                                                                                                                                  |
+| <a id="api-gateway_timeout504"></a> `GATEWAY_TIMEOUT504`             | `504` | This error response is given when the server is acting as a gateway and cannot get a response in time.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| <a id="api-internal_server_error500"></a> `INTERNAL_SERVER_ERROR500` | `500` | The server encountered an unexpected condition that prevented it from fulfilling the request.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| <a id="api-method_not_allowed405"></a> `METHOD_NOT_ALLOWED405`       | `405` | The request method is known by the server but has been disabled and cannot be used. For example, an API may forbid DELETE-ing a resource. The two mandatory methods, GET and HEAD, must never be disabled and should not return this error code.                                                                                                                                                                                                                                                                                                                                              |
+| <a id="api-moved_permanently301"></a> `MOVED_PERMANENTLY301`         | `301` | This response code means that URI of requested resource has been changed. Probably, new URI would be given in the response.                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| <a id="api-moved_temporarily302"></a> `MOVED_TEMPORARILY302`         | `302` | This response code means that URI of requested resource has been changed temporarily. New changes in the URI might be made in the future. Therefore, this same URI should be used by the client in future requests.                                                                                                                                                                                                                                                                                                                                                                           |
+| <a id="api-no_content204"></a> `NO_CONTENT204`                       | `204` | There is no content to send for this request, but the headers may be useful. The user-agent may update its cached headers for this resource with the new ones.                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| <a id="api-not_found404"></a> `NOT_FOUND404`                         | `404` | The server can not find requested resource. In the browser, this means the URL is not recognized. In an API, this can also mean that the endpoint is valid but the resource itself does not exist. Servers may also send this response instead of 403 to hide the existence of a resource from an unauthorized client. This response code is probably the most famous one due to its frequent occurence on the web.                                                                                                                                                                           |
+| <a id="api-not_implemented501"></a> `NOT_IMPLEMENTED501`             | `501` | The request method is not supported by the server and cannot be handled. The only methods that servers are required to support (and therefore that must not return this code) are GET and HEAD.                                                                                                                                                                                                                                                                                                                                                                                               |
+| <a id="api-ok200"></a> `OK200`                                       | `200` | The request has succeeded. The meaning of a success varies depending on the HTTP method: GET: The resource has been fetched and is transmitted in the message body. HEAD: The entity headers are in the message body. POST: The resource describing the result of the action is transmitted in the message body. TRACE: The message body contains the request message as received by the server                                                                                                                                                                                               |
+| <a id="api-permanent_redirect308"></a> `PERMANENT_REDIRECT308`       | `308` | This means that the resource is now permanently located at another URI, specified by the Location: HTTP Response header. This has the same semantics as the 301 Moved Permanently HTTP response code, with the exception that the user agent must not change the HTTP method used: if a POST was used in the first request, a POST must be used in the second request.                                                                                                                                                                                                                        |
+| <a id="api-request_timeout408"></a> `REQUEST_TIMEOUT408`             | `408` | This response is sent on an idle connection by some servers, even without any previous request by the client. It means that the server would like to shut down this unused connection. This response is used much more since some browsers, like Chrome, Firefox 27+, or IE9, use HTTP pre-connection mechanisms to speed up surfing. Also note that some servers merely shut down the connection without sending this message.                                                                                                                                                               |
+| <a id="api-see_other303"></a> `SEE_OTHER303`                         | `303` | Server sent this response to directing client to get requested resource to another URI with an GET request.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| <a id="api-service_unavailable503"></a> `SERVICE_UNAVAILABLE503`     | `503` | The server is not ready to handle the request. Common causes are a server that is down for maintenance or that is overloaded. Note that together with this response, a user-friendly page explaining the problem should be sent. This responses should be used for temporary conditions and the Retry-After: HTTP header should, if possible, contain the estimated time before the recovery of the service. The webmaster must also take care about the caching-related headers that are sent along with this response, as these temporary condition responses should usually not be cached. |
+| <a id="api-temporary_redirect307"></a> `TEMPORARY_REDIRECT307`       | `307` | Server sent this response to directing client to get requested resource to another URI with same method that used prior request. This has the same semantic than the 302 Found HTTP response code, with the exception that the user agent must not change the HTTP method used: if a POST was used in the first request, a POST must be used in the second request.                                                                                                                                                                                                                           |
+| <a id="api-too_many_requests429"></a> `TOO_MANY_REQUESTS429`         | `429` | The user has sent too many requests in a given amount of time ("rate limiting").                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| <a id="api-unauthorized401"></a> `UNAUTHORIZED401`                   | `401` | Although the HTTP standard specifies "unauthorized", semantically this response means "unauthenticated". That is, the client must authenticate itself to get the requested response.                                                                                                                                                                                                                                                                                                                                                                                                          |
 
 ### Variables
-
 
 <a id="http-statusvariableshttpstatusmessagemd"></a>
 
@@ -1055,33 +1014,32 @@ Some (not all) HTTP status messages matching their codes
 
 ##### Type Declaration
 
-| Name | Type | Default value |
-| ------ | ------ | ------ |
-| <a id="api-200"></a> `200` | `string` | `'OK'` |
-| <a id="api-201"></a> `201` | `string` | `'Created'` |
-| <a id="api-202"></a> `202` | `string` | `'Accepted'` |
-| <a id="api-204"></a> `204` | `string` | `'No Content'` |
-| <a id="api-301"></a> `301` | `string` | `'Moved Permanently'` |
-| <a id="api-302"></a> `302` | `string` | `'Moved Temporarily'` |
-| <a id="api-303"></a> `303` | `string` | `'See Other'` |
-| <a id="api-307"></a> `307` | `string` | `'Temporary Redirect'` |
-| <a id="api-308"></a> `308` | `string` | `'Permanent Redirect'` |
-| <a id="api-400"></a> `400` | `string` | `'Bad Request'` |
-| <a id="api-401"></a> `401` | `string` | `'Unauthorized'` |
-| <a id="api-403"></a> `403` | `string` | `'Forbidden'` |
-| <a id="api-404"></a> `404` | `string` | `'Not Found'` |
-| <a id="api-405"></a> `405` | `string` | `'Method Not Allowed'` |
-| <a id="api-408"></a> `408` | `string` | `'Request Timeout'` |
-| <a id="api-409"></a> `409` | `string` | `'Conflict'` |
-| <a id="api-429"></a> `429` | `string` | `'Too Many Requests'` |
+| Name                       | Type     | Default value             |
+| -------------------------- | -------- | ------------------------- |
+| <a id="api-200"></a> `200` | `string` | `'OK'`                    |
+| <a id="api-201"></a> `201` | `string` | `'Created'`               |
+| <a id="api-202"></a> `202` | `string` | `'Accepted'`              |
+| <a id="api-204"></a> `204` | `string` | `'No Content'`            |
+| <a id="api-301"></a> `301` | `string` | `'Moved Permanently'`     |
+| <a id="api-302"></a> `302` | `string` | `'Moved Temporarily'`     |
+| <a id="api-303"></a> `303` | `string` | `'See Other'`             |
+| <a id="api-307"></a> `307` | `string` | `'Temporary Redirect'`    |
+| <a id="api-308"></a> `308` | `string` | `'Permanent Redirect'`    |
+| <a id="api-400"></a> `400` | `string` | `'Bad Request'`           |
+| <a id="api-401"></a> `401` | `string` | `'Unauthorized'`          |
+| <a id="api-403"></a> `403` | `string` | `'Forbidden'`             |
+| <a id="api-404"></a> `404` | `string` | `'Not Found'`             |
+| <a id="api-405"></a> `405` | `string` | `'Method Not Allowed'`    |
+| <a id="api-408"></a> `408` | `string` | `'Request Timeout'`       |
+| <a id="api-409"></a> `409` | `string` | `'Conflict'`              |
+| <a id="api-429"></a> `429` | `string` | `'Too Many Requests'`     |
 | <a id="api-500"></a> `500` | `string` | `'Internal Server Error'` |
-| <a id="api-501"></a> `501` | `string` | `'Not Implemented'` |
-| <a id="api-502"></a> `502` | `string` | `'Bad Gateway'` |
-| <a id="api-503"></a> `503` | `string` | `'Service Unavailable'` |
-| <a id="api-504"></a> `504` | `string` | `'Gateway Timeout'` |
+| <a id="api-501"></a> `501` | `string` | `'Not Implemented'`       |
+| <a id="api-502"></a> `502` | `string` | `'Bad Gateway'`           |
+| <a id="api-503"></a> `503` | `string` | `'Service Unavailable'`   |
+| <a id="api-504"></a> `504` | `string` | `'Gateway Timeout'`       |
 
 ## Index
-
 
 <a id="indexreadmemd"></a>
 
@@ -1095,7 +1053,7 @@ Some (not all) HTTP status messages matching their codes
 
 Re-exports [applyWordCasing](#stringvariablesapplywordcasingmd)
 
-***
+---
 
 <a id="api-base64fromuint32"></a>
 
@@ -1103,7 +1061,7 @@ Re-exports [applyWordCasing](#stringvariablesapplywordcasingmd)
 
 Re-exports [base64FromUInt32](#codecfunctionsbase64fromuint32md)
 
-***
+---
 
 <a id="api-base64urlfromuint32"></a>
 
@@ -1111,7 +1069,7 @@ Re-exports [base64FromUInt32](#codecfunctionsbase64fromuint32md)
 
 Re-exports [base64UrlFromUInt32](#codecfunctionsbase64urlfromuint32md)
 
-***
+---
 
 <a id="api-cameltosnake"></a>
 
@@ -1119,7 +1077,7 @@ Re-exports [base64UrlFromUInt32](#codecfunctionsbase64urlfromuint32md)
 
 Re-exports [camelToSnake](#stringvariablescameltosnakemd)
 
-***
+---
 
 <a id="api-capitalise"></a>
 
@@ -1127,7 +1085,7 @@ Re-exports [camelToSnake](#stringvariablescameltosnakemd)
 
 Re-exports [capitalise](#stringvariablescapitalisemd)
 
-***
+---
 
 <a id="api-capitalize"></a>
 
@@ -1135,7 +1093,7 @@ Re-exports [capitalise](#stringvariablescapitalisemd)
 
 Re-exports [capitalize](#stringvariablescapitalizemd)
 
-***
+---
 
 <a id="api-chunk"></a>
 
@@ -1143,7 +1101,7 @@ Re-exports [capitalize](#stringvariablescapitalizemd)
 
 Re-exports [chunk](#arrayfunctionschunkmd)
 
-***
+---
 
 <a id="api-clamp"></a>
 
@@ -1151,7 +1109,7 @@ Re-exports [chunk](#arrayfunctionschunkmd)
 
 Re-exports [clamp](#numbervariablesclampmd)
 
-***
+---
 
 <a id="api-consolelike"></a>
 
@@ -1159,7 +1117,7 @@ Re-exports [clamp](#numbervariablesclampmd)
 
 Re-exports [consoleLike](#line-loggervariablesconsolelikemd)
 
-***
+---
 
 <a id="api-consolelinelogger"></a>
 
@@ -1167,7 +1125,7 @@ Re-exports [consoleLike](#line-loggervariablesconsolelikemd)
 
 Re-exports [ConsoleLineLogger](#line-loggertype-aliasesconsolelineloggermd)
 
-***
+---
 
 <a id="api-consolewithcolour"></a>
 
@@ -1175,7 +1133,7 @@ Re-exports [ConsoleLineLogger](#line-loggertype-aliasesconsolelineloggermd)
 
 Re-exports [consoleWithColour](#line-loggervariablesconsolewithcolourmd)
 
-***
+---
 
 <a id="api-consolewithoutcolour"></a>
 
@@ -1183,7 +1141,7 @@ Re-exports [consoleWithColour](#line-loggervariablesconsolewithcolourmd)
 
 Re-exports [consoleWithoutColour](#line-loggervariablesconsolewithoutcolourmd)
 
-***
+---
 
 <a id="api-couldbenetworkingtimeouterror"></a>
 
@@ -1191,7 +1149,7 @@ Re-exports [consoleWithoutColour](#line-loggervariablesconsolewithoutcolourmd)
 
 Re-exports [couldBeNetworkingTimeoutError](#errorsfunctionscouldbenetworkingtimeouterrormd)
 
-***
+---
 
 <a id="api-couldbeservererror"></a>
 
@@ -1199,7 +1157,7 @@ Re-exports [couldBeNetworkingTimeoutError](#errorsfunctionscouldbenetworkingtime
 
 Re-exports [couldBeServerError](#errorsfunctionscouldbeservererrormd)
 
-***
+---
 
 <a id="api-couldbetemporarynetworkingerror"></a>
 
@@ -1207,7 +1165,7 @@ Re-exports [couldBeServerError](#errorsfunctionscouldbeservererrormd)
 
 Re-exports [couldBeTemporaryNetworkingError](#errorsfunctionscouldbetemporarynetworkingerrormd)
 
-***
+---
 
 <a id="api-distributeroundrobin"></a>
 
@@ -1215,7 +1173,7 @@ Re-exports [couldBeTemporaryNetworkingError](#errorsfunctionscouldbetemporarynet
 
 Re-exports [distributeRoundRobin](#arrayfunctionsdistributeroundrobinmd)
 
-***
+---
 
 <a id="api-downsamplerandomly"></a>
 
@@ -1223,7 +1181,7 @@ Re-exports [distributeRoundRobin](#arrayfunctionsdistributeroundrobinmd)
 
 Re-exports [downSampleRandomly](#arrayfunctionsdownsamplerandomlymd)
 
-***
+---
 
 <a id="api-escapeforregexp"></a>
 
@@ -1231,7 +1189,7 @@ Re-exports [downSampleRandomly](#arrayfunctionsdownsamplerandomlymd)
 
 Re-exports [escapeForRegExp](#codecfunctionsescapeforregexpmd)
 
-***
+---
 
 <a id="api-escapeforregexpreplacement"></a>
 
@@ -1239,7 +1197,7 @@ Re-exports [escapeForRegExp](#codecfunctionsescapeforregexpmd)
 
 Re-exports [escapeForRegExpReplacement](#codecfunctionsescapeforregexpreplacementmd)
 
-***
+---
 
 <a id="api-escapexml"></a>
 
@@ -1247,7 +1205,7 @@ Re-exports [escapeForRegExpReplacement](#codecfunctionsescapeforregexpreplacemen
 
 Re-exports [escapeXml](#stringvariablesescapexmlmd)
 
-***
+---
 
 <a id="api-findindexinsorted"></a>
 
@@ -1255,7 +1213,7 @@ Re-exports [escapeXml](#stringvariablesescapexmlmd)
 
 Re-exports [findIndexInSorted](#arrayfunctionsfindindexinsortedmd)
 
-***
+---
 
 <a id="api-findinsertionindexinsorted"></a>
 
@@ -1263,7 +1221,7 @@ Re-exports [findIndexInSorted](#arrayfunctionsfindindexinsortedmd)
 
 Re-exports [findInsertionIndexInSorted](#arrayfunctionsfindinsertionindexinsortedmd)
 
-***
+---
 
 <a id="api-findinsorted"></a>
 
@@ -1271,7 +1229,7 @@ Re-exports [findInsertionIndexInSorted](#arrayfunctionsfindinsertionindexinsorte
 
 Re-exports [findInSorted](#arrayfunctionsfindinsortedmd)
 
-***
+---
 
 <a id="api-findwithinrangeinsorted"></a>
 
@@ -1279,7 +1237,7 @@ Re-exports [findInSorted](#arrayfunctionsfindinsortedmd)
 
 Re-exports [findWithinRangeInSorted](#arrayfunctionsfindwithinrangeinsortedmd)
 
-***
+---
 
 <a id="api-gaussianrandom"></a>
 
@@ -1287,7 +1245,7 @@ Re-exports [findWithinRangeInSorted](#arrayfunctionsfindwithinrangeinsortedmd)
 
 Re-exports [gaussianRandom](#randomfunctionsgaussianrandommd)
 
-***
+---
 
 <a id="api-generaterandomboolean"></a>
 
@@ -1295,7 +1253,7 @@ Re-exports [gaussianRandom](#randomfunctionsgaussianrandommd)
 
 Re-exports [generateRandomBoolean](#randomfunctionsgeneraterandombooleanmd)
 
-***
+---
 
 <a id="api-generaterandominteger"></a>
 
@@ -1303,7 +1261,7 @@ Re-exports [generateRandomBoolean](#randomfunctionsgeneraterandombooleanmd)
 
 Re-exports [generateRandomInteger](#randomfunctionsgeneraterandomintegermd)
 
-***
+---
 
 <a id="api-generaterandomnumber"></a>
 
@@ -1311,7 +1269,7 @@ Re-exports [generateRandomInteger](#randomfunctionsgeneraterandomintegermd)
 
 Re-exports [generateRandomNumber](#randomfunctionsgeneraterandomnumbermd)
 
-***
+---
 
 <a id="api-generaterandomstring"></a>
 
@@ -1319,7 +1277,7 @@ Re-exports [generateRandomNumber](#randomfunctionsgeneraterandomnumbermd)
 
 Re-exports [generateRandomString](#codecfunctionsgeneraterandomstringmd)
 
-***
+---
 
 <a id="api-generaterandomstringfromchars"></a>
 
@@ -1327,7 +1285,7 @@ Re-exports [generateRandomString](#codecfunctionsgeneraterandomstringmd)
 
 Re-exports [generateRandomStringFromChars](#randomfunctionsgeneraterandomstringfromcharsmd)
 
-***
+---
 
 <a id="api-generaterandomstringquickly"></a>
 
@@ -1335,7 +1293,7 @@ Re-exports [generateRandomStringFromChars](#randomfunctionsgeneraterandomstringf
 
 Re-exports [generateRandomStringQuickly](#codecfunctionsgeneraterandomstringquicklymd)
 
-***
+---
 
 <a id="api-httpstatuscode"></a>
 
@@ -1343,7 +1301,7 @@ Re-exports [generateRandomStringQuickly](#codecfunctionsgeneraterandomstringquic
 
 Re-exports [HttpStatusCode](#http-statusenumerationshttpstatuscodemd)
 
-***
+---
 
 <a id="api-httpstatusmessage"></a>
 
@@ -1351,7 +1309,7 @@ Re-exports [HttpStatusCode](#http-statusenumerationshttpstatuscodemd)
 
 Re-exports [HttpStatusMessage](#http-statusvariableshttpstatusmessagemd)
 
-***
+---
 
 <a id="api-isinrange"></a>
 
@@ -1359,7 +1317,7 @@ Re-exports [HttpStatusMessage](#http-statusvariableshttpstatusmessagemd)
 
 Re-exports [isInRange](#numbervariablesisinrangemd)
 
-***
+---
 
 <a id="api-jsonstringifyreplacer"></a>
 
@@ -1367,7 +1325,7 @@ Re-exports [isInRange](#numbervariablesisinrangemd)
 
 Re-exports [JsonStringifyReplacer](#stringify-replacertype-aliasesjsonstringifyreplacermd)
 
-***
+---
 
 <a id="api-jsonstringifyreplacerfrompathbasedrules"></a>
 
@@ -1375,7 +1333,7 @@ Re-exports [JsonStringifyReplacer](#stringify-replacertype-aliasesjsonstringifyr
 
 Re-exports [JsonStringifyReplacerFromPathBasedRules](#stringify-replacertype-aliasesjsonstringifyreplacerfrompathbasedrulesmd)
 
-***
+---
 
 <a id="api-linelogger"></a>
 
@@ -1383,7 +1341,7 @@ Re-exports [JsonStringifyReplacerFromPathBasedRules](#stringify-replacertype-ali
 
 Re-exports [LineLogger](#line-loggerclasseslineloggermd)
 
-***
+---
 
 <a id="api-mask"></a>
 
@@ -1391,7 +1349,7 @@ Re-exports [LineLogger](#line-loggerclasseslineloggermd)
 
 Re-exports [mask](#maskfunctionsmaskmd)
 
-***
+---
 
 <a id="api-maskall"></a>
 
@@ -1399,7 +1357,7 @@ Re-exports [mask](#maskfunctionsmaskmd)
 
 Re-exports [maskAll](#maskfunctionsmaskallmd)
 
-***
+---
 
 <a id="api-maskcreditcard"></a>
 
@@ -1407,7 +1365,7 @@ Re-exports [maskAll](#maskfunctionsmaskallmd)
 
 Re-exports [maskCreditCard](#maskfunctionsmaskcreditcardmd)
 
-***
+---
 
 <a id="api-maskemail"></a>
 
@@ -1415,7 +1373,7 @@ Re-exports [maskCreditCard](#maskfunctionsmaskcreditcardmd)
 
 Re-exports [maskEmail](#maskfunctionsmaskemailmd)
 
-***
+---
 
 <a id="api-masker"></a>
 
@@ -1423,7 +1381,7 @@ Re-exports [maskEmail](#maskfunctionsmaskemailmd)
 
 Re-exports [masker](#maskfunctionsmaskermd)
 
-***
+---
 
 <a id="api-maskfullname"></a>
 
@@ -1431,7 +1389,7 @@ Re-exports [masker](#maskfunctionsmaskermd)
 
 Re-exports [maskFullName](#maskfunctionsmaskfullnamemd)
 
-***
+---
 
 <a id="api-merge"></a>
 
@@ -1439,7 +1397,7 @@ Re-exports [maskFullName](#maskfunctionsmaskfullnamemd)
 
 Re-exports [merge](#mergefunctionsmergemd)
 
-***
+---
 
 <a id="api-mergeoptions"></a>
 
@@ -1447,7 +1405,7 @@ Re-exports [merge](#mergefunctionsmergemd)
 
 Re-exports [MergeOptions](#mergeinterfacesmergeoptionsmd)
 
-***
+---
 
 <a id="api-numberutils"></a>
 
@@ -1455,7 +1413,7 @@ Re-exports [MergeOptions](#mergeinterfacesmergeoptionsmd)
 
 Re-exports [NumberUtils](#numberclassesnumberutilsmd)
 
-***
+---
 
 <a id="api-partition"></a>
 
@@ -1463,7 +1421,7 @@ Re-exports [NumberUtils](#numberclassesnumberutilsmd)
 
 Re-exports [partition](#arrayfunctionspartitionmd)
 
-***
+---
 
 <a id="api-pathawarereplacer"></a>
 
@@ -1471,7 +1429,7 @@ Re-exports [partition](#arrayfunctionspartitionmd)
 
 Re-exports [pathAwareReplacer](#stringify-replacerfunctionspathawarereplacermd)
 
-***
+---
 
 <a id="api-pathawarereplacer-1"></a>
 
@@ -1479,7 +1437,7 @@ Re-exports [pathAwareReplacer](#stringify-replacerfunctionspathawarereplacermd)
 
 Re-exports [PathAwareReplacer](#stringify-replacertype-aliasespathawarereplacermd)
 
-***
+---
 
 <a id="api-pathbasedreplacer"></a>
 
@@ -1487,7 +1445,7 @@ Re-exports [PathAwareReplacer](#stringify-replacertype-aliasespathawarereplacerm
 
 Re-exports [pathBasedReplacer](#stringify-replacerfunctionspathbasedreplacermd)
 
-***
+---
 
 <a id="api-pickrandomelement"></a>
 
@@ -1495,7 +1453,7 @@ Re-exports [pathBasedReplacer](#stringify-replacerfunctionspathbasedreplacermd)
 
 Re-exports [pickRandomElement](#randomfunctionspickrandomelementmd)
 
-***
+---
 
 <a id="api-pluralise"></a>
 
@@ -1503,7 +1461,7 @@ Re-exports [pickRandomElement](#randomfunctionspickrandomelementmd)
 
 Re-exports [pluralise](#stringvariablespluralisemd)
 
-***
+---
 
 <a id="api-pluralize"></a>
 
@@ -1511,7 +1469,7 @@ Re-exports [pluralise](#stringvariablespluralisemd)
 
 Re-exports [pluralize](#stringvariablespluralizemd)
 
-***
+---
 
 <a id="api-rangeintersection"></a>
 
@@ -1519,7 +1477,7 @@ Re-exports [pluralize](#stringvariablespluralizemd)
 
 Re-exports [rangeIntersection](#numbervariablesrangeintersectionmd)
 
-***
+---
 
 <a id="api-roundto"></a>
 
@@ -1527,7 +1485,7 @@ Re-exports [rangeIntersection](#numbervariablesrangeintersectionmd)
 
 Re-exports [roundTo](#numbervariablesroundtomd)
 
-***
+---
 
 <a id="api-seededrandom"></a>
 
@@ -1535,7 +1493,7 @@ Re-exports [roundTo](#numbervariablesroundtomd)
 
 Re-exports [seededRandom](#randomfunctionsseededrandommd)
 
-***
+---
 
 <a id="api-shortbase64fromuint32"></a>
 
@@ -1543,7 +1501,7 @@ Re-exports [seededRandom](#randomfunctionsseededrandommd)
 
 Re-exports [shortBase64FromUInt32](#codecfunctionsshortbase64fromuint32md)
 
-***
+---
 
 <a id="api-shortbase64urlfromuint32"></a>
 
@@ -1551,7 +1509,7 @@ Re-exports [shortBase64FromUInt32](#codecfunctionsshortbase64fromuint32md)
 
 Re-exports [shortBase64UrlFromUInt32](#codecfunctionsshortbase64urlfromuint32md)
 
-***
+---
 
 <a id="api-shuffle"></a>
 
@@ -1559,7 +1517,7 @@ Re-exports [shortBase64UrlFromUInt32](#codecfunctionsshortbase64urlfromuint32md)
 
 Re-exports [shuffle](#arrayfunctionsshufflemd)
 
-***
+---
 
 <a id="api-snaketocamel"></a>
 
@@ -1567,7 +1525,7 @@ Re-exports [shuffle](#arrayfunctionsshufflemd)
 
 Re-exports [snakeToCamel](#stringvariablessnaketocamelmd)
 
-***
+---
 
 <a id="api-stringutils"></a>
 
@@ -1575,7 +1533,7 @@ Re-exports [snakeToCamel](#stringvariablessnaketocamelmd)
 
 Re-exports [StringUtils](#stringclassesstringutilsmd)
 
-***
+---
 
 <a id="api-substituteall"></a>
 
@@ -1583,7 +1541,7 @@ Re-exports [StringUtils](#stringclassesstringutilsmd)
 
 Re-exports [substituteAll](#substitutefunctionssubstituteallmd)
 
-***
+---
 
 <a id="api-truncate"></a>
 
@@ -1591,7 +1549,7 @@ Re-exports [substituteAll](#substitutefunctionssubstituteallmd)
 
 Re-exports [truncate](#stringvariablestruncatemd)
 
-***
+---
 
 <a id="api-unescapexml"></a>
 
@@ -1599,7 +1557,7 @@ Re-exports [truncate](#stringvariablestruncatemd)
 
 Re-exports [unescapeXml](#stringvariablesunescapexmlmd)
 
-***
+---
 
 <a id="api-urlsafe"></a>
 
@@ -1607,7 +1565,7 @@ Re-exports [unescapeXml](#stringvariablesunescapexmlmd)
 
 Re-exports [urlSafe](#codecfunctionsurlsafemd)
 
-***
+---
 
 <a id="api-weightedpickrandomelement"></a>
 
@@ -1617,33 +1575,31 @@ Re-exports [weightedPickRandomElement](#randomfunctionsweightedpickrandomelement
 
 ## Line Logger
 
-
 <a id="line-loggerreadmemd"></a>
 
 ### line-logger
 
 #### Classes
 
-| Class | Description |
-| ------ | ------ |
+| Class                                         | Description                                                                                                                                                                                                                                                           |
+| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [LineLogger](#line-loggerclasseslineloggermd) | A LineLogger logs/prints one entire line of text before advancing to another line. This class is useful for encapsulating console.log/info/warn/error functions. By having an abstraction layer, your code can switching to a different output with nearly no change. |
 
 #### Type Aliases
 
-| Type Alias | Description |
-| ------ | ------ |
+| Type Alias                                                       | Description                                                                                                                                                    |
+| ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [ConsoleLineLogger](#line-loggertype-aliasesconsolelineloggermd) | Type of the object returned by `LineLogger.console()` or `LineLogger.consoleWithColour()`. It has the same function signatures as console.log/info/warn/error. |
 
 #### Variables
 
-| Variable | Description |
-| ------ | ------ |
-| [consoleLike](#line-loggervariablesconsolelikemd) | Build an instance from 'log' (https://github.com/medikoo/log). `info` of the LineLogger is mapped to `notice` of the medikoo log. |
-| [consoleWithColour](#line-loggervariablesconsolewithcolourmd) | Build an encapsulation of console output functions with console.log/info/warn/error and chalk/colors/cli-color. |
-| [consoleWithoutColour](#line-loggervariablesconsolewithoutcolourmd) | Build an encapsulation of console output functions with console.log/info/warn/error. |
+| Variable                                                            | Description                                                                                                                       |
+| ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| [consoleLike](#line-loggervariablesconsolelikemd)                   | Build an instance from 'log' (https://github.com/medikoo/log). `info` of the LineLogger is mapped to `notice` of the medikoo log. |
+| [consoleWithColour](#line-loggervariablesconsolewithcolourmd)       | Build an encapsulation of console output functions with console.log/info/warn/error and chalk/colors/cli-color.                   |
+| [consoleWithoutColour](#line-loggervariablesconsolewithoutcolourmd) | Build an encapsulation of console output functions with console.log/info/warn/error.                                              |
 
 ### Classes
-
 
 <a id="line-loggerclasseslineloggermd"></a>
 
@@ -1666,26 +1622,26 @@ Or you can use the constructor to build your own wrappers.
 const consoleLogger = LineLogger.console();
 
 // Wrapper of console.log/info/warn/error but it mutes console.log
-const lessVerboseConsoleLogger = LineLogger.console({debug: false});
+const lessVerboseConsoleLogger = LineLogger.console({ debug: false });
 
 // Wrapper of console.log/info/warn/error but it mutes console.log and console.info
-const lessVerboseConsoleLogger = LineLogger.console({quiet: true});
+const lessVerboseConsoleLogger = LineLogger.console({ quiet: true });
 
 // use chalk (chalk is not a dependency of this package, you need to add chalk as a dependency separately)
 import chalk from 'chalk';
 // this.flags is an object with properties "debug" and "quiet"
 this.output = LineLogger.consoleWithColour(this.flags, chalk);
-this.output.warn('Configuration file not found, default configuration would be used.');  // it would be printed out in yellow
+this.output.warn('Configuration file not found, default configuration would be used.'); // it would be printed out in yellow
 ```
 
 ##### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `DEBUG_FUNC` *extends* `Function` |
-| `INFO_FUNC` *extends* `Function` |
-| `WARN_FUNC` *extends* `Function` |
-| `ERROR_FUNC` *extends* `Function` |
+| Type Parameter                    |
+| --------------------------------- |
+| `DEBUG_FUNC` _extends_ `Function` |
+| `INFO_FUNC` _extends_ `Function`  |
+| `WARN_FUNC` _extends_ `Function`  |
+| `ERROR_FUNC` _extends_ `Function` |
 
 ##### Constructors
 
@@ -1699,14 +1655,14 @@ Constructor
 
 ####### Parameters
 
-| Parameter | Type | Default value | Description |
-| ------ | ------ | ------ | ------ |
-| `debugFunction` | `DEBUG_FUNC` | `undefined` | function for outputting debug information |
-| `infoFunction` | `INFO_FUNC` | `undefined` | function for outputting info information |
-| `warnFunction` | `WARN_FUNC` | `undefined` | function for outputting warn information |
-| `errorFunction` | `ERROR_FUNC` | `undefined` | function for outputting error information |
-| `isDebug` | `boolean` | `false` | is debug output enabled or not, it could be overriden by isQuiet |
-| `isQuiet` | `boolean` | `false` | is quiet mode enabled or not. When quiet mode is enabled, both debug and info output would be discarded. |
+| Parameter       | Type         | Default value | Description                                                                                              |
+| --------------- | ------------ | ------------- | -------------------------------------------------------------------------------------------------------- |
+| `debugFunction` | `DEBUG_FUNC` | `undefined`   | function for outputting debug information                                                                |
+| `infoFunction`  | `INFO_FUNC`  | `undefined`   | function for outputting info information                                                                 |
+| `warnFunction`  | `WARN_FUNC`  | `undefined`   | function for outputting warn information                                                                 |
+| `errorFunction` | `ERROR_FUNC` | `undefined`   | function for outputting error information                                                                |
+| `isDebug`       | `boolean`    | `false`       | is debug output enabled or not, it could be overriden by isQuiet                                         |
+| `isQuiet`       | `boolean`    | `false`       | is quiet mode enabled or not. When quiet mode is enabled, both debug and info output would be discarded. |
 
 ####### Returns
 
@@ -1714,15 +1670,15 @@ Constructor
 
 ##### Properties
 
-| Property | Modifier | Type | Default value | Description |
-| ------ | ------ | ------ | ------ | ------ |
-| <a id="api-debug"></a> `debug` | `public` | `DEBUG_FUNC` | `undefined` | - |
-| <a id="api-error"></a> `error` | `public` | `ERROR_FUNC` | `undefined` | - |
-| <a id="api-info"></a> `info` | `public` | `INFO_FUNC` | `undefined` | - |
-| <a id="api-isdebug"></a> `isDebug` | `public` | `boolean` | `false` | is debug output enabled or not, it could be overriden by isQuiet |
-| <a id="api-isquiet"></a> `isQuiet` | `public` | `boolean` | `false` | is quiet mode enabled or not. When quiet mode is enabled, both debug and info output would be discarded. |
-| <a id="api-warn"></a> `warn` | `public` | `WARN_FUNC` | `undefined` | - |
-| <a id="api-no_op_func"></a> `NO_OP_FUNC` | `static` | () => `void` | `undefined` | - |
+| Property                                 | Modifier | Type         | Default value | Description                                                                                              |
+| ---------------------------------------- | -------- | ------------ | ------------- | -------------------------------------------------------------------------------------------------------- |
+| <a id="api-debug"></a> `debug`           | `public` | `DEBUG_FUNC` | `undefined`   | -                                                                                                        |
+| <a id="api-error"></a> `error`           | `public` | `ERROR_FUNC` | `undefined`   | -                                                                                                        |
+| <a id="api-info"></a> `info`             | `public` | `INFO_FUNC`  | `undefined`   | -                                                                                                        |
+| <a id="api-isdebug"></a> `isDebug`       | `public` | `boolean`    | `false`       | is debug output enabled or not, it could be overriden by isQuiet                                         |
+| <a id="api-isquiet"></a> `isQuiet`       | `public` | `boolean`    | `false`       | is quiet mode enabled or not. When quiet mode is enabled, both debug and info output would be discarded. |
+| <a id="api-warn"></a> `warn`             | `public` | `WARN_FUNC`  | `undefined`   | -                                                                                                        |
+| <a id="api-no_op_func"></a> `NO_OP_FUNC` | `static` | () => `void` | `undefined`   | -                                                                                                        |
 
 ##### Methods
 
@@ -1736,17 +1692,17 @@ Build an instance with console.log/info/warn/error.
 
 ####### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `FLAGS` *extends* `Record`\<`string`, `any`\> |
+| Type Parameter                                |
+| --------------------------------------------- |
+| `FLAGS` _extends_ `Record`\<`string`, `any`\> |
 
 ####### Parameters
 
-| Parameter | Type | Default value | Description |
-| ------ | ------ | ------ | ------ |
-| `flags` | `FLAGS` | `...` | The flag object that contains fields for knowing whether debug is enabled and whether quiet mode is enabled. Values of those fields are evaluated only once within this function. They are not evaluated when debug/info/warn/error functions are called. |
-| `debugFlagName` | keyof `FLAGS` | `'debug'` | Name of the debug field in the flags object |
-| `quietFlagName` | keyof `FLAGS` | `'quiet'` | Name of the quiet field in the flags object |
+| Parameter       | Type          | Default value | Description                                                                                                                                                                                                                                               |
+| --------------- | ------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `flags`         | `FLAGS`       | `...`         | The flag object that contains fields for knowing whether debug is enabled and whether quiet mode is enabled. Values of those fields are evaluated only once within this function. They are not evaluated when debug/info/warn/error functions are called. |
+| `debugFlagName` | keyof `FLAGS` | `'debug'`     | Name of the debug field in the flags object                                                                                                                                                                                                               |
+| `quietFlagName` | keyof `FLAGS` | `'quiet'`     | Name of the quiet field in the flags object                                                                                                                                                                                                               |
 
 ####### Returns
 
@@ -1754,7 +1710,7 @@ Build an instance with console.log/info/warn/error.
 
 An instance that uses console.log/info/warn/error.
 
-***
+---
 
 <a id="api-consolelike"></a>
 
@@ -1767,9 +1723,9 @@ Build an instance from 'log' (https://github.com/medikoo/log).
 
 ####### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `log` | `MedikooLogger` | instance of the logger |
+| Parameter | Type            | Description            |
+| --------- | --------------- | ---------------------- |
+| `log`     | `MedikooLogger` | instance of the logger |
 
 ####### Returns
 
@@ -1777,7 +1733,7 @@ Build an instance from 'log' (https://github.com/medikoo/log).
 
 instance of LineLogger that is actually ConsoleLineLogger type
 
-***
+---
 
 <a id="api-consolewithcolour"></a>
 
@@ -1791,23 +1747,23 @@ you need to add them as dependencies separately.
 
 ####### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `FLAGS` *extends* `Record`\<`string`, `any`\> |
-| `COLOURER` *extends* `Record`\<`string`, `any`\> |
+| Type Parameter                                   |
+| ------------------------------------------------ |
+| `FLAGS` _extends_ `Record`\<`string`, `any`\>    |
+| `COLOURER` _extends_ `Record`\<`string`, `any`\> |
 
 ####### Parameters
 
-| Parameter | Type | Default value | Description |
-| ------ | ------ | ------ | ------ |
-| `flags` | `FLAGS` | `undefined` | The flag object that contains fields for knowning whether debug is enabled and whether quiet mode is enabled. Values of those fields are evaluated only once within this function. They are not evaluated when debug/info/warn/error functions are called. |
-| `colourer` | `COLOURER` | `undefined` | Supplier of the colouring function, such as chalk or colors or cli-color |
-| `debugColourFuncName` | keyof `COLOURER` | `'grey'` | Name of the function within colourer that will be used to add colour to debug messages, or null if colouring is not desired. |
-| `infoColourFuncName?` | keyof `COLOURER` | `undefined` | Name of the function within colourer that will be used to add colour to info messages, or null if colouring is not desired. |
-| `warnColourFuncName?` | keyof `COLOURER` | `'yellow'` | Name of the function within colourer that will be used to add colour to warn messages, or null if colouring is not desired. |
-| `errorColourFuncName?` | keyof `COLOURER` | `'red'` | Name of the function within colourer that will be used to add colour to error messages, or null if colouring is not desired. |
-| `debugFlagName?` | keyof `FLAGS` | `'debug'` | Name of the debug field in the flags object |
-| `quietFlagName?` | keyof `FLAGS` | `'quiet'` | Name of the quiet field in the flags object |
+| Parameter              | Type             | Default value | Description                                                                                                                                                                                                                                                |
+| ---------------------- | ---------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `flags`                | `FLAGS`          | `undefined`   | The flag object that contains fields for knowning whether debug is enabled and whether quiet mode is enabled. Values of those fields are evaluated only once within this function. They are not evaluated when debug/info/warn/error functions are called. |
+| `colourer`             | `COLOURER`       | `undefined`   | Supplier of the colouring function, such as chalk or colors or cli-color                                                                                                                                                                                   |
+| `debugColourFuncName`  | keyof `COLOURER` | `'grey'`      | Name of the function within colourer that will be used to add colour to debug messages, or null if colouring is not desired.                                                                                                                               |
+| `infoColourFuncName?`  | keyof `COLOURER` | `undefined`   | Name of the function within colourer that will be used to add colour to info messages, or null if colouring is not desired.                                                                                                                                |
+| `warnColourFuncName?`  | keyof `COLOURER` | `'yellow'`    | Name of the function within colourer that will be used to add colour to warn messages, or null if colouring is not desired.                                                                                                                                |
+| `errorColourFuncName?` | keyof `COLOURER` | `'red'`       | Name of the function within colourer that will be used to add colour to error messages, or null if colouring is not desired.                                                                                                                               |
+| `debugFlagName?`       | keyof `FLAGS`    | `'debug'`     | Name of the debug field in the flags object                                                                                                                                                                                                                |
+| `quietFlagName?`       | keyof `FLAGS`    | `'quiet'`     | Name of the quiet field in the flags object                                                                                                                                                                                                                |
 
 ####### Returns
 
@@ -1817,18 +1773,16 @@ An instance that uses console.log/info/warn/error and also adds colour to the me
 
 ### Type Aliases
 
-
 <a id="line-loggertype-aliasesconsolelineloggermd"></a>
 
 #### Type Alias: ConsoleLineLogger
 
-> **ConsoleLineLogger** = `ReturnType`\<*typeof* [`console`](#console)\>
+> **ConsoleLineLogger** = `ReturnType`\<_typeof_ [`console`](#console)\>
 
 Type of the object returned by `LineLogger.console()` or `LineLogger.consoleWithColour()`.
 It has the same function signatures as console.log/info/warn/error.
 
 ### Variables
-
 
 <a id="line-loggervariablesconsolelikemd"></a>
 
@@ -1844,9 +1798,9 @@ Build an instance from 'log' (https://github.com/medikoo/log).
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `log` | `MedikooLogger` | instance of the logger |
+| Parameter | Type            | Description            |
+| --------- | --------------- | ---------------------- |
+| `log`     | `MedikooLogger` | instance of the logger |
 
 ##### Returns
 
@@ -1862,7 +1816,6 @@ instance of the logger
 
 instance of LineLogger that is actually ConsoleLineLogger type
 
-
 <a id="line-loggervariablesconsolewithcolourmd"></a>
 
 #### Variable: consoleWithColour()
@@ -1877,23 +1830,23 @@ you need to add them as dependencies separately.
 
 ##### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `FLAGS` *extends* `Record`\<`string`, `any`\> |
-| `COLOURER` *extends* `Record`\<`string`, `any`\> |
+| Type Parameter                                   |
+| ------------------------------------------------ |
+| `FLAGS` _extends_ `Record`\<`string`, `any`\>    |
+| `COLOURER` _extends_ `Record`\<`string`, `any`\> |
 
 ##### Parameters
 
-| Parameter | Type | Default value | Description |
-| ------ | ------ | ------ | ------ |
-| `flags` | `FLAGS` | `undefined` | The flag object that contains fields for knowning whether debug is enabled and whether quiet mode is enabled. Values of those fields are evaluated only once within this function. They are not evaluated when debug/info/warn/error functions are called. |
-| `colourer` | `COLOURER` | `undefined` | Supplier of the colouring function, such as chalk or colors or cli-color |
-| `debugColourFuncName` | keyof `COLOURER` | `'grey'` | Name of the function within colourer that will be used to add colour to debug messages, or null if colouring is not desired. |
-| `infoColourFuncName?` | keyof `COLOURER` | `undefined` | Name of the function within colourer that will be used to add colour to info messages, or null if colouring is not desired. |
-| `warnColourFuncName?` | keyof `COLOURER` | `'yellow'` | Name of the function within colourer that will be used to add colour to warn messages, or null if colouring is not desired. |
-| `errorColourFuncName?` | keyof `COLOURER` | `'red'` | Name of the function within colourer that will be used to add colour to error messages, or null if colouring is not desired. |
-| `debugFlagName?` | keyof `FLAGS` | `'debug'` | Name of the debug field in the flags object |
-| `quietFlagName?` | keyof `FLAGS` | `'quiet'` | Name of the quiet field in the flags object |
+| Parameter              | Type             | Default value | Description                                                                                                                                                                                                                                                |
+| ---------------------- | ---------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `flags`                | `FLAGS`          | `undefined`   | The flag object that contains fields for knowning whether debug is enabled and whether quiet mode is enabled. Values of those fields are evaluated only once within this function. They are not evaluated when debug/info/warn/error functions are called. |
+| `colourer`             | `COLOURER`       | `undefined`   | Supplier of the colouring function, such as chalk or colors or cli-color                                                                                                                                                                                   |
+| `debugColourFuncName`  | keyof `COLOURER` | `'grey'`      | Name of the function within colourer that will be used to add colour to debug messages, or null if colouring is not desired.                                                                                                                               |
+| `infoColourFuncName?`  | keyof `COLOURER` | `undefined`   | Name of the function within colourer that will be used to add colour to info messages, or null if colouring is not desired.                                                                                                                                |
+| `warnColourFuncName?`  | keyof `COLOURER` | `'yellow'`    | Name of the function within colourer that will be used to add colour to warn messages, or null if colouring is not desired.                                                                                                                                |
+| `errorColourFuncName?` | keyof `COLOURER` | `'red'`       | Name of the function within colourer that will be used to add colour to error messages, or null if colouring is not desired.                                                                                                                               |
+| `debugFlagName?`       | keyof `FLAGS`    | `'debug'`     | Name of the debug field in the flags object                                                                                                                                                                                                                |
+| `quietFlagName?`       | keyof `FLAGS`    | `'quiet'`     | Name of the quiet field in the flags object                                                                                                                                                                                                                |
 
 ##### Returns
 
@@ -1939,7 +1892,6 @@ Name of the quiet field in the flags object. Quiet flag can override debug flag.
 
 An LineLogger instance that uses console.log/info/warn/error and also adds colour to the messages using chalk/colors/cli-color.
 
-
 <a id="line-loggervariablesconsolewithoutcolourmd"></a>
 
 #### Variable: consoleWithoutColour()
@@ -1952,17 +1904,17 @@ Build an instance with console.log/info/warn/error.
 
 ##### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `FLAGS` *extends* `Record`\<`string`, `any`\> |
+| Type Parameter                                |
+| --------------------------------------------- |
+| `FLAGS` _extends_ `Record`\<`string`, `any`\> |
 
 ##### Parameters
 
-| Parameter | Type | Default value | Description |
-| ------ | ------ | ------ | ------ |
-| `flags` | `FLAGS` | `...` | The flag object that contains fields for knowing whether debug is enabled and whether quiet mode is enabled. Values of those fields are evaluated only once within this function. They are not evaluated when debug/info/warn/error functions are called. |
-| `debugFlagName` | keyof `FLAGS` | `'debug'` | Name of the debug field in the flags object |
-| `quietFlagName` | keyof `FLAGS` | `'quiet'` | Name of the quiet field in the flags object |
+| Parameter       | Type          | Default value | Description                                                                                                                                                                                                                                               |
+| --------------- | ------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `flags`         | `FLAGS`       | `...`         | The flag object that contains fields for knowing whether debug is enabled and whether quiet mode is enabled. Values of those fields are evaluated only once within this function. They are not evaluated when debug/info/warn/error functions are called. |
+| `debugFlagName` | keyof `FLAGS` | `'debug'`     | Name of the debug field in the flags object                                                                                                                                                                                                               |
+| `quietFlagName` | keyof `FLAGS` | `'quiet'`     | Name of the quiet field in the flags object                                                                                                                                                                                                               |
 
 ##### Returns
 
@@ -1990,24 +1942,22 @@ An LineLogger instance that uses console.log/info/warn/error.
 
 ## Mask
 
-
 <a id="maskreadmemd"></a>
 
 ### mask
 
 #### Functions
 
-| Function | Description |
-| ------ | ------ |
-| [mask](#maskfunctionsmaskmd) | Mask the content of a string |
-| [maskAll](#maskfunctionsmaskallmd) | Replace each character of the input with '*' |
-| [maskCreditCard](#maskfunctionsmaskcreditcardmd) | Mask credit card number string |
-| [maskEmail](#maskfunctionsmaskemailmd) | Mask sensitive information in an email address while keeping some information for troubleshooting |
-| [masker](#maskfunctionsmaskermd) | Create a mask function with pre-set parameters. |
-| [maskFullName](#maskfunctionsmaskfullnamemd) | Mask sensitive information in the full name while keeping useful information for troubleshooting |
+| Function                                         | Description                                                                                       |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| [mask](#maskfunctionsmaskmd)                     | Mask the content of a string                                                                      |
+| [maskAll](#maskfunctionsmaskallmd)               | Replace each character of the input with '*'                                                      |
+| [maskCreditCard](#maskfunctionsmaskcreditcardmd) | Mask credit card number string                                                                    |
+| [maskEmail](#maskfunctionsmaskemailmd)           | Mask sensitive information in an email address while keeping some information for troubleshooting |
+| [masker](#maskfunctionsmaskermd)                 | Create a mask function with pre-set parameters.                                                   |
+| [maskFullName](#maskfunctionsmaskfullnamemd)     | Mask sensitive information in the full name while keeping useful information for troubleshooting  |
 
 ### Functions
-
 
 <a id="maskfunctionsmaskmd"></a>
 
@@ -2019,27 +1969,26 @@ Mask the content of a string
 
 ##### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `T` *extends* `string` \| `null` \| `undefined` |
+| Type Parameter                                  |
+| ----------------------------------------------- |
+| `T` _extends_ `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
-| Parameter | Type | Default value | Description |
-| ------ | ------ | ------ | ------ |
-| `input` | `T` | `undefined` | The input which could also be null or undefined |
-| `keepLeft` | `number` | `1` | Number of characters on the left to be kept in the output without masking. Default value is 1. |
-| `keepRight` | `number` | `0` | Number of characters on the right to be kept in the output without masking. Default value is 0. |
-| `minLength` | `number` | `3` | Minimal length of the string for keepLeft and keepRight to be effective. If the input string is shorter than this length, the whole string would be masked. Default value is 3. |
-| `maskLengthOrMaskString` | `string` \| `number` \| `null` \| `undefined` | `null` | The string to be used for replacing the part in the input that needs to be masked, or the length of the mask string if a fixed length is desired, or null/undefined if the mask string should have the same length as the part to be masked. Default value is null. |
-| `maskPattern` | `string` | `'*'` | The pattern to be repeated as the mask. Default value is '*'. |
+| Parameter                | Type                                          | Default value | Description                                                                                                                                                                                                                                                         |
+| ------------------------ | --------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `input`                  | `T`                                           | `undefined`   | The input which could also be null or undefined                                                                                                                                                                                                                     |
+| `keepLeft`               | `number`                                      | `1`           | Number of characters on the left to be kept in the output without masking. Default value is 1.                                                                                                                                                                      |
+| `keepRight`              | `number`                                      | `0`           | Number of characters on the right to be kept in the output without masking. Default value is 0.                                                                                                                                                                     |
+| `minLength`              | `number`                                      | `3`           | Minimal length of the string for keepLeft and keepRight to be effective. If the input string is shorter than this length, the whole string would be masked. Default value is 3.                                                                                     |
+| `maskLengthOrMaskString` | `string` \| `number` \| `null` \| `undefined` | `null`        | The string to be used for replacing the part in the input that needs to be masked, or the length of the mask string if a fixed length is desired, or null/undefined if the mask string should have the same length as the part to be masked. Default value is null. |
+| `maskPattern`            | `string`                                      | `'*'`         | The pattern to be repeated as the mask. Default value is '*'.                                                                                                                                                                                                       |
 
 ##### Returns
 
 `T`
 
 String with masked content
-
 
 <a id="maskfunctionsmaskallmd"></a>
 
@@ -2051,22 +2000,21 @@ Replace each character of the input with '*'
 
 ##### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `T` *extends* `string` \| `null` \| `undefined` |
+| Type Parameter                                  |
+| ----------------------------------------------- |
+| `T` _extends_ `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `input` | `T` | a string or null or undefined |
+| Parameter | Type | Description                   |
+| --------- | ---- | ----------------------------- |
+| `input`   | `T`  | a string or null or undefined |
 
 ##### Returns
 
 `T`
 
 masked string or null or undefined
-
 
 <a id="maskfunctionsmaskcreditcardmd"></a>
 
@@ -2078,22 +2026,21 @@ Mask credit card number string
 
 ##### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `T` *extends* `string` \| `null` \| `undefined` |
+| Type Parameter                                  |
+| ----------------------------------------------- |
+| `T` _extends_ `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `input` | `T` | credit card number string which could also be null or undefined |
+| Parameter | Type | Description                                                     |
+| --------- | ---- | --------------------------------------------------------------- |
+| `input`   | `T`  | credit card number string which could also be null or undefined |
 
 ##### Returns
 
 `T`
 
 Something like ****-****-****-1234, or null/undefined if the input is null/undefined
-
 
 <a id="maskfunctionsmaskemailmd"></a>
 
@@ -2105,22 +2052,21 @@ Mask sensitive information in an email address while keeping some information fo
 
 ##### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `T` *extends* `string` \| `null` \| `undefined` |
+| Type Parameter                                  |
+| ----------------------------------------------- |
+| `T` _extends_ `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `email` | `T` | the email address which could also be null or undefined |
+| Parameter | Type | Description                                             |
+| --------- | ---- | ------------------------------------------------------- |
+| `email`   | `T`  | the email address which could also be null or undefined |
 
 ##### Returns
 
 `T`
 
 masked email address
-
 
 <a id="maskfunctionsmaskfullnamemd"></a>
 
@@ -2132,22 +2078,21 @@ Mask sensitive information in the full name while keeping useful information for
 
 ##### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `T` *extends* `string` \| `null` \| `undefined` |
+| Type Parameter                                  |
+| ----------------------------------------------- |
+| `T` _extends_ `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `name` | `T` | the full name which could also be null or undefined |
+| Parameter | Type | Description                                         |
+| --------- | ---- | --------------------------------------------------- |
+| `name`    | `T`  | the full name which could also be null or undefined |
 
 ##### Returns
 
 `T`
 
 masked full name
-
 
 <a id="maskfunctionsmaskermd"></a>
 
@@ -2159,19 +2104,19 @@ Create a mask function with pre-set parameters.
 
 ##### Type Parameters
 
-| Type Parameter | Default type |
-| ------ | ------ |
-| `T` *extends* `string` \| `null` \| `undefined` | `string` |
+| Type Parameter                                  | Default type |
+| ----------------------------------------------- | ------------ |
+| `T` _extends_ `string` \| `null` \| `undefined` | `string`     |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `keepLeft?` | `number` | Number of characters on the left to be kept in the output without masking. Default value is 1. |
-| `keepRight?` | `number` | Number of characters on the right to be kept in the output without masking. Default value is 0. |
-| `minLength?` | `number` | Minimal length of the string for keepLeft and keepRight to be effective. If the input string is shorter than this length, the whole string would be masked. Default value is 3. |
+| Parameter                 | Type                           | Description                                                                                                                                                                                                                                                         |
+| ------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `keepLeft?`               | `number`                       | Number of characters on the left to be kept in the output without masking. Default value is 1.                                                                                                                                                                      |
+| `keepRight?`              | `number`                       | Number of characters on the right to be kept in the output without masking. Default value is 0.                                                                                                                                                                     |
+| `minLength?`              | `number`                       | Minimal length of the string for keepLeft and keepRight to be effective. If the input string is shorter than this length, the whole string would be masked. Default value is 3.                                                                                     |
 | `maskLengthOrMaskString?` | `string` \| `number` \| `null` | The string to be used for replacing the part in the input that needs to be masked, or the length of the mask string if a fixed length is desired, or null/undefined if the mask string should have the same length as the part to be masked. Default value is null. |
-| `maskPattern?` | `string` | The pattern to be repeated as the mask. Default value is '*'. |
+| `maskPattern?`            | `string`                       | The pattern to be repeated as the mask. Default value is '*'.                                                                                                                                                                                                       |
 
 ##### Returns
 
@@ -2182,8 +2127,8 @@ A mask function that has specified parameters as pre-set
 ###### Parameters
 
 | Parameter | Type |
-| ------ | ------ |
-| `input` | `T` |
+| --------- | ---- |
+| `input`   | `T`  |
 
 ###### Returns
 
@@ -2193,11 +2138,10 @@ A mask function that has specified parameters as pre-set
 
 ```ts
 const maskApiKey = masker(2, 2, 10);
-  const maskedString = maskApiKey(myApiKey);
+const maskedString = maskApiKey(myApiKey);
 ```
 
 ## Merge
-
 
 <a id="mergereadmemd"></a>
 
@@ -2205,18 +2149,17 @@ const maskApiKey = masker(2, 2, 10);
 
 #### Interfaces
 
-| Interface | Description |
-| ------ | ------ |
+| Interface                                      | Description                              |
+| ---------------------------------------------- | ---------------------------------------- |
 | [MergeOptions](#mergeinterfacesmergeoptionsmd) | Options to customize the merge behavior. |
 
 #### Functions
 
-| Function | Description |
-| ------ | ------ |
+| Function                        | Description                                                                            |
+| ------------------------------- | -------------------------------------------------------------------------------------- |
 | [merge](#mergefunctionsmergemd) | Recursively merges properties of one or more source objects into a destination object. |
 
 ### Functions
-
 
 <a id="mergefunctionsmergemd"></a>
 
@@ -2228,18 +2171,18 @@ Recursively merges properties of one or more source objects into a destination o
 
 ##### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `T` *extends* `object` |
-| `U` *extends* `any`[] |
+| Type Parameter         |
+| ---------------------- |
+| `T` _extends_ `object` |
+| `U` _extends_ `any`[]  |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `options` | [`MergeOptions`](#mergeinterfacesmergeoptionsmd) \| `null` \| `undefined` | Customizes the merge behavior. |
-| `destination` | `T` | The object to merge properties into. It will be mutated unless `options.immutable` is true. |
-| ...`sources` | `U` | The source objects. |
+| Parameter     | Type                                                                      | Description                                                                                 |
+| ------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `options`     | [`MergeOptions`](#mergeinterfacesmergeoptionsmd) \| `null` \| `undefined` | Customizes the merge behavior.                                                              |
+| `destination` | `T`                                                                       | The object to merge properties into. It will be mutated unless `options.immutable` is true. |
+| ...`sources`  | `U`                                                                       | The source objects.                                                                         |
 
 ##### Returns
 
@@ -2249,7 +2192,6 @@ The merged object.
 
 ### Interfaces
 
-
 <a id="mergeinterfacesmergeoptionsmd"></a>
 
 #### Interface: MergeOptions
@@ -2258,14 +2200,13 @@ Options to customize the merge behavior.
 
 ##### Properties
 
-| Property | Type | Description |
-| ------ | ------ | ------ |
-| <a id="api-array"></a> `array?` | `"replace"` \| `"append"` \| `"merge"` | Defines how to handle arrays during the merge. - `replace`: The source array completely replaces the destination array. - `append`: The source array's elements are added to the end of the destination array. - `merge`: (Default) Mimics Lodash's behavior. It overwrites elements at the same index. If an element is an object, it merges them recursively. If the source array is longer, its additional elements are appended. **Default** `'merge'` |
-| <a id="api-immutable"></a> `immutable?` | `boolean` | If `true`, the merge will be immutable, creating a new object. If `false` or not provided, the destination object will be mutated. **Default** `false` |
-| <a id="api-set"></a> `set?` | `"replace"` \| `"merge"` | Defines how to handle `Set` objects during the merge. - `replace`: (Default) The source `Set` completely replaces the destination `Set`. - `merge`: A new `Set` is created containing all elements from both the destination and source `Set`s. **Default** `'replace'` |
+| Property                                | Type                                   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| --------------------------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a id="api-array"></a> `array?`         | `"replace"` \| `"append"` \| `"merge"` | Defines how to handle arrays during the merge. - `replace`: The source array completely replaces the destination array. - `append`: The source array's elements are added to the end of the destination array. - `merge`: (Default) Mimics Lodash's behavior. It overwrites elements at the same index. If an element is an object, it merges them recursively. If the source array is longer, its additional elements are appended. **Default** `'merge'` |
+| <a id="api-immutable"></a> `immutable?` | `boolean`                              | If `true`, the merge will be immutable, creating a new object. If `false` or not provided, the destination object will be mutated. **Default** `false`                                                                                                                                                                                                                                                                                                     |
+| <a id="api-set"></a> `set?`             | `"replace"` \| `"merge"`               | Defines how to handle `Set` objects during the merge. - `replace`: (Default) The source `Set` completely replaces the destination `Set`. - `merge`: A new `Set` is created containing all elements from both the destination and source `Set`s. **Default** `'replace'`                                                                                                                                                                                    |
 
 ## Number
-
 
 <a id="numberreadmemd"></a>
 
@@ -2273,21 +2214,20 @@ Options to customize the merge behavior.
 
 #### Classes
 
-| Class | Description |
-| ------ | ------ |
-| [NumberUtils](#numberclassesnumberutilsmd) | - |
+| Class                                      | Description |
+| ------------------------------------------ | ----------- |
+| [NumberUtils](#numberclassesnumberutilsmd) | -           |
 
 #### Variables
 
-| Variable | Description |
-| ------ | ------ |
-| [clamp](#numbervariablesclampmd) | Constrains a number within specified bounds. |
-| [isInRange](#numbervariablesisinrangemd) | Checks if a number is within a specified range (inclusive). |
-| [rangeIntersection](#numbervariablesrangeintersectionmd) | Calculates the intersection between two ranges. |
-| [roundTo](#numbervariablesroundtomd) | Rounds a number to a specified number of decimal places. |
+| Variable                                                 | Description                                                 |
+| -------------------------------------------------------- | ----------------------------------------------------------- |
+| [clamp](#numbervariablesclampmd)                         | Constrains a number within specified bounds.                |
+| [isInRange](#numbervariablesisinrangemd)                 | Checks if a number is within a specified range (inclusive). |
+| [rangeIntersection](#numbervariablesrangeintersectionmd) | Calculates the intersection between two ranges.             |
+| [roundTo](#numbervariablesroundtomd)                     | Rounds a number to a specified number of decimal places.    |
 
 ### Classes
-
 
 <a id="numberclassesnumberutilsmd"></a>
 
@@ -2317,11 +2257,11 @@ Constrains a number within specified bounds.
 
 ####### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `num` | `number` | The number to clamp |
-| `min` | `number` | The minimum value (inclusive) |
-| `max` | `number` | The maximum value (inclusive) |
+| Parameter | Type     | Description                   |
+| --------- | -------- | ----------------------------- |
+| `num`     | `number` | The number to clamp           |
+| `min`     | `number` | The minimum value (inclusive) |
+| `max`     | `number` | The maximum value (inclusive) |
 
 ####### Returns
 
@@ -2329,7 +2269,7 @@ Constrains a number within specified bounds.
 
 The clamped value
 
-***
+---
 
 <a id="api-isinrange"></a>
 
@@ -2341,11 +2281,11 @@ Checks if a number is within a specified range (inclusive).
 
 ####### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `num` | `number` | The number to check |
-| `min` | `number` | The minimum value |
-| `max` | `number` | The maximum value |
+| Parameter | Type     | Description         |
+| --------- | -------- | ------------------- |
+| `num`     | `number` | The number to check |
+| `min`     | `number` | The minimum value   |
+| `max`     | `number` | The maximum value   |
 
 ####### Returns
 
@@ -2353,7 +2293,7 @@ Checks if a number is within a specified range (inclusive).
 
 True if the number is within range
 
-***
+---
 
 <a id="api-rangeintersection"></a>
 
@@ -2365,12 +2305,12 @@ Calculates the intersection between two ranges.
 
 ####### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `min1` | `number` | Minimum value of the first range |
-| `max1` | `number` | Maximum value of the first range |
-| `min2` | `number` | Minimum value of the second range |
-| `max2` | `number` | Maximum value of the second range |
+| Parameter | Type     | Description                       |
+| --------- | -------- | --------------------------------- |
+| `min1`    | `number` | Minimum value of the first range  |
+| `max1`    | `number` | Maximum value of the first range  |
+| `min2`    | `number` | Minimum value of the second range |
+| `max2`    | `number` | Maximum value of the second range |
 
 ####### Returns
 
@@ -2378,7 +2318,7 @@ Calculates the intersection between two ranges.
 
 The intersection as a tuple [min, max], or undefined if there is no intersection.
 
-***
+---
 
 <a id="api-roundto"></a>
 
@@ -2390,10 +2330,10 @@ Rounds a number to a specified number of decimal places.
 
 ####### Parameters
 
-| Parameter | Type | Default value | Description |
-| ------ | ------ | ------ | ------ |
-| `num` | `number` | `undefined` | The number to round |
-| `precision` | `number` | `0` | The number of decimal places (default: 0) |
+| Parameter   | Type     | Default value | Description                               |
+| ----------- | -------- | ------------- | ----------------------------------------- |
+| `num`       | `number` | `undefined`   | The number to round                       |
+| `precision` | `number` | `0`           | The number of decimal places (default: 0) |
 
 ####### Returns
 
@@ -2402,7 +2342,6 @@ Rounds a number to a specified number of decimal places.
 Rounded number
 
 ### Variables
-
 
 <a id="numbervariablesclampmd"></a>
 
@@ -2416,11 +2355,11 @@ Constrains a number within specified bounds.
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `num` | `number` | The number to clamp |
-| `min` | `number` | The minimum value (inclusive) |
-| `max` | `number` | The maximum value (inclusive) |
+| Parameter | Type     | Description                   |
+| --------- | -------- | ----------------------------- |
+| `num`     | `number` | The number to clamp           |
+| `min`     | `number` | The minimum value (inclusive) |
+| `max`     | `number` | The maximum value (inclusive) |
 
 ##### Returns
 
@@ -2444,7 +2383,6 @@ The maximum value
 
 The clamped value
 
-
 <a id="numbervariablesisinrangemd"></a>
 
 #### Variable: isInRange()
@@ -2457,11 +2395,11 @@ Checks if a number is within a specified range (inclusive).
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `num` | `number` | The number to check |
-| `min` | `number` | The minimum value |
-| `max` | `number` | The maximum value |
+| Parameter | Type     | Description         |
+| --------- | -------- | ------------------- |
+| `num`     | `number` | The number to check |
+| `min`     | `number` | The minimum value   |
+| `max`     | `number` | The maximum value   |
 
 ##### Returns
 
@@ -2485,7 +2423,6 @@ The maximum value
 
 True if the number is within range
 
-
 <a id="numbervariablesrangeintersectionmd"></a>
 
 #### Variable: rangeIntersection()
@@ -2498,12 +2435,12 @@ Calculates the intersection between two ranges.
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `min1` | `number` | Minimum value of the first range |
-| `max1` | `number` | Maximum value of the first range |
-| `min2` | `number` | Minimum value of the second range |
-| `max2` | `number` | Maximum value of the second range |
+| Parameter | Type     | Description                       |
+| --------- | -------- | --------------------------------- |
+| `min1`    | `number` | Minimum value of the first range  |
+| `max1`    | `number` | Maximum value of the first range  |
+| `min2`    | `number` | Minimum value of the second range |
+| `max2`    | `number` | Maximum value of the second range |
 
 ##### Returns
 
@@ -2531,7 +2468,6 @@ Maximum value of the second range
 
 The intersection as a tuple [min, max], or undefined if there is no intersection.
 
-
 <a id="numbervariablesroundtomd"></a>
 
 #### Variable: roundTo()
@@ -2544,10 +2480,10 @@ Rounds a number to a specified number of decimal places.
 
 ##### Parameters
 
-| Parameter | Type | Default value | Description |
-| ------ | ------ | ------ | ------ |
-| `num` | `number` | `undefined` | The number to round |
-| `precision` | `number` | `0` | The number of decimal places (default: 0) |
+| Parameter   | Type     | Default value | Description                               |
+| ----------- | -------- | ------------- | ----------------------------------------- |
+| `num`       | `number` | `undefined`   | The number to round                       |
+| `precision` | `number` | `0`           | The number of decimal places (default: 0) |
 
 ##### Returns
 
@@ -2569,26 +2505,24 @@ Rounded number
 
 ## Random
 
-
 <a id="randomreadmemd"></a>
 
 ### random
 
 #### Functions
 
-| Function | Description |
-| ------ | ------ |
-| [gaussianRandom](#randomfunctionsgaussianrandommd) | Generates a random number following a normal (Gaussian) distribution using Box-Muller transform. |
-| [generateRandomBoolean](#randomfunctionsgeneraterandombooleanmd) | Generates a random boolean value. |
-| [generateRandomInteger](#randomfunctionsgeneraterandomintegermd) | Generates a random integer within [min, max). |
-| [generateRandomNumber](#randomfunctionsgeneraterandomnumbermd) | Generates a random number based on a distribution function. |
-| [generateRandomStringFromChars](#randomfunctionsgeneraterandomstringfromcharsmd) | Generates a random string using the characters provided. |
-| [pickRandomElement](#randomfunctionspickrandomelementmd) | Picks a random element from an array. |
-| [seededRandom](#randomfunctionsseededrandommd) | Creates a seeded pseudo-random number generator (LCG). |
-| [weightedPickRandomElement](#randomfunctionsweightedpickrandomelementmd) | Picks an item from an array based on weights. |
+| Function                                                                         | Description                                                                                      |
+| -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| [gaussianRandom](#randomfunctionsgaussianrandommd)                               | Generates a random number following a normal (Gaussian) distribution using Box-Muller transform. |
+| [generateRandomBoolean](#randomfunctionsgeneraterandombooleanmd)                 | Generates a random boolean value.                                                                |
+| [generateRandomInteger](#randomfunctionsgeneraterandomintegermd)                 | Generates a random integer within [min, max).                                                    |
+| [generateRandomNumber](#randomfunctionsgeneraterandomnumbermd)                   | Generates a random number based on a distribution function.                                      |
+| [generateRandomStringFromChars](#randomfunctionsgeneraterandomstringfromcharsmd) | Generates a random string using the characters provided.                                         |
+| [pickRandomElement](#randomfunctionspickrandomelementmd)                         | Picks a random element from an array.                                                            |
+| [seededRandom](#randomfunctionsseededrandommd)                                   | Creates a seeded pseudo-random number generator (LCG).                                           |
+| [weightedPickRandomElement](#randomfunctionsweightedpickrandomelementmd)         | Picks an item from an array based on weights.                                                    |
 
 ### Functions
-
 
 <a id="randomfunctionsgaussianrandommd"></a>
 
@@ -2600,17 +2534,16 @@ Generates a random number following a normal (Gaussian) distribution using Box-M
 
 ##### Parameters
 
-| Parameter | Type | Default value | Description |
-| ------ | ------ | ------ | ------ |
-| `mean` | `number` | `0` | The mean of the distribution. |
-| `stdev` | `number` | `1` | The standard deviation of the distribution. |
+| Parameter | Type     | Default value | Description                                 |
+| --------- | -------- | ------------- | ------------------------------------------- |
+| `mean`    | `number` | `0`           | The mean of the distribution.               |
+| `stdev`   | `number` | `1`           | The standard deviation of the distribution. |
 
 ##### Returns
 
 `number`
 
 A random number.
-
 
 <a id="randomfunctionsgeneraterandombooleanmd"></a>
 
@@ -2622,16 +2555,15 @@ Generates a random boolean value.
 
 ##### Parameters
 
-| Parameter | Type | Default value | Description |
-| ------ | ------ | ------ | ------ |
-| `probabilityOfTrue` | `number` | `0.5` | The probability of returning true, between 0 and 1. Default is 0.5. |
+| Parameter           | Type     | Default value | Description                                                         |
+| ------------------- | -------- | ------------- | ------------------------------------------------------------------- |
+| `probabilityOfTrue` | `number` | `0.5`         | The probability of returning true, between 0 and 1. Default is 0.5. |
 
 ##### Returns
 
 `boolean`
 
 True with the specified probability, otherwise false.
-
 
 <a id="randomfunctionsgeneraterandomintegermd"></a>
 
@@ -2643,17 +2575,16 @@ Generates a random integer within [min, max).
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `min` | `number` | The inclusive lower bound. |
-| `max` | `number` | The exclusive upper bound. |
+| Parameter | Type     | Description                |
+| --------- | -------- | -------------------------- |
+| `min`     | `number` | The inclusive lower bound. |
+| `max`     | `number` | The exclusive upper bound. |
 
 ##### Returns
 
 `number`
 
 A random integer between min (inclusive) and max (exclusive).
-
 
 <a id="randomfunctionsgeneraterandomnumbermd"></a>
 
@@ -2665,8 +2596,8 @@ Generates a random number based on a distribution function.
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
+| Parameter                        | Type              | Description                                                                                                                          |
+| -------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | `probabilityTransformerFunction` | (`x`) => `number` | A function that turns a random number within [0, 1) to another number. If not provided, the identity function F(x) = x will be used. |
 
 ##### Returns
@@ -2674,7 +2605,6 @@ Generates a random number based on a distribution function.
 `number`
 
 A generated random number.
-
 
 <a id="randomfunctionsgeneraterandomstringfromcharsmd"></a>
 
@@ -2686,17 +2616,16 @@ Generates a random string using the characters provided.
 
 ##### Parameters
 
-| Parameter | Type | Default value | Description |
-| ------ | ------ | ------ | ------ |
-| `length` | `number` | `undefined` | The length of the string to generate. |
-| `chars` | `string` | `'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'` | The characters to use. Defaults to alphanumeric characters. |
+| Parameter | Type     | Default value                                                      | Description                                                 |
+| --------- | -------- | ------------------------------------------------------------------ | ----------------------------------------------------------- |
+| `length`  | `number` | `undefined`                                                        | The length of the string to generate.                       |
+| `chars`   | `string` | `'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'` | The characters to use. Defaults to alphanumeric characters. |
 
 ##### Returns
 
 `string`
 
 A random string.
-
 
 <a id="randomfunctionspickrandomelementmd"></a>
 
@@ -2709,21 +2638,20 @@ Picks a random element from an array.
 ##### Type Parameters
 
 | Type Parameter |
-| ------ |
-| `T` |
+| -------------- |
+| `T`            |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `array` | `T`[] | The array to pick an element from. |
+| Parameter | Type  | Description                        |
+| --------- | ----- | ---------------------------------- |
+| `array`   | `T`[] | The array to pick an element from. |
 
 ##### Returns
 
 `T` \| `undefined`
 
 A randomly selected element from the array, or undefined if the array is empty.
-
 
 <a id="randomfunctionsseededrandommd"></a>
 
@@ -2735,9 +2663,9 @@ Creates a seeded pseudo-random number generator (LCG).
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `seed` | `number` | The seed value. |
+| Parameter | Type     | Description     |
+| --------- | -------- | --------------- |
+| `seed`    | `number` | The seed value. |
 
 ##### Returns
 
@@ -2748,7 +2676,6 @@ A function that generates random numbers in [0, 1).
 ###### Returns
 
 `number`
-
 
 <a id="randomfunctionsweightedpickrandomelementmd"></a>
 
@@ -2761,14 +2688,14 @@ Picks an item from an array based on weights.
 ##### Type Parameters
 
 | Type Parameter |
-| ------ |
-| `T` |
+| -------------- |
+| `T`            |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `items` | `T`[] | The items to pick from. |
+| Parameter | Type       | Description               |
+| --------- | ---------- | ------------------------- |
+| `items`   | `T`[]      | The items to pick from.   |
 | `weights` | `number`[] | The weights of the items. |
 
 ##### Returns
@@ -2779,34 +2706,32 @@ The picked item or undefined if invalid input.
 
 ## String
 
-
 <a id="stringreadmemd"></a>
 
 ### string
 
 #### Classes
 
-| Class | Description |
-| ------ | ------ |
-| [StringUtils](#stringclassesstringutilsmd) | - |
+| Class                                      | Description |
+| ------------------------------------------ | ----------- |
+| [StringUtils](#stringclassesstringutilsmd) | -           |
 
 #### Variables
 
-| Variable | Description |
-| ------ | ------ |
-| [applyWordCasing](#stringvariablesapplywordcasingmd) | Preserve basic casing from a template single word and apply it to another word. |
-| [camelToSnake](#stringvariablescameltosnakemd) | Converts a camelCase string to snake_case. |
-| [capitalise](#stringvariablescapitalisemd) | Capitalises the first letter of a string, making the rest lowercase. |
-| [capitalize](#stringvariablescapitalizemd) | Capitalizes the first letter of a string, making the rest lowercase. |
-| [escapeXml](#stringvariablesescapexmlmd) | Escapes special XML entities/characters in a string. Replaces &, <, >, ", and ' with their corresponding XML entities. Designed for performance using a single pass and lookup table. |
-| [pluralise](#stringvariablespluralisemd) | Returns the plural form of a single English word based on the supplied count (alias). |
-| [pluralize](#stringvariablespluralizemd) | Returns the plural form of a single English word based on the supplied count. |
-| [snakeToCamel](#stringvariablessnaketocamelmd) | Converts a snake_case string to camelCase. |
-| [truncate](#stringvariablestruncatemd) | Truncates a string to a specified length, optionally adding a suffix. |
-| [unescapeXml](#stringvariablesunescapexmlmd) | Unescapes XML entities/characters in a string. Converts &amp;, &lt;, &gt;, &quot;, &apos; back to their original characters. |
+| Variable                                             | Description                                                                                                                                                                           |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [applyWordCasing](#stringvariablesapplywordcasingmd) | Preserve basic casing from a template single word and apply it to another word.                                                                                                       |
+| [camelToSnake](#stringvariablescameltosnakemd)       | Converts a camelCase string to snake_case.                                                                                                                                            |
+| [capitalise](#stringvariablescapitalisemd)           | Capitalises the first letter of a string, making the rest lowercase.                                                                                                                  |
+| [capitalize](#stringvariablescapitalizemd)           | Capitalizes the first letter of a string, making the rest lowercase.                                                                                                                  |
+| [escapeXml](#stringvariablesescapexmlmd)             | Escapes special XML entities/characters in a string. Replaces &, <, >, ", and ' with their corresponding XML entities. Designed for performance using a single pass and lookup table. |
+| [pluralise](#stringvariablespluralisemd)             | Returns the plural form of a single English word based on the supplied count (alias).                                                                                                 |
+| [pluralize](#stringvariablespluralizemd)             | Returns the plural form of a single English word based on the supplied count.                                                                                                         |
+| [snakeToCamel](#stringvariablessnaketocamelmd)       | Converts a snake_case string to camelCase.                                                                                                                                            |
+| [truncate](#stringvariablestruncatemd)               | Truncates a string to a specified length, optionally adding a suffix.                                                                                                                 |
+| [unescapeXml](#stringvariablesunescapexmlmd)         | Unescapes XML entities/characters in a string. Converts &amp;, &lt;, &gt;, &quot;, &apos; back to their original characters.                                                          |
 
 ### Classes
-
 
 <a id="stringclassesstringutilsmd"></a>
 
@@ -2835,6 +2760,7 @@ The picked item or undefined if invalid input.
 Preserve basic casing from a template single word and apply it to another word.
 
 Rules:
+
 - If `casingTemplate` is all upper-case, return `word` in all upper-case.
 - If `casingTemplate` is Title Case (first letter uppercase, rest lowercase), return
   `word` in Title Case.
@@ -2846,10 +2772,10 @@ complex multi-word or mixed-case patterns. Use for word-level casing preservatio
 
 ####### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `casingTemplate` | `string` | A word whose casing should be copied (e.g. 'Cat' or 'CAT') |
-| `word` | `string` | The word to apply casing to (usually a transformed/lowercased form) |
+| Parameter        | Type     | Description                                                         |
+| ---------------- | -------- | ------------------------------------------------------------------- |
+| `casingTemplate` | `string` | A word whose casing should be copied (e.g. 'Cat' or 'CAT')          |
+| `word`           | `string` | The word to apply casing to (usually a transformed/lowercased form) |
 
 ####### Returns
 
@@ -2857,7 +2783,7 @@ complex multi-word or mixed-case patterns. Use for word-level casing preservatio
 
 The `word` adjusted to match the template's basic casing
 
-***
+---
 
 <a id="api-cameltosnake"></a>
 
@@ -2869,9 +2795,9 @@ Converts a camelCase string to snake_case.
 
 ####### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `str` | `string` | The camelCase string to convert |
+| Parameter | Type     | Description                     |
+| --------- | -------- | ------------------------------- |
+| `str`     | `string` | The camelCase string to convert |
 
 ####### Returns
 
@@ -2879,7 +2805,7 @@ Converts a camelCase string to snake_case.
 
 snake_case string
 
-***
+---
 
 <a id="api-capitalise"></a>
 
@@ -2891,9 +2817,9 @@ Capitalises the first letter of a string, making the rest lowercase.
 
 ####### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `str` | `string` | The string to capitalise |
+| Parameter | Type     | Description              |
+| --------- | -------- | ------------------------ |
+| `str`     | `string` | The string to capitalise |
 
 ####### Returns
 
@@ -2901,7 +2827,7 @@ Capitalises the first letter of a string, making the rest lowercase.
 
 Capitalised string
 
-***
+---
 
 <a id="api-capitalize"></a>
 
@@ -2913,9 +2839,9 @@ Capitalizes the first letter of a string, making the rest lowercase.
 
 ####### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `str` | `string` | The string to capitalize |
+| Parameter | Type     | Description              |
+| --------- | -------- | ------------------------ |
+| `str`     | `string` | The string to capitalize |
 
 ####### Returns
 
@@ -2923,7 +2849,7 @@ Capitalizes the first letter of a string, making the rest lowercase.
 
 Capitalized string
 
-***
+---
 
 <a id="api-escapexml"></a>
 
@@ -2937,15 +2863,15 @@ Designed for performance using a single pass and lookup table.
 
 ####### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `T` *extends* `string` \| `null` \| `undefined` |
+| Type Parameter                                  |
+| ----------------------------------------------- |
+| `T` _extends_ `string` \| `null` \| `undefined` |
 
 ####### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `str` | `T` | The string to escape for XML |
+| Parameter | Type | Description                  |
+| --------- | ---- | ---------------------------- |
+| `str`     | `T`  | The string to escape for XML |
 
 ####### Returns
 
@@ -2953,7 +2879,7 @@ Designed for performance using a single pass and lookup table.
 
 The escaped XML string
 
-***
+---
 
 <a id="api-pluralise"></a>
 
@@ -2964,6 +2890,7 @@ The escaped XML string
 Returns the plural form of a single English word based on the supplied count.
 
 Capabilities:
+
 - Preserves basic input casing (using `applyWordCasing`) so e.g. "Cat" -> "Cats",
   "CAT" -> "CATS".
 - Handles common irregular plurals (person->people, child->children, mouse->mice, etc.).
@@ -2974,6 +2901,7 @@ Capabilities:
   potato, tomato, echo, torpedo); otherwise 's' is added.
 
 Limitations and notes:
+
 - This is a pragmatic, rule-based implementation covering the most common English cases,
   not a complete linguistic solution. It does not support locales or full irregular/exception
   lists (many English words have irregular forms not included here).
@@ -2985,10 +2913,10 @@ Limitations and notes:
 
 ####### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `word` | `string` | The single English word to pluralize (may be mixed case) |
-| `count` | `number` | The numeric count; if equal to 1 the original word is returned |
+| Parameter | Type     | Description                                                    |
+| --------- | -------- | -------------------------------------------------------------- |
+| `word`    | `string` | The single English word to pluralize (may be mixed case)       |
+| `count`   | `number` | The numeric count; if equal to 1 the original word is returned |
 
 ####### Returns
 
@@ -2996,7 +2924,7 @@ Limitations and notes:
 
 The pluralized word with basic casing preserved
 
-***
+---
 
 <a id="api-pluralize"></a>
 
@@ -3007,6 +2935,7 @@ The pluralized word with basic casing preserved
 Returns the plural form of a single English word based on the supplied count.
 
 Capabilities:
+
 - Preserves basic input casing (using `applyWordCasing`) so e.g. "Cat" -> "Cats",
   "CAT" -> "CATS".
 - Handles common irregular plurals (person->people, child->children, mouse->mice, etc.).
@@ -3017,6 +2946,7 @@ Capabilities:
   potato, tomato, echo, torpedo); otherwise 's' is added.
 
 Limitations and notes:
+
 - This is a pragmatic, rule-based implementation covering the most common English cases,
   not a complete linguistic solution. It does not support locales or full irregular/exception
   lists (many English words have irregular forms not included here).
@@ -3028,10 +2958,10 @@ Limitations and notes:
 
 ####### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `word` | `string` | The single English word to pluralize (may be mixed case) |
-| `count` | `number` | The numeric count; if equal to 1 the original word is returned |
+| Parameter | Type     | Description                                                    |
+| --------- | -------- | -------------------------------------------------------------- |
+| `word`    | `string` | The single English word to pluralize (may be mixed case)       |
+| `count`   | `number` | The numeric count; if equal to 1 the original word is returned |
 
 ####### Returns
 
@@ -3039,7 +2969,7 @@ Limitations and notes:
 
 The pluralized word with basic casing preserved
 
-***
+---
 
 <a id="api-snaketocamel"></a>
 
@@ -3051,9 +2981,9 @@ Converts a snake_case string to camelCase.
 
 ####### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `str` | `string` | The snake_case string to convert |
+| Parameter | Type     | Description                      |
+| --------- | -------- | -------------------------------- |
+| `str`     | `string` | The snake_case string to convert |
 
 ####### Returns
 
@@ -3061,7 +2991,7 @@ Converts a snake_case string to camelCase.
 
 camelCase string
 
-***
+---
 
 <a id="api-truncate"></a>
 
@@ -3073,11 +3003,11 @@ Truncates a string to a specified length, optionally adding a suffix.
 
 ####### Parameters
 
-| Parameter | Type | Default value | Description |
-| ------ | ------ | ------ | ------ |
-| `str` | `string` | `undefined` | The string to truncate |
-| `length` | `number` | `undefined` | Maximum length of the resulting string (including suffix if provided) |
-| `suffix` | `string` | `'...'` | Optional suffix to add to truncated string (default: '...') |
+| Parameter | Type     | Default value | Description                                                           |
+| --------- | -------- | ------------- | --------------------------------------------------------------------- |
+| `str`     | `string` | `undefined`   | The string to truncate                                                |
+| `length`  | `number` | `undefined`   | Maximum length of the resulting string (including suffix if provided) |
+| `suffix`  | `string` | `'...'`       | Optional suffix to add to truncated string (default: '...')           |
 
 ####### Returns
 
@@ -3085,7 +3015,7 @@ Truncates a string to a specified length, optionally adding a suffix.
 
 Truncated string
 
-***
+---
 
 <a id="api-unescapexml"></a>
 
@@ -3098,15 +3028,15 @@ Converts &amp;, &lt;, &gt;, &quot;, &apos; back to their original characters.
 
 ####### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `T` *extends* `string` \| `null` \| `undefined` |
+| Type Parameter                                  |
+| ----------------------------------------------- |
+| `T` _extends_ `string` \| `null` \| `undefined` |
 
 ####### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `str` | `T` | The string to unescape from XML |
+| Parameter | Type | Description                     |
+| --------- | ---- | ------------------------------- |
+| `str`     | `T`  | The string to unescape from XML |
 
 ####### Returns
 
@@ -3115,7 +3045,6 @@ Converts &amp;, &lt;, &gt;, &quot;, &apos; back to their original characters.
 The unescaped string
 
 ### Variables
-
 
 <a id="stringvariablesapplywordcasingmd"></a>
 
@@ -3126,6 +3055,7 @@ The unescaped string
 Preserve basic casing from a template single word and apply it to another word.
 
 Rules:
+
 - If `casingTemplate` is all upper-case, return `word` in all upper-case.
 - If `casingTemplate` is Title Case (first letter uppercase, rest lowercase), return
   `word` in Title Case.
@@ -3138,6 +3068,7 @@ complex multi-word or mixed-case patterns. Use for word-level casing preservatio
 Preserve basic casing from a template single word and apply it to another word.
 
 Rules:
+
 - If `casingTemplate` is all upper-case, return `word` in all upper-case.
 - If `casingTemplate` is Title Case (first letter uppercase, rest lowercase), return
   `word` in Title Case.
@@ -3149,10 +3080,10 @@ complex multi-word or mixed-case patterns. Use for word-level casing preservatio
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `casingTemplate` | `string` | A word whose casing should be copied (e.g. 'Cat' or 'CAT') |
-| `word` | `string` | The word to apply casing to (usually a transformed/lowercased form) |
+| Parameter        | Type     | Description                                                         |
+| ---------------- | -------- | ------------------------------------------------------------------- |
+| `casingTemplate` | `string` | A word whose casing should be copied (e.g. 'Cat' or 'CAT')          |
+| `word`           | `string` | The word to apply casing to (usually a transformed/lowercased form) |
 
 ##### Returns
 
@@ -3172,7 +3103,6 @@ The word to apply casing to (usually a transformed/lowercased form)
 
 The `word` adjusted to match the template's basic casing
 
-
 <a id="stringvariablescameltosnakemd"></a>
 
 #### Variable: camelToSnake()
@@ -3185,9 +3115,9 @@ Converts a camelCase string to snake_case.
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `str` | `string` | The camelCase string to convert |
+| Parameter | Type     | Description                     |
+| --------- | -------- | ------------------------------- |
+| `str`     | `string` | The camelCase string to convert |
 
 ##### Returns
 
@@ -3203,7 +3133,6 @@ The camelCase string to convert
 
 snake_case string
 
-
 <a id="stringvariablescapitalisemd"></a>
 
 #### Variable: capitalise()
@@ -3216,9 +3145,9 @@ Capitalises the first letter of a string, making the rest lowercase.
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `str` | `string` | The string to capitalise |
+| Parameter | Type     | Description              |
+| --------- | -------- | ------------------------ |
+| `str`     | `string` | The string to capitalise |
 
 ##### Returns
 
@@ -3234,7 +3163,6 @@ The string to capitalise
 
 Capitalised string
 
-
 <a id="stringvariablescapitalizemd"></a>
 
 #### Variable: capitalize()
@@ -3247,9 +3175,9 @@ Capitalizes the first letter of a string, making the rest lowercase.
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `str` | `string` | The string to capitalize |
+| Parameter | Type     | Description              |
+| --------- | -------- | ------------------------ |
+| `str`     | `string` | The string to capitalize |
 
 ##### Returns
 
@@ -3264,7 +3192,6 @@ The string to capitalize
 ##### Returns
 
 Capitalized string
-
 
 <a id="stringvariablesescapexmlmd"></a>
 
@@ -3282,15 +3209,15 @@ Designed for performance using a single pass and lookup table.
 
 ##### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `T` *extends* `string` \| `null` \| `undefined` |
+| Type Parameter                                  |
+| ----------------------------------------------- |
+| `T` _extends_ `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `str` | `T` | The string to escape for XML |
+| Parameter | Type | Description                  |
+| --------- | ---- | ---------------------------- |
+| `str`     | `T`  | The string to escape for XML |
 
 ##### Returns
 
@@ -3306,7 +3233,6 @@ The string to escape for XML
 
 The escaped XML string
 
-
 <a id="stringvariablespluralisemd"></a>
 
 #### Variable: pluralise()
@@ -3320,6 +3246,7 @@ See `pluralize` for capabilities and limitations.
 Returns the plural form of a single English word based on the supplied count.
 
 Capabilities:
+
 - Preserves basic input casing (using `applyWordCasing`) so e.g. "Cat" -> "Cats",
   "CAT" -> "CATS".
 - Handles common irregular plurals (person->people, child->children, mouse->mice, etc.).
@@ -3330,6 +3257,7 @@ Capabilities:
   potato, tomato, echo, torpedo); otherwise 's' is added.
 
 Limitations and notes:
+
 - This is a pragmatic, rule-based implementation covering the most common English cases,
   not a complete linguistic solution. It does not support locales or full irregular/exception
   lists (many English words have irregular forms not included here).
@@ -3341,10 +3269,10 @@ Limitations and notes:
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `word` | `string` | The single English word to pluralize (may be mixed case) |
-| `count` | `number` | The numeric count; if equal to 1 the original word is returned |
+| Parameter | Type     | Description                                                    |
+| --------- | -------- | -------------------------------------------------------------- |
+| `word`    | `string` | The single English word to pluralize (may be mixed case)       |
+| `count`   | `number` | The numeric count; if equal to 1 the original word is returned |
 
 ##### Returns
 
@@ -3363,7 +3291,6 @@ The numeric count; if equal to 1 the original word is returned
 ##### Returns
 
 The pluralized word with basic casing preserved
-
 
 <a id="stringvariablespluralizemd"></a>
 
@@ -3374,6 +3301,7 @@ The pluralized word with basic casing preserved
 Returns the plural form of a single English word based on the supplied count.
 
 Capabilities:
+
 - Preserves basic input casing (using `applyWordCasing`) so e.g. "Cat" -> "Cats",
   "CAT" -> "CATS".
 - Handles common irregular plurals (person->people, child->children, mouse->mice, etc.).
@@ -3384,6 +3312,7 @@ Capabilities:
   potato, tomato, echo, torpedo); otherwise 's' is added.
 
 Limitations and notes:
+
 - This is a pragmatic, rule-based implementation covering the most common English cases,
   not a complete linguistic solution. It does not support locales or full irregular/exception
   lists (many English words have irregular forms not included here).
@@ -3396,6 +3325,7 @@ Limitations and notes:
 Returns the plural form of a single English word based on the supplied count.
 
 Capabilities:
+
 - Preserves basic input casing (using `applyWordCasing`) so e.g. "Cat" -> "Cats",
   "CAT" -> "CATS".
 - Handles common irregular plurals (person->people, child->children, mouse->mice, etc.).
@@ -3406,6 +3336,7 @@ Capabilities:
   potato, tomato, echo, torpedo); otherwise 's' is added.
 
 Limitations and notes:
+
 - This is a pragmatic, rule-based implementation covering the most common English cases,
   not a complete linguistic solution. It does not support locales or full irregular/exception
   lists (many English words have irregular forms not included here).
@@ -3417,10 +3348,10 @@ Limitations and notes:
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `word` | `string` | The single English word to pluralize (may be mixed case) |
-| `count` | `number` | The numeric count; if equal to 1 the original word is returned |
+| Parameter | Type     | Description                                                    |
+| --------- | -------- | -------------------------------------------------------------- |
+| `word`    | `string` | The single English word to pluralize (may be mixed case)       |
+| `count`   | `number` | The numeric count; if equal to 1 the original word is returned |
 
 ##### Returns
 
@@ -3439,7 +3370,6 @@ The numeric count; if equal to 1 the original word is returned
 ##### Returns
 
 The pluralized word with basic casing preserved
-
 
 <a id="stringvariablessnaketocamelmd"></a>
 
@@ -3453,9 +3383,9 @@ Converts a snake_case string to camelCase.
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `str` | `string` | The snake_case string to convert |
+| Parameter | Type     | Description                      |
+| --------- | -------- | -------------------------------- |
+| `str`     | `string` | The snake_case string to convert |
 
 ##### Returns
 
@@ -3471,7 +3401,6 @@ The snake_case string to convert
 
 camelCase string
 
-
 <a id="stringvariablestruncatemd"></a>
 
 #### Variable: truncate()
@@ -3484,11 +3413,11 @@ Truncates a string to a specified length, optionally adding a suffix.
 
 ##### Parameters
 
-| Parameter | Type | Default value | Description |
-| ------ | ------ | ------ | ------ |
-| `str` | `string` | `undefined` | The string to truncate |
-| `length` | `number` | `undefined` | Maximum length of the resulting string (including suffix if provided) |
-| `suffix` | `string` | `'...'` | Optional suffix to add to truncated string (default: '...') |
+| Parameter | Type     | Default value | Description                                                           |
+| --------- | -------- | ------------- | --------------------------------------------------------------------- |
+| `str`     | `string` | `undefined`   | The string to truncate                                                |
+| `length`  | `number` | `undefined`   | Maximum length of the resulting string (including suffix if provided) |
+| `suffix`  | `string` | `'...'`       | Optional suffix to add to truncated string (default: '...')           |
 
 ##### Returns
 
@@ -3512,7 +3441,6 @@ Optional suffix to add to truncated string (default: '...')
 
 Truncated string
 
-
 <a id="stringvariablesunescapexmlmd"></a>
 
 #### Variable: unescapeXml()
@@ -3527,15 +3455,15 @@ Converts &amp;, &lt;, &gt;, &quot;, &apos; back to their original characters.
 
 ##### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `T` *extends* `string` \| `null` \| `undefined` |
+| Type Parameter                                  |
+| ----------------------------------------------- |
+| `T` _extends_ `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `str` | `T` | The string to unescape from XML |
+| Parameter | Type | Description                     |
+| --------- | ---- | ------------------------------- |
+| `str`     | `T`  | The string to unescape from XML |
 
 ##### Returns
 
@@ -3553,28 +3481,26 @@ The unescaped string
 
 ## Stringify Replacer
 
-
 <a id="stringify-replacerreadmemd"></a>
 
 ### stringify-replacer
 
 #### Type Aliases
 
-| Type Alias | Description |
-| ------ | ------ |
-| [JsonStringifyReplacer](#stringify-replacertype-aliasesjsonstringifyreplacermd) | The original replacer expected by JSON.stringify(...) |
+| Type Alias                                                                                                          | Description                                                                                                                     |
+| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| [JsonStringifyReplacer](#stringify-replacertype-aliasesjsonstringifyreplacermd)                                     | The original replacer expected by JSON.stringify(...)                                                                           |
 | [JsonStringifyReplacerFromPathBasedRules](#stringify-replacertype-aliasesjsonstringifyreplacerfrompathbasedrulesmd) | A JsonStringifyReplacer that was created from path based rules. Those rules are stored in the `rules` property in case of need. |
-| [PathAwareReplacer](#stringify-replacertype-aliasespathawarereplacermd) | The replacer that can potentially utilise the full path of the property in the object. |
+| [PathAwareReplacer](#stringify-replacertype-aliasespathawarereplacermd)                                             | The replacer that can potentially utilise the full path of the property in the object.                                          |
 
 #### Functions
 
-| Function | Description |
-| ------ | ------ |
-| [pathAwareReplacer](#stringify-replacerfunctionspathawarereplacermd) | Build a replacer function that can be passed to JSON.stringify(...). |
+| Function                                                             | Description                                                                                                                                                                                             |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [pathAwareReplacer](#stringify-replacerfunctionspathawarereplacermd) | Build a replacer function that can be passed to JSON.stringify(...).                                                                                                                                    |
 | [pathBasedReplacer](#stringify-replacerfunctionspathbasedreplacermd) | Create a replacer function for JSON.stringify(...) from an array of path based rules. This function is useful for creating masking replacers which can apply masking based on the path of the property. |
 
 ### Functions
-
 
 <a id="stringify-replacerfunctionspathawarereplacermd"></a>
 
@@ -3586,19 +3512,18 @@ Build a replacer function that can be passed to JSON.stringify(...).
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `replacer` | [`PathAwareReplacer`](#stringify-replacertype-aliasespathawarereplacermd) | The actual replacer function which could utilise additional information. |
-| `options?` | \{ `ancestors?`: `boolean`; `pathArray?`: `boolean`; \} | Options to control whether the pathArray and ancestors parameters would have values populated. By default all information available would be populated. There is no need to specify options unless you are extremely concerned about performance, for example if you need to frequently stringify 500MB objects. |
-| `options.ancestors?` | `boolean` | When false, ancestors would be an empty array. |
-| `options.pathArray?` | `boolean` | When false, pathArray would be an empty array. This would remove the need to construct a pathArray from the path string. |
+| Parameter            | Type                                                                      | Description                                                                                                                                                                                                                                                                                                      |
+| -------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `replacer`           | [`PathAwareReplacer`](#stringify-replacertype-aliasespathawarereplacermd) | The actual replacer function which could utilise additional information.                                                                                                                                                                                                                                         |
+| `options?`           | \{ `ancestors?`: `boolean`; `pathArray?`: `boolean`; \}                   | Options to control whether the pathArray and ancestors parameters would have values populated. By default all information available would be populated. There is no need to specify options unless you are extremely concerned about performance, for example if you need to frequently stringify 500MB objects. |
+| `options.ancestors?` | `boolean`                                                                 | When false, ancestors would be an empty array.                                                                                                                                                                                                                                                                   |
+| `options.pathArray?` | `boolean`                                                                 | When false, pathArray would be an empty array. This would remove the need to construct a pathArray from the path string.                                                                                                                                                                                         |
 
 ##### Returns
 
 [`JsonStringifyReplacer`](#stringify-replacertype-aliasesjsonstringifyreplacermd)
 
 The replacer function that can be passed to JSON.stringify(...).
-
 
 <a id="stringify-replacerfunctionspathbasedreplacermd"></a>
 
@@ -3611,9 +3536,9 @@ This function is useful for creating masking replacers which can apply masking b
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `rules` | \[`RegExp`, (`input`) => `any`\][] | Array of rules: if the regular expression tests true with the property path, the replacer function will be applied on the value |
+| Parameter | Type                               | Description                                                                                                                     |
+| --------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `rules`   | \[`RegExp`, (`input`) => `any`\][] | Array of rules: if the regular expression tests true with the property path, the replacer function will be applied on the value |
 
 ##### Returns
 
@@ -3625,18 +3550,22 @@ The replacer function built from those path based rules. It also has a `rules` p
 
 ```ts
 import { mask, maskAll, maskEmail, maskFullName, pathBasedReplacer } from '@handy-common-utils/misc-utils';
-console.log(JSON.stringify(obj, pathBasedReplacer([
- [/.*\.x-api-key$/, maskAll],
- [/.*customer\.name$/, maskFullName],
- [/.*customer\..*[eE]mail$/, maskEmail],
- [/.*\.zip$/, (value: string) => value.slice(0, 3) + 'XX'],
- [/.*\.cc$/, () => undefined],
- [/.*\.ssn$/, mask],
-])));
+console.log(
+  JSON.stringify(
+    obj,
+    pathBasedReplacer([
+      [/.*\.x-api-key$/, maskAll],
+      [/.*customer\.name$/, maskFullName],
+      [/.*customer\..*[eE]mail$/, maskEmail],
+      [/.*\.zip$/, (value: string) => value.slice(0, 3) + 'XX'],
+      [/.*\.cc$/, () => undefined],
+      [/.*\.ssn$/, mask],
+    ]),
+  ),
+);
 ```
 
 ### Type Aliases
-
 
 <a id="stringify-replacertype-aliasesjsonstringifyreplacermd"></a>
 
@@ -3648,16 +3577,15 @@ The original replacer expected by JSON.stringify(...)
 
 ##### Parameters
 
-| Parameter | Type |
-| ------ | ------ |
-| `this` | `any` |
-| `key` | `string` |
-| `value` | `any` |
+| Parameter | Type     |
+| --------- | -------- |
+| `this`    | `any`    |
+| `key`     | `string` |
+| `value`   | `any`    |
 
 ##### Returns
 
 `any`
-
 
 <a id="stringify-replacertype-aliasesjsonstringifyreplacerfrompathbasedrulesmd"></a>
 
@@ -3670,10 +3598,9 @@ Those rules are stored in the `rules` property in case of need.
 
 ##### Type Declaration
 
-| Name | Type |
-| ------ | ------ |
+| Name    | Type                               |
+| ------- | ---------------------------------- |
 | `rules` | \[`RegExp`, (`input`) => `any`\][] |
-
 
 <a id="stringify-replacertype-aliasespathawarereplacermd"></a>
 
@@ -3685,14 +3612,14 @@ The replacer that can potentially utilise the full path of the property in the o
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `key` | `string` | Name of the property, or the index in the parent array. |
-| `value` | `any` | Value of the property or the object in the parent array. |
-| `path` | `string` | The full path of the property in the object, such like "access.visitor.location" or "request.x-forwarded-for.0". Please note that the special characters (including ".") in property names are not escaped, for example, "order.billing address.first line". |
-| `parent` | `Parent` | The object that the property or the element belongs to. It could be `{ '': <the original object> }` when this replacer function is called the first time. |
-| `pathArray` | `string`[] | The full path as an array. It is more useful than `path` in case special characters exist in property names. When this replacer function is called the first time, pathArray array would have a zero length. |
-| `ancestors` | `Parent`[] | All the ancestor objects/arrays of the property. When this replacer function is called the first time, ancestors array would have a zero length. |
+| Parameter   | Type       | Description                                                                                                                                                                                                                                                  |
+| ----------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `key`       | `string`   | Name of the property, or the index in the parent array.                                                                                                                                                                                                      |
+| `value`     | `any`      | Value of the property or the object in the parent array.                                                                                                                                                                                                     |
+| `path`      | `string`   | The full path of the property in the object, such like "access.visitor.location" or "request.x-forwarded-for.0". Please note that the special characters (including ".") in property names are not escaped, for example, "order.billing address.first line". |
+| `parent`    | `Parent`   | The object that the property or the element belongs to. It could be `{ '': <the original object> }` when this replacer function is called the first time.                                                                                                    |
+| `pathArray` | `string`[] | The full path as an array. It is more useful than `path` in case special characters exist in property names. When this replacer function is called the first time, pathArray array would have a zero length.                                                 |
+| `ancestors` | `Parent`[] | All the ancestor objects/arrays of the property. When this replacer function is called the first time, ancestors array would have a zero length.                                                                                                             |
 
 ##### Returns
 
@@ -3700,19 +3627,17 @@ The replacer that can potentially utilise the full path of the property in the o
 
 ## Substitute
 
-
 <a id="substitutereadmemd"></a>
 
 ### substitute
 
 #### Functions
 
-| Function | Description |
-| ------ | ------ |
+| Function                                             | Description                                          |
+| ---------------------------------------------------- | ---------------------------------------------------- |
 | [substituteAll](#substitutefunctionssubstituteallmd) | Substitute all occurrences of a pattern in a string. |
 
 ### Functions
-
 
 <a id="substitutefunctionssubstituteallmd"></a>
 
@@ -3724,17 +3649,17 @@ Substitute all occurrences of a pattern in a string.
 
 ##### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `T` *extends* `string` \| `null` \| `undefined` |
+| Type Parameter                                  |
+| ----------------------------------------------- |
+| `T` _extends_ `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
-| Parameter | Type | Description |
-| ------ | ------ | ------ |
-| `input` | `T` | The input string on which the substitutions will be performed. |
-| `searchPattern` | `RegExp` | The regular expression pattern used to search for segments that should be substituted. It must have the `g` flag set. If the beginning part of the `input` should be skipped, set the `lastIndex` of the `searchPattern` before calling this function. After all the substitution are done, the `lastIndex` of the `searchPattern` will be reset to zero. See [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/RegExp/lastIndex](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/lastIndex) |
-| `substitute` | (`match`, `matchResult`) => `string` \| `null` | TThe function that builds the substitution string. It is called with the matched substring and the result of `RegExp.exec()`. See [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/RegExp/exec#examples](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec#examples). The function can return null to indicate that no further substitution is desired. In such case, the `lastIndex` of the `searchPattern` will not be reset to zero. |
+| Parameter       | Type                                           | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| --------------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `input`         | `T`                                            | The input string on which the substitutions will be performed.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `searchPattern` | `RegExp`                                       | The regular expression pattern used to search for segments that should be substituted. It must have the `g` flag set. If the beginning part of the `input` should be skipped, set the `lastIndex` of the `searchPattern` before calling this function. After all the substitution are done, the `lastIndex` of the `searchPattern` will be reset to zero. See [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/RegExp/lastIndex](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/lastIndex) |
+| `substitute`    | (`match`, `matchResult`) => `string` \| `null` | TThe function that builds the substitution string. It is called with the matched substring and the result of `RegExp.exec()`. See [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/RegExp/exec#examples](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec#examples). The function can return null to indicate that no further substitution is desired. In such case, the `lastIndex` of the `searchPattern` will not be reset to zero.                                                  |
 
 ##### Returns
 

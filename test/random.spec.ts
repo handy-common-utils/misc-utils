@@ -1,6 +1,15 @@
 import { expect } from 'chai';
 
-import { gaussianRandom, generateRandomBoolean, generateRandomInteger, generateRandomNumber, generateRandomStringFromChars, pickRandomElement, seededRandom, weightedPickRandomElement } from '../src/random';
+import {
+  gaussianRandom,
+  generateRandomBoolean,
+  generateRandomInteger,
+  generateRandomNumber,
+  generateRandomStringFromChars,
+  pickRandomElement,
+  seededRandom,
+  weightedPickRandomElement,
+} from '../src/random';
 
 describe('random', () => {
   describe('generateRandomNumber()', () => {
@@ -25,7 +34,7 @@ describe('random', () => {
         const num = generateRandomInteger(5, 10);
         expect(num).to.be.at.least(5);
         expect(num).to.be.below(10);
-        expect(Number.isInteger(num)).to.be.true;
+        expect(Number.isSafeInteger(num)).to.be.true;
       }
     });
   });

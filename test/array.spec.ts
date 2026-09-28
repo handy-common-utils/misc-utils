@@ -1,6 +1,16 @@
 import { expect } from 'chai';
 
-import { chunk, distributeRoundRobin, downSampleRandomly, findIndexInSorted, findInsertionIndexInSorted, findInSorted, findWithinRangeInSorted, partition, shuffle } from '../src/array';
+import {
+  chunk,
+  distributeRoundRobin,
+  downSampleRandomly,
+  findIndexInSorted,
+  findInsertionIndexInSorted,
+  findInSorted,
+  findWithinRangeInSorted,
+  partition,
+  shuffle,
+} from '../src/array';
 
 describe('distributeRoundRobin()', () => {
   it('should work when number of groups equals number of elements', () => {
@@ -11,7 +21,11 @@ describe('distributeRoundRobin()', () => {
   it('should work when number of groups equals to half of the number of elements', () => {
     const items = [1, 2, 3, 4, 5, 6];
     const result = distributeRoundRobin(items, 3);
-    expect(result).to.deep.equal([[1, 4], [2, 5], [3, 6]]);
+    expect(result).to.deep.equal([
+      [1, 4],
+      [2, 5],
+      [3, 6],
+    ]);
   });
   it('should work when number of groups is more than the number of elements', () => {
     const items = [1, 2, 3, 4];
@@ -86,7 +100,7 @@ describe('downSampleRandomly()', () => {
     const items = [1, 2, 3, 4, 5];
     const result = downSampleRandomly(items, 3);
     expect(result.length).to.equal(3);
-    result.forEach(item => expect(items).to.include(item));
+    for (const item of result) expect(items).to.include(item);
   });
 
   it('should respect the probabilityTransformerFunction', () => {
@@ -223,7 +237,10 @@ describe('shuffle()', () => {
 
 describe('chunk()', () => {
   it('should split array into equal chunks', () => {
-    expect(chunk([1, 2, 3, 4], 2)).to.deep.equal([[1, 2], [3, 4]]);
+    expect(chunk([1, 2, 3, 4], 2)).to.deep.equal([
+      [1, 2],
+      [3, 4],
+    ]);
   });
 
   it('should handle uneven chunks', () => {
@@ -320,27 +337,27 @@ describe('findInsertionIndex()', () => {
 
 describe('findWithinRangeInSorted()', () => {
   const arr = [10, 20, 30, 40, 50, 60, 70];
-  
+
   it('should find elements within inclusive boundaries by default', () => {
     const result = findWithinRangeInSorted(arr, 25, 55, (a: number, b: number) => a - b);
     expect(result).to.deep.equal([30, 40, 50]);
   });
-  
+
   it('should find elements within inclusive boundaries when boundaries match elements', () => {
     const result = findWithinRangeInSorted(arr, 20, 60, (a: number, b: number) => a - b);
     expect(result).to.deep.equal([20, 30, 40, 50, 60]);
   });
-  
+
   it('should find elements within exclusive lower boundary', () => {
     const result = findWithinRangeInSorted(arr, 20, 60, (a: number, b: number) => a - b, { lowInclusive: false });
     expect(result).to.deep.equal([30, 40, 50, 60]);
   });
-  
+
   it('should find elements within exclusive upper boundary', () => {
     const result = findWithinRangeInSorted(arr, 20, 60, (a: number, b: number) => a - b, { highInclusive: false });
     expect(result).to.deep.equal([20, 30, 40, 50]);
   });
-  
+
   it('should find elements within exclusive lower and upper boundaries', () => {
     const result = findWithinRangeInSorted(arr, 20, 60, (a: number, b: number) => a - b, { lowInclusive: false, highInclusive: false });
     expect(result).to.deep.equal([30, 40, 50]);
@@ -355,7 +372,7 @@ describe('findWithinRangeInSorted()', () => {
     const result = findWithinRangeInSorted(arr, 80, 100, (a: number, b: number) => a - b);
     expect(result).to.deep.equal([]);
   });
-  
+
   it('should return empty array if boundaries are reversed', () => {
     const result = findWithinRangeInSorted(arr, 50, 30, (a: number, b: number) => a - b);
     expect(result).to.deep.equal([]);

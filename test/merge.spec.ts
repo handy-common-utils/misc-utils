@@ -183,11 +183,7 @@ describe('merge()', () => {
 
     expect(merge({ immutable: true }, destClone, srcClone)).to.deep.equal(_.merge({}, destClone, srcClone));
 
-    const result = merge(
-      { immutable: true, array: 'merge', set: 'merge' },
-      dest,
-      src,
-    );
+    const result = merge({ immutable: true, array: 'merge', set: 'merge' }, dest, src);
 
     const expectedResult = {
       a: {
@@ -199,9 +195,7 @@ describe('merge()', () => {
     };
 
     expect(result.a.b).to.deep.equal(expectedResult.a.b);
-    expect(Array.from(result.a.c as Set<number>)).to.have.members(
-      Array.from(expectedResult.a.c),
-    );
+    expect(Array.from(result.a.c as Set<number>)).to.have.members(Array.from(expectedResult.a.c));
     expect(result.d).to.equal(expectedResult.d);
     expect(result.e).to.equal(expectedResult.e);
 

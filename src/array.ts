@@ -55,7 +55,11 @@ export function distributeRoundRobin<T>(array: Array<T>, groups: number): Array<
  * @returns A new array with the down sampled elements from the input array.
  *          The order of the elements in the output array is the same as the input array.
  */
-export function downSampleRandomly<T>(array:  Array<T>, numSamples: number, probabilityTransformerFunction: ((x: number) => number) = x => x): Array<T> {
+export function downSampleRandomly<T>(
+  array: Array<T>,
+  numSamples: number,
+  probabilityTransformerFunction: (x: number) => number = (x) => x,
+): Array<T> {
   if (numSamples <= 0) {
     return [];
   }
@@ -107,11 +111,7 @@ export function findInSorted<T>(array: Array<T> | null | undefined, compareFn: (
       return item;
     }
 
-    if (comparison < 0) {
-      return search(index + 1, high);
-    }
-
-    return search(low, index - 1);
+    return comparison < 0 ? search(index + 1, high) : search(low, index - 1);
   };
 
   return search(0, array.length - 1);
@@ -146,11 +146,7 @@ export function findIndexInSorted<T>(array: Array<T> | null | undefined, compare
       return index;
     }
 
-    if (comparison < 0) {
-      return search(index + 1, high);
-    }
-
-    return search(low, index - 1);
+    return comparison < 0 ? search(index + 1, high) : search(low, index - 1);
   };
 
   return search(0, array.length - 1);
@@ -200,7 +196,7 @@ export function findWithinRangeInSorted<T, B>(
   lowBoundary: B,
   highBoundary: B,
   compareFn: (a: T, b: B) => number,
-  options?: { lowInclusive?: boolean; highInclusive?: boolean, },
+  options?: { lowInclusive?: boolean; highInclusive?: boolean },
 ): Array<T> {
   const lowInclusive = options?.lowInclusive ?? true;
   const highInclusive = options?.highInclusive ?? true;
@@ -228,7 +224,6 @@ export function findWithinRangeInSorted<T, B>(
 
   return result;
 }
-
 
 /**
  * Shuffles the elements of an array randomly using the Fisher-Yates algorithm.
@@ -286,7 +281,7 @@ export function partition<T>(array: Array<T>, classifier: (item: T) => boolean |
 
   for (const item of array) {
     const key = classifier(item);
-    const index = typeof key === 'boolean' ? (key ? 0 : 1) : (key < 0 ? 0 : Math.floor(key));
+    const index = typeof key === 'boolean' ? (key ? 0 : 1) : key < 0 ? 0 : Math.floor(key);
 
     while (result.length <= index) {
       result.push([]);
@@ -295,5 +290,3 @@ export function partition<T>(array: Array<T>, classifier: (item: T) => boolean |
   }
   return result;
 }
-
-

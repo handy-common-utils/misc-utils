@@ -1,7 +1,14 @@
-/* eslint-disable unicorn/no-useless-undefined */
 import { expect } from 'chai';
 
-import { base64UrlFromUInt32, escapeForRegExp, escapeForRegExpReplacement, generateRandomString, generateRandomStringQuickly, shortBase64UrlFromUInt32, urlSafe } from '../src/codec';
+import {
+  base64UrlFromUInt32,
+  escapeForRegExp,
+  escapeForRegExpReplacement,
+  generateRandomString,
+  generateRandomStringQuickly,
+  shortBase64UrlFromUInt32,
+  urlSafe,
+} from '../src/codec';
 
 describe('pathSafe', () => {
   it('should return null for null', () => {

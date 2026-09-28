@@ -1,6 +1,17 @@
 import { expect } from 'chai';
- 
-import { applyWordCasing, camelToSnake, capitalise, capitalize, escapeXml, pluralise, pluralize, snakeToCamel, truncate, unescapeXml } from '../src/string';
+
+import {
+  applyWordCasing,
+  camelToSnake,
+  capitalise,
+  capitalize,
+  escapeXml,
+  pluralise,
+  pluralize,
+  snakeToCamel,
+  truncate,
+  unescapeXml,
+} from '../src/string';
 
 describe('StringUtils', () => {
   describe('truncate', () => {

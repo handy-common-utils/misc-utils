@@ -104,7 +104,7 @@ describe('substituteAll', () => {
     const substitute = (_: string, result: any) => {
       const [match, date, month, day, year] = result;
       const formattedDate = `20${year}-${month}-${day}`;
-      return match.replace(date, formattedDate);
+      return match.replace(date, () => formattedDate);
     };
 
     const result = substituteAll(input, searchPattern, substitute);

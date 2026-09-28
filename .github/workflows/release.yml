@@ -1,9 +1,9 @@
 name: Release if needed
 on:
   workflow_run:
-    workflows: ["CI"]
+    workflows: ['CI']
     branches: [main, master]
-    types: 
+    types:
       - completed
 
 jobs:

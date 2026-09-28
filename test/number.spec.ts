@@ -47,6 +47,8 @@ describe('NumberUtils', () => {
   });
 
   describe('roundTo', () => {
+    // These are arbitrary decimal fixtures for testing rounding precision, not references to Math.PI
+    /* eslint-disable unicorn/prefer-math-constants */
     it('should round to specified decimal places', () => {
       expect(roundTo(3.14159, 2)).to.equal(3.14);
       expect(roundTo(3.14159, 3)).to.equal(3.142);
@@ -57,6 +59,7 @@ describe('NumberUtils', () => {
     it('should handle negative numbers', () => {
       expect(roundTo(-3.14159, 2)).to.equal(-3.14);
     });
+    /* eslint-enable unicorn/prefer-math-constants */
 
     it('should handle zero', () => {
       expect(roundTo(0, 2)).to.equal(0);

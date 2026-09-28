@@ -92,9 +92,9 @@ const expectedParamPaths = [
   'un',
 ];
 
-const stringifyKeys: Array<string|number> = [];
+const stringifyKeys: Array<string | number> = [];
 const stringifyParents: Array<any> = [];
-stringify(obj, function (this: any, key: string|number, value: any) {
+stringify(obj, function (this: any, key: string | number, value: any) {
   stringifyKeys.push(key);
   stringifyParents.push(this);
   return value;
@@ -111,19 +111,23 @@ stringify(obj, function (this: any, key: string|number, value: any) {
 
 describe('stringifyReplacer(...)', () => {
   it('should supply the correct parameters to encapsulated replacer function', () => {
-    const keys: Array<string|number> = [];
+    const keys: Array<string | number> = [];
     const paths: string[] = [];
-    const parents: Array<object|Array<unknown>> = [];
+    const parents: Array<object | Array<unknown>> = [];
     const pathArrays: Array<Array<any>> = [];
     const allAncestors: Array<Array<any>> = [];
-    const s = stringify(obj, pathAwareReplacer((key: string|number, value: any, path: string, parent: any, pathArray: Array<any>, ancestors: Array<any>) => {
-      keys.push(key);
-      paths.push(path);
-      parents.push(parent);
-      pathArrays.push(pathArray);
-      allAncestors.push(ancestors);
-      return value;
-    }), 2);
+    const s = stringify(
+      obj,
+      pathAwareReplacer((key: string | number, value: any, path: string, parent: any, pathArray: Array<any>, ancestors: Array<any>) => {
+        keys.push(key);
+        paths.push(path);
+        parents.push(parent);
+        pathArrays.push(pathArray);
+        allAncestors.push(ancestors);
+        return value;
+      }),
+      2,
+    );
 
     expect(s).to.be.a('string');
     expect(JSON.parse(s!)).to.deep.equal(expectedRoundTripObj);
@@ -163,13 +167,20 @@ describe('stringifyReplacer(...)', () => {
   });
 
   it('should be able to use options', () => {
-    const keys: Array<string|number> = [];
+    const keys: Array<string | number> = [];
     const paths: string[] = [];
-    const s = stringify(obj, pathAwareReplacer((key: string|number, value: any, path: string) => {
-      keys.push(key);
-      paths.push(path);
-      return value;
-    }, { pathArray: false, ancestors: false }), 2);
+    const s = stringify(
+      obj,
+      pathAwareReplacer(
+        (key: string | number, value: any, path: string) => {
+          keys.push(key);
+          paths.push(path);
+          return value;
+        },
+        { pathArray: false, ancestors: false },
+      ),
+      2,
+    );
 
     expect(s).to.be.a('string');
     expect(JSON.parse(s!)).to.deep.equal(expectedRoundTripObj);
@@ -179,15 +190,22 @@ describe('stringifyReplacer(...)', () => {
   });
 
   it('should honour options', () => {
-    const keys: Array<string|number> = [];
+    const keys: Array<string | number> = [];
     const paths: string[] = [];
-    const s = stringify(obj, pathAwareReplacer((key: string|number, value: any, path: string, _parent: any, pathArray: Array<any>, ancestors: Array<any>) => {
-      keys.push(key);
-      paths.push(path);
-      expect(pathArray.length).to.equal(0);
-      expect(ancestors.length).to.equal(0);
-      return value;
-    }, { pathArray: false, ancestors: false }), 2);
+    const s = stringify(
+      obj,
+      pathAwareReplacer(
+        (key: string | number, value: any, path: string, _parent: any, pathArray: Array<any>, ancestors: Array<any>) => {
+          keys.push(key);
+          paths.push(path);
+          expect(pathArray.length).to.equal(0);
+          expect(ancestors.length).to.equal(0);
+          return value;
+        },
+        { pathArray: false, ancestors: false },
+      ),
+      2,
+    );
 
     expect(s).to.be.a('string');
     expect(JSON.parse(s!)).to.deep.equal(expectedRoundTripObj);
@@ -208,14 +226,7 @@ describe('pathBasedReplacer(...)', () => {
       email: 'john.doe@example.com',
       name: 'John Doe',
     },
-    recipients: [
-      'john.doe@example.com',
-      'alice.spring@example.com',
-      sameString,
-      sameString,
-      sameString,
-      sameString,
-    ],
+    recipients: ['john.doe@example.com', 'alice.spring@example.com', sameString, sameString, sameString, sameString],
     billingAddress: {
       street: '33 High St',
       city: 'New Port',

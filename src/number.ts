@@ -49,10 +49,7 @@ export class NumberUtils {
     const intersectionMin = Math.max(r1Min, r2Min);
     const intersectionMax = Math.min(r1Max, r2Max);
 
-    if (intersectionMin <= intersectionMax) {
-      return [intersectionMin, intersectionMax];
-    }
-    return undefined;
+    return intersectionMin <= intersectionMax ? [intersectionMin, intersectionMax] : undefined;
   }
 }
 

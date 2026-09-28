@@ -9,12 +9,12 @@ import * as crypto from 'crypto';
  * @returns URL/path safe version of the (BASE64) input string, or the original input if it is null or undefined.
  */
 export function urlSafe<T extends string | undefined | null>(base64Input: T, replacements = '_-='): T {
-  if (base64Input == null) {
-    return base64Input;
-  }
-  return base64Input.replace(/\//g, replacements.charAt(0))
-        .replace(/\+/g, replacements.charAt(1))
-        .replace(/=/g, replacements.charAt(2)) as T;
+  return base64Input == null
+    ? base64Input
+    : (base64Input
+        .replace(/\//g, () => replacements.charAt(0))
+        .replace(/\+/g, () => replacements.charAt(1))
+        .replace(/=/g, () => replacements.charAt(2)) as T);
 }
 
 /**
@@ -40,10 +40,10 @@ export function base64FromUInt32<T extends number | undefined | null>(ui32: T): 
   view.setUint32(0, ui32, false); // 'false' specifies Big-Endian
   const uint8Array = new Uint8Array(buffer);
   let binaryString = '';
-  uint8Array.forEach(byte => {
+  for (const byte of uint8Array) {
     // eslint-disable-next-line unicorn/prefer-code-point
     binaryString += String.fromCharCode(byte);
-  });
+  }
   return btoa(binaryString);
 }
 
@@ -55,10 +55,7 @@ export function base64FromUInt32<T extends number | undefined | null>(ui32: T): 
  * @returns BASE64 string without trailing '=' representing the integer input, or the original input if it is null or undefined.
  */
 export function shortBase64FromUInt32<T extends number | undefined | null>(ui32: T): Exclude<T, number> | string {
-  if (ui32 == null) {
-    return ui32 as any;
-  }
-  return base64FromUInt32(ui32 as number).replace(/=+$/, '');
+  return ui32 == null ? (ui32 as any) : base64FromUInt32(ui32 as number).replace(/=+$/, '');
 }
 
 /**
@@ -98,10 +95,7 @@ export function generateRandomString(len: number): string {
   // 32 bits => 6 characters
   const numbers = new Uint32Array(Math.ceil((len + 1) / 6));
   crypto.randomFillSync(numbers);
-  const strings: string[] = [];
-  for (const i of numbers) {
-    strings.push(shortBase64UrlFromUInt32(i));
-  }
+  const strings: string[] = Array.from(numbers, (i) => shortBase64UrlFromUInt32(i));
   return strings.join('').slice(0, len);
 }
 
@@ -127,7 +121,7 @@ export function generateRandomStringQuickly(len: number): string {
  * @param text the string literal to be escaped
  * @returns escaped string that can be used inside of RegExp, or an empty string if the input is null or undefined
  */
-export function escapeForRegExp(text: string|undefined|null): string {
+export function escapeForRegExp(text: string | undefined | null): string {
   if (text == null) {
     return '';
   }
@@ -140,9 +134,6 @@ export function escapeForRegExp(text: string|undefined|null): string {
  * @param text the replacement string to be escaped, or an empty string if the input is null or undefined
  * @returns escaped replacement string that can be used inside of RegExp replacement parameter
  */
-export function escapeForRegExpReplacement(text: string|undefined|null): string {
-  if (text == null) {
-    return '';
-  }
-  return text.replace(/\$/g, '$$$$');
+export function escapeForRegExpReplacement(text: string | undefined | null): string {
+  return text == null ? '' : text.replace(/\$/g, '$$$$');
 }
