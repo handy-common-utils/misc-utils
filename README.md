@@ -383,9 +383,9 @@ Splits an array into chunks of a specified size.
 
 ##### Type Parameters
 
-| Type Parameter |
-| -------------- |
-| `T`            |
+| Type Parameter                        |
+| ------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` |
 
 ##### Parameters
 
@@ -411,9 +411,9 @@ This function has been tuned for performance.
 
 ##### Type Parameters
 
-| Type Parameter |
-| -------------- |
-| `T`            |
+| Type Parameter                        |
+| ------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` |
 
 ##### Parameters
 
@@ -438,17 +438,17 @@ Down samples the input array randomly.
 
 ##### Type Parameters
 
-| Type Parameter |
-| -------------- |
-| `T`            |
+| Type Parameter                        |
+| ------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` |
 
 ##### Parameters
 
-| Parameter                        | Type              | Description                                                                                                                                                                                                                                          |
-| -------------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `array`                          | `T`[]             | The input array                                                                                                                                                                                                                                      |
-| `numSamples`                     | `number`          | Number of samples to be taken from the input array. If the number of samples is greater than or equal to the length of the input array, the output array will contain all the elements in the input array.                                           |
-| `probabilityTransformerFunction` | (`x`) => `number` | A function that turns a random number within [0, 1) to another number within [0, 1). If not provided, the identity function F(x) = x will be used. The probability of an element being selected from the input array is determined by this function. |
+| Parameter                         | Type              | Description                                                                                                                                                                                                                                          |
+| --------------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `array`                           | `T`[]             | The input array                                                                                                                                                                                                                                      |
+| `numSamples`                      | `number`          | Number of samples to be taken from the input array. If the number of samples is greater than or equal to the length of the input array, the output array will contain all the elements in the input array.                                           |
+| `probabilityTransformerFunction?` | (`x`) => `number` | A function that turns a random number within [0, 1) to another number within [0, 1). If not provided, the identity function F(x) = x will be used. The probability of an element being selected from the input array is determined by this function. |
 
 ##### Returns
 
@@ -467,9 +467,9 @@ Finds an element in a sorted array using a golden ratio split (0.618) which stat
 
 ##### Type Parameters
 
-| Type Parameter |
-| -------------- |
-| `T`            |
+| Type Parameter                        |
+| ------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` |
 
 ##### Parameters
 
@@ -494,9 +494,9 @@ Finds the index of an element in a sorted array using a golden ratio split (0.61
 
 ##### Type Parameters
 
-| Type Parameter |
-| -------------- |
-| `T`            |
+| Type Parameter                        |
+| ------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` |
 
 ##### Parameters
 
@@ -522,10 +522,10 @@ using a golden ratio split (0.6180339887) for consistent performance.
 
 ##### Type Parameters
 
-| Type Parameter | Default type |
-| -------------- | ------------ |
-| `T`            | -            |
-| `I`            | `T`          |
+| Type Parameter                        | Default type |
+| ------------------------------------- | ------------ |
+| <a id="api-type-parameter-t"></a> `T` | -            |
+| <a id="api-type-parameter-i"></a> `I` | `T`          |
 
 ##### Parameters
 
@@ -551,10 +551,10 @@ Finds all elements within a specified range in a sorted array.
 
 ##### Type Parameters
 
-| Type Parameter |
-| -------------- |
-| `T`            |
-| `B`            |
+| Type Parameter                        |
+| ------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` |
+| <a id="api-type-parameter-b"></a> `B` |
 
 ##### Parameters
 
@@ -588,9 +588,9 @@ specified number of elements or to avoid the overhead of resizing the result arr
 
 ##### Type Parameters
 
-| Type Parameter |
-| -------------- |
-| `T`            |
+| Type Parameter                        |
+| ------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` |
 
 ##### Parameters
 
@@ -616,9 +616,9 @@ Shuffles the elements of an array randomly using the Fisher-Yates algorithm.
 
 ##### Type Parameters
 
-| Type Parameter |
-| -------------- |
-| `T`            |
+| Type Parameter                        |
+| ------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` |
 
 ##### Parameters
 
@@ -664,9 +664,9 @@ Encode an unsigned 32-bit integer into BASE64 string.
 
 ##### Type Parameters
 
-| Type Parameter                                  |
-| ----------------------------------------------- |
-| `T` _extends_ `number` \| `null` \| `undefined` |
+| Type Parameter                                                                    |
+| --------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` _extends_ `number` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -690,16 +690,16 @@ Encode an unsigned 32-bit integer into URL/path safe BASE64 string.
 
 ##### Type Parameters
 
-| Type Parameter                                  |
-| ----------------------------------------------- |
-| `T` _extends_ `number` \| `null` \| `undefined` |
+| Type Parameter                                                                    |
+| --------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` _extends_ `number` \| `null` \| `undefined` |
 
 ##### Parameters
 
-| Parameter      | Type     | Default value | Description                                                                                                                                                                                                                                                                                                                                                                              |
-| -------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ui32`         | `T`      | `undefined`   | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when the value is anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
-| `replacements` | `string` | `'_-='`       | A string containing replacement characters for "/", "+", and "=". If omitted, default value of '_-=' would be used.                                                                                                                                                                                                                                                                      |
+| Parameter       | Type     | Default value | Description                                                                                                                                                                                                                                                                                                                                                                              |
+| --------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ui32`          | `T`      | `undefined`   | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when the value is anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
+| `replacements?` | `string` | `'_-='`       | A string containing replacement characters for "/", "+", and "=". If omitted, default value of '_-=' would be used.                                                                                                                                                                                                                                                                      |
 
 ##### Returns
 
@@ -803,9 +803,9 @@ Encode an unsigned 32-bit integer into BASE64 string without trailing '='.
 
 ##### Type Parameters
 
-| Type Parameter                                  |
-| ----------------------------------------------- |
-| `T` _extends_ `number` \| `null` \| `undefined` |
+| Type Parameter                                                                    |
+| --------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` _extends_ `number` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -829,16 +829,16 @@ Encode an unsigned 32-bit integer into URL/path safe BASE64 string without trail
 
 ##### Type Parameters
 
-| Type Parameter                                  |
-| ----------------------------------------------- |
-| `T` _extends_ `number` \| `null` \| `undefined` |
+| Type Parameter                                                                    |
+| --------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` _extends_ `number` \| `null` \| `undefined` |
 
 ##### Parameters
 
-| Parameter      | Type     | Default value | Description                                                                                                                                                                                                                                                                                                                                                                              |
-| -------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ui32`         | `T`      | `undefined`   | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when the value is anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
-| `replacements` | `string` | `'_-'`        | A string containing replacement characters for "/" and "+". If omitted, default value of '_-' would be used.                                                                                                                                                                                                                                                                             |
+| Parameter       | Type     | Default value | Description                                                                                                                                                                                                                                                                                                                                                                              |
+| --------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ui32`          | `T`      | `undefined`   | A 32-bit integer number which could also be null or undefined. It must be a valid unsigned 32-bit integer. Behavior is undefined when the value is anything other than an unsigned 32-bit integer. If you don't care about loosing precision, you can convert a number by doing `n >>> 0` (See https://stackoverflow.com/questions/22335853/hack-to-convert-javascript-number-to-uint32) |
+| `replacements?` | `string` | `'_-'`        | A string containing replacement characters for "/" and "+". If omitted, default value of '_-' would be used.                                                                                                                                                                                                                                                                             |
 
 ##### Returns
 
@@ -856,16 +856,16 @@ Make a "normal" (BASE64) string URL/path safe.
 
 ##### Type Parameters
 
-| Type Parameter                                  |
-| ----------------------------------------------- |
-| `T` _extends_ `string` \| `null` \| `undefined` |
+| Type Parameter                                                                    |
+| --------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` _extends_ `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
-| Parameter      | Type     | Default value | Description                                                                                                         |
-| -------------- | -------- | ------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `base64Input`  | `T`      | `undefined`   | A (BASE64) string which could be null or undefined.                                                                 |
-| `replacements` | `string` | `'_-='`       | A string containing replacement characters for "/", "+", and "=". If omitted, default value of '_-=' would be used. |
+| Parameter       | Type     | Default value | Description                                                                                                         |
+| --------------- | -------- | ------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `base64Input`   | `T`      | `undefined`   | A (BASE64) string which could be null or undefined.                                                                 |
+| `replacements?` | `string` | `'_-='`       | A string containing replacement characters for "/", "+", and "=". If omitted, default value of '_-=' would be used. |
 
 ##### Returns
 
@@ -1636,12 +1636,12 @@ this.output.warn('Configuration file not found, default configuration would be u
 
 ##### Type Parameters
 
-| Type Parameter                    |
-| --------------------------------- |
-| `DEBUG_FUNC` _extends_ `Function` |
-| `INFO_FUNC` _extends_ `Function`  |
-| `WARN_FUNC` _extends_ `Function`  |
-| `ERROR_FUNC` _extends_ `Function` |
+| Type Parameter                                                               |
+| ---------------------------------------------------------------------------- |
+| <a id="api-type-parameter-debug_func"></a> `DEBUG_FUNC` _extends_ `Function` |
+| <a id="api-type-parameter-info_func"></a> `INFO_FUNC` _extends_ `Function`   |
+| <a id="api-type-parameter-warn_func"></a> `WARN_FUNC` _extends_ `Function`   |
+| <a id="api-type-parameter-error_func"></a> `ERROR_FUNC` _extends_ `Function` |
 
 ##### Constructors
 
@@ -1661,8 +1661,8 @@ Constructor
 | `infoFunction`  | `INFO_FUNC`  | `undefined`   | function for outputting info information                                                                 |
 | `warnFunction`  | `WARN_FUNC`  | `undefined`   | function for outputting warn information                                                                 |
 | `errorFunction` | `ERROR_FUNC` | `undefined`   | function for outputting error information                                                                |
-| `isDebug`       | `boolean`    | `false`       | is debug output enabled or not, it could be overriden by isQuiet                                         |
-| `isQuiet`       | `boolean`    | `false`       | is quiet mode enabled or not. When quiet mode is enabled, both debug and info output would be discarded. |
+| `isDebug?`      | `boolean`    | `false`       | is debug output enabled or not, it could be overriden by isQuiet                                         |
+| `isQuiet?`      | `boolean`    | `false`       | is quiet mode enabled or not. When quiet mode is enabled, both debug and info output would be discarded. |
 
 ####### Returns
 
@@ -1670,15 +1670,15 @@ Constructor
 
 ##### Properties
 
-| Property                                          | Modifier | Type         | Default value | Description                                                                                              |
-| ------------------------------------------------- | -------- | ------------ | ------------- | -------------------------------------------------------------------------------------------------------- |
-| <a id="api-property-debug"></a> `debug`           | `public` | `DEBUG_FUNC` | `undefined`   | -                                                                                                        |
-| <a id="api-property-error"></a> `error`           | `public` | `ERROR_FUNC` | `undefined`   | -                                                                                                        |
-| <a id="api-property-info"></a> `info`             | `public` | `INFO_FUNC`  | `undefined`   | -                                                                                                        |
-| <a id="api-property-isdebug"></a> `isDebug`       | `public` | `boolean`    | `false`       | is debug output enabled or not, it could be overriden by isQuiet                                         |
-| <a id="api-property-isquiet"></a> `isQuiet`       | `public` | `boolean`    | `false`       | is quiet mode enabled or not. When quiet mode is enabled, both debug and info output would be discarded. |
-| <a id="api-property-warn"></a> `warn`             | `public` | `WARN_FUNC`  | `undefined`   | -                                                                                                        |
-| <a id="api-property-no_op_func"></a> `NO_OP_FUNC` | `static` | () => `void` | `undefined`   | -                                                                                                        |
+| Property                                          | Modifier           | Type         | Default value | Description                                                                                              |
+| ------------------------------------------------- | ------------------ | ------------ | ------------- | -------------------------------------------------------------------------------------------------------- |
+| <a id="api-property-debug"></a> `debug`           | `public`           | `DEBUG_FUNC` | `...`         | -                                                                                                        |
+| <a id="api-property-error"></a> `error`           | `public`           | `ERROR_FUNC` | `...`         | -                                                                                                        |
+| <a id="api-property-info"></a> `info`             | `public`           | `INFO_FUNC`  | `...`         | -                                                                                                        |
+| <a id="api-property-isdebug"></a> `isDebug`       | `public`           | `boolean`    | `false`       | is debug output enabled or not, it could be overriden by isQuiet                                         |
+| <a id="api-property-isquiet"></a> `isQuiet`       | `public`           | `boolean`    | `false`       | is quiet mode enabled or not. When quiet mode is enabled, both debug and info output would be discarded. |
+| <a id="api-property-warn"></a> `warn`             | `public`           | `WARN_FUNC`  | `...`         | -                                                                                                        |
+| <a id="api-property-no_op_func"></a> `NO_OP_FUNC` | `protected static` | () => `void` | `...`         | -                                                                                                        |
 
 ##### Methods
 
@@ -1692,17 +1692,17 @@ Build an instance with console.log/info/warn/error.
 
 ####### Type Parameters
 
-| Type Parameter                                |
-| --------------------------------------------- |
-| `FLAGS` _extends_ `Record`\<`string`, `any`\> |
+| Type Parameter                                                                      |
+| ----------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-flags"></a> `FLAGS` _extends_ `Record`\<`string`, `any`\> |
 
 ####### Parameters
 
-| Parameter       | Type          | Default value | Description                                                                                                                                                                                                                                               |
-| --------------- | ------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `flags`         | `FLAGS`       | `...`         | The flag object that contains fields for knowing whether debug is enabled and whether quiet mode is enabled. Values of those fields are evaluated only once within this function. They are not evaluated when debug/info/warn/error functions are called. |
-| `debugFlagName` | keyof `FLAGS` | `'debug'`     | Name of the debug field in the flags object                                                                                                                                                                                                               |
-| `quietFlagName` | keyof `FLAGS` | `'quiet'`     | Name of the quiet field in the flags object                                                                                                                                                                                                               |
+| Parameter        | Type          | Default value | Description                                                                                                                                                                                                                                               |
+| ---------------- | ------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `flags?`         | `FLAGS`       | `...`         | The flag object that contains fields for knowing whether debug is enabled and whether quiet mode is enabled. Values of those fields are evaluated only once within this function. They are not evaluated when debug/info/warn/error functions are called. |
+| `debugFlagName?` | keyof `FLAGS` | `'debug'`     | Name of the debug field in the flags object                                                                                                                                                                                                               |
+| `quietFlagName?` | keyof `FLAGS` | `'quiet'`     | Name of the quiet field in the flags object                                                                                                                                                                                                               |
 
 ####### Returns
 
@@ -1747,10 +1747,10 @@ you need to add them as dependencies separately.
 
 ####### Type Parameters
 
-| Type Parameter                                   |
-| ------------------------------------------------ |
-| `FLAGS` _extends_ `Record`\<`string`, `any`\>    |
-| `COLOURER` _extends_ `Record`\<`string`, `any`\> |
+| Type Parameter                                                                            |
+| ----------------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-flags-1"></a> `FLAGS` _extends_ `Record`\<`string`, `any`\>     |
+| <a id="api-type-parameter-colourer"></a> `COLOURER` _extends_ `Record`\<`string`, `any`\> |
 
 ####### Parameters
 
@@ -1758,7 +1758,7 @@ you need to add them as dependencies separately.
 | ---------------------- | ---------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `flags`                | `FLAGS`          | `undefined`   | The flag object that contains fields for knowning whether debug is enabled and whether quiet mode is enabled. Values of those fields are evaluated only once within this function. They are not evaluated when debug/info/warn/error functions are called. |
 | `colourer`             | `COLOURER`       | `undefined`   | Supplier of the colouring function, such as chalk or colors or cli-color                                                                                                                                                                                   |
-| `debugColourFuncName`  | keyof `COLOURER` | `'grey'`      | Name of the function within colourer that will be used to add colour to debug messages, or null if colouring is not desired.                                                                                                                               |
+| `debugColourFuncName?` | keyof `COLOURER` | `'grey'`      | Name of the function within colourer that will be used to add colour to debug messages, or null if colouring is not desired.                                                                                                                               |
 | `infoColourFuncName?`  | keyof `COLOURER` | `undefined`   | Name of the function within colourer that will be used to add colour to info messages, or null if colouring is not desired.                                                                                                                                |
 | `warnColourFuncName?`  | keyof `COLOURER` | `'yellow'`    | Name of the function within colourer that will be used to add colour to warn messages, or null if colouring is not desired.                                                                                                                                |
 | `errorColourFuncName?` | keyof `COLOURER` | `'red'`       | Name of the function within colourer that will be used to add colour to error messages, or null if colouring is not desired.                                                                                                                               |
@@ -1777,7 +1777,7 @@ An instance that uses console.log/info/warn/error and also adds colour to the me
 
 #### Type Alias: ConsoleLineLogger
 
-> **ConsoleLineLogger** = `ReturnType`\<_typeof_ [`console`](#console)\>
+> **ConsoleLineLogger** = `ReturnType`\<_typeof_ [`console`](#api-console)\>
 
 Type of the object returned by `LineLogger.console()` or `LineLogger.consoleWithColour()`.
 It has the same function signatures as console.log/info/warn/error.
@@ -1832,10 +1832,10 @@ you need to add them as dependencies separately.
 
 ##### Type Parameters
 
-| Type Parameter                                   |
-| ------------------------------------------------ |
-| `FLAGS` _extends_ `Record`\<`string`, `any`\>    |
-| `COLOURER` _extends_ `Record`\<`string`, `any`\> |
+| Type Parameter                                                                                  |
+| ----------------------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-__typeflags"></a> `FLAGS` _extends_ `Record`\<`string`, `any`\>       |
+| <a id="api-type-parameter-__typecolourer"></a> `COLOURER` _extends_ `Record`\<`string`, `any`\> |
 
 ##### Parameters
 
@@ -1843,7 +1843,7 @@ you need to add them as dependencies separately.
 | ---------------------- | ---------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `flags`                | `FLAGS`          | `undefined`   | The flag object that contains fields for knowning whether debug is enabled and whether quiet mode is enabled. Values of those fields are evaluated only once within this function. They are not evaluated when debug/info/warn/error functions are called. |
 | `colourer`             | `COLOURER`       | `undefined`   | Supplier of the colouring function, such as chalk or colors or cli-color                                                                                                                                                                                   |
-| `debugColourFuncName`  | keyof `COLOURER` | `'grey'`      | Name of the function within colourer that will be used to add colour to debug messages, or null if colouring is not desired.                                                                                                                               |
+| `debugColourFuncName?` | keyof `COLOURER` | `'grey'`      | Name of the function within colourer that will be used to add colour to debug messages, or null if colouring is not desired.                                                                                                                               |
 | `infoColourFuncName?`  | keyof `COLOURER` | `undefined`   | Name of the function within colourer that will be used to add colour to info messages, or null if colouring is not desired.                                                                                                                                |
 | `warnColourFuncName?`  | keyof `COLOURER` | `'yellow'`    | Name of the function within colourer that will be used to add colour to warn messages, or null if colouring is not desired.                                                                                                                                |
 | `errorColourFuncName?` | keyof `COLOURER` | `'red'`       | Name of the function within colourer that will be used to add colour to error messages, or null if colouring is not desired.                                                                                                                               |
@@ -1922,17 +1922,17 @@ Build an instance with console.log/info/warn/error.
 
 ##### Type Parameters
 
-| Type Parameter                                |
-| --------------------------------------------- |
-| `FLAGS` _extends_ `Record`\<`string`, `any`\> |
+| Type Parameter                                                                            |
+| ----------------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-__typeflags"></a> `FLAGS` _extends_ `Record`\<`string`, `any`\> |
 
 ##### Parameters
 
-| Parameter       | Type          | Default value | Description                                                                                                                                                                                                                                               |
-| --------------- | ------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `flags`         | `FLAGS`       | `...`         | The flag object that contains fields for knowing whether debug is enabled and whether quiet mode is enabled. Values of those fields are evaluated only once within this function. They are not evaluated when debug/info/warn/error functions are called. |
-| `debugFlagName` | keyof `FLAGS` | `'debug'`     | Name of the debug field in the flags object                                                                                                                                                                                                               |
-| `quietFlagName` | keyof `FLAGS` | `'quiet'`     | Name of the quiet field in the flags object                                                                                                                                                                                                               |
+| Parameter        | Type          | Default value | Description                                                                                                                                                                                                                                               |
+| ---------------- | ------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `flags?`         | `FLAGS`       | `...`         | The flag object that contains fields for knowing whether debug is enabled and whether quiet mode is enabled. Values of those fields are evaluated only once within this function. They are not evaluated when debug/info/warn/error functions are called. |
+| `debugFlagName?` | keyof `FLAGS` | `'debug'`     | Name of the debug field in the flags object                                                                                                                                                                                                               |
+| `quietFlagName?` | keyof `FLAGS` | `'quiet'`     | Name of the quiet field in the flags object                                                                                                                                                                                                               |
 
 ##### Returns
 
@@ -1993,20 +1993,20 @@ Mask the content of a string
 
 ##### Type Parameters
 
-| Type Parameter                                  |
-| ----------------------------------------------- |
-| `T` _extends_ `string` \| `null` \| `undefined` |
+| Type Parameter                                                                    |
+| --------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` _extends_ `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
-| Parameter                | Type                                          | Default value | Description                                                                                                                                                                                                                                                         |
-| ------------------------ | --------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `input`                  | `T`                                           | `undefined`   | The input which could also be null or undefined                                                                                                                                                                                                                     |
-| `keepLeft`               | `number`                                      | `1`           | Number of characters on the left to be kept in the output without masking. Default value is 1.                                                                                                                                                                      |
-| `keepRight`              | `number`                                      | `0`           | Number of characters on the right to be kept in the output without masking. Default value is 0.                                                                                                                                                                     |
-| `minLength`              | `number`                                      | `3`           | Minimal length of the string for keepLeft and keepRight to be effective. If the input string is shorter than this length, the whole string would be masked. Default value is 3.                                                                                     |
-| `maskLengthOrMaskString` | `string` \| `number` \| `null` \| `undefined` | `null`        | The string to be used for replacing the part in the input that needs to be masked, or the length of the mask string if a fixed length is desired, or null/undefined if the mask string should have the same length as the part to be masked. Default value is null. |
-| `maskPattern`            | `string`                                      | `'*'`         | The pattern to be repeated as the mask. Default value is '*'.                                                                                                                                                                                                       |
+| Parameter                 | Type                                          | Default value | Description                                                                                                                                                                                                                                                         |
+| ------------------------- | --------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `input`                   | `T`                                           | `undefined`   | The input which could also be null or undefined                                                                                                                                                                                                                     |
+| `keepLeft?`               | `number`                                      | `1`           | Number of characters on the left to be kept in the output without masking. Default value is 1.                                                                                                                                                                      |
+| `keepRight?`              | `number`                                      | `0`           | Number of characters on the right to be kept in the output without masking. Default value is 0.                                                                                                                                                                     |
+| `minLength?`              | `number`                                      | `3`           | Minimal length of the string for keepLeft and keepRight to be effective. If the input string is shorter than this length, the whole string would be masked. Default value is 3.                                                                                     |
+| `maskLengthOrMaskString?` | `string` \| `number` \| `null` \| `undefined` | `null`        | The string to be used for replacing the part in the input that needs to be masked, or the length of the mask string if a fixed length is desired, or null/undefined if the mask string should have the same length as the part to be masked. Default value is null. |
+| `maskPattern?`            | `string`                                      | `'*'`         | The pattern to be repeated as the mask. Default value is '*'.                                                                                                                                                                                                       |
 
 ##### Returns
 
@@ -2024,9 +2024,9 @@ Replace each character of the input with '*'
 
 ##### Type Parameters
 
-| Type Parameter                                  |
-| ----------------------------------------------- |
-| `T` _extends_ `string` \| `null` \| `undefined` |
+| Type Parameter                                                                    |
+| --------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` _extends_ `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -2050,9 +2050,9 @@ Mask credit card number string
 
 ##### Type Parameters
 
-| Type Parameter                                  |
-| ----------------------------------------------- |
-| `T` _extends_ `string` \| `null` \| `undefined` |
+| Type Parameter                                                                    |
+| --------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` _extends_ `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -2076,9 +2076,9 @@ Mask sensitive information in an email address while keeping some information fo
 
 ##### Type Parameters
 
-| Type Parameter                                  |
-| ----------------------------------------------- |
-| `T` _extends_ `string` \| `null` \| `undefined` |
+| Type Parameter                                                                    |
+| --------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` _extends_ `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -2102,9 +2102,9 @@ Mask sensitive information in the full name while keeping useful information for
 
 ##### Type Parameters
 
-| Type Parameter                                  |
-| ----------------------------------------------- |
-| `T` _extends_ `string` \| `null` \| `undefined` |
+| Type Parameter                                                                    |
+| --------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` _extends_ `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -2128,9 +2128,9 @@ Create a mask function with pre-set parameters.
 
 ##### Type Parameters
 
-| Type Parameter                                  | Default type |
-| ----------------------------------------------- | ------------ |
-| `T` _extends_ `string` \| `null` \| `undefined` | `string`     |
+| Type Parameter                                                                    | Default type |
+| --------------------------------------------------------------------------------- | ------------ |
+| <a id="api-type-parameter-t"></a> `T` _extends_ `string` \| `null` \| `undefined` | `string`     |
 
 ##### Parameters
 
@@ -2185,10 +2185,10 @@ Recursively merges properties of one or more source objects into a destination o
 
 ##### Type Parameters
 
-| Type Parameter         |
-| ---------------------- |
-| `T` _extends_ `object` |
-| `U` _extends_ `any`[]  |
+| Type Parameter                                           |
+| -------------------------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` _extends_ `object` |
+| <a id="api-type-parameter-u"></a> `U` _extends_ `any`[]  |
 
 ##### Parameters
 
@@ -2344,10 +2344,10 @@ Rounds a number to a specified number of decimal places.
 
 ####### Parameters
 
-| Parameter   | Type     | Default value | Description                               |
-| ----------- | -------- | ------------- | ----------------------------------------- |
-| `num`       | `number` | `undefined`   | The number to round                       |
-| `precision` | `number` | `0`           | The number of decimal places (default: 0) |
+| Parameter    | Type     | Default value | Description                               |
+| ------------ | -------- | ------------- | ----------------------------------------- |
+| `num`        | `number` | `undefined`   | The number to round                       |
+| `precision?` | `number` | `0`           | The number of decimal places (default: 0) |
 
 ####### Returns
 
@@ -2514,10 +2514,10 @@ Rounds a number to a specified number of decimal places.
 
 ##### Parameters
 
-| Parameter   | Type     | Default value | Description                               |
-| ----------- | -------- | ------------- | ----------------------------------------- |
-| `num`       | `number` | `undefined`   | The number to round                       |
-| `precision` | `number` | `0`           | The number of decimal places (default: 0) |
+| Parameter    | Type     | Default value | Description                               |
+| ------------ | -------- | ------------- | ----------------------------------------- |
+| `num`        | `number` | `undefined`   | The number to round                       |
+| `precision?` | `number` | `0`           | The number of decimal places (default: 0) |
 
 ##### Returns
 
@@ -2574,8 +2574,8 @@ Generates a random number following a normal (Gaussian) distribution using Box-M
 
 | Parameter | Type     | Default value | Description                                 |
 | --------- | -------- | ------------- | ------------------------------------------- |
-| `mean`    | `number` | `0`           | The mean of the distribution.               |
-| `stdev`   | `number` | `1`           | The standard deviation of the distribution. |
+| `mean?`   | `number` | `0`           | The mean of the distribution.               |
+| `stdev?`  | `number` | `1`           | The standard deviation of the distribution. |
 
 ##### Returns
 
@@ -2593,9 +2593,9 @@ Generates a random boolean value.
 
 ##### Parameters
 
-| Parameter           | Type     | Default value | Description                                                         |
-| ------------------- | -------- | ------------- | ------------------------------------------------------------------- |
-| `probabilityOfTrue` | `number` | `0.5`         | The probability of returning true, between 0 and 1. Default is 0.5. |
+| Parameter            | Type     | Default value | Description                                                         |
+| -------------------- | -------- | ------------- | ------------------------------------------------------------------- |
+| `probabilityOfTrue?` | `number` | `0.5`         | The probability of returning true, between 0 and 1. Default is 0.5. |
 
 ##### Returns
 
@@ -2634,9 +2634,9 @@ Generates a random number based on a distribution function.
 
 ##### Parameters
 
-| Parameter                        | Type              | Description                                                                                                                          |
-| -------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `probabilityTransformerFunction` | (`x`) => `number` | A function that turns a random number within [0, 1) to another number. If not provided, the identity function F(x) = x will be used. |
+| Parameter                         | Type              | Description                                                                                                                          |
+| --------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `probabilityTransformerFunction?` | (`x`) => `number` | A function that turns a random number within [0, 1) to another number. If not provided, the identity function F(x) = x will be used. |
 
 ##### Returns
 
@@ -2657,7 +2657,7 @@ Generates a random string using the characters provided.
 | Parameter | Type     | Default value                                                      | Description                                                 |
 | --------- | -------- | ------------------------------------------------------------------ | ----------------------------------------------------------- |
 | `length`  | `number` | `undefined`                                                        | The length of the string to generate.                       |
-| `chars`   | `string` | `'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'` | The characters to use. Defaults to alphanumeric characters. |
+| `chars?`  | `string` | `'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'` | The characters to use. Defaults to alphanumeric characters. |
 
 ##### Returns
 
@@ -2675,9 +2675,9 @@ Picks a random element from an array.
 
 ##### Type Parameters
 
-| Type Parameter |
-| -------------- |
-| `T`            |
+| Type Parameter                        |
+| ------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` |
 
 ##### Parameters
 
@@ -2721,9 +2721,9 @@ Picks an item from an array based on weights.
 
 ##### Type Parameters
 
-| Type Parameter |
-| -------------- |
-| `T`            |
+| Type Parameter                        |
+| ------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` |
 
 ##### Parameters
 
@@ -2897,9 +2897,9 @@ Designed for performance using a single pass and lookup table.
 
 ####### Type Parameters
 
-| Type Parameter                                  |
-| ----------------------------------------------- |
-| `T` _extends_ `string` \| `null` \| `undefined` |
+| Type Parameter                                                                    |
+| --------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` _extends_ `string` \| `null` \| `undefined` |
 
 ####### Parameters
 
@@ -3041,7 +3041,7 @@ Truncates a string to a specified length, optionally adding a suffix.
 | --------- | -------- | ------------- | --------------------------------------------------------------------- |
 | `str`     | `string` | `undefined`   | The string to truncate                                                |
 | `length`  | `number` | `undefined`   | Maximum length of the resulting string (including suffix if provided) |
-| `suffix`  | `string` | `'...'`       | Optional suffix to add to truncated string (default: '...')           |
+| `suffix?` | `string` | `'...'`       | Optional suffix to add to truncated string (default: '...')           |
 
 ####### Returns
 
@@ -3062,9 +3062,9 @@ Converts &amp;, &lt;, &gt;, &quot;, &apos; back to their original characters.
 
 ####### Type Parameters
 
-| Type Parameter                                  |
-| ----------------------------------------------- |
-| `T` _extends_ `string` \| `null` \| `undefined` |
+| Type Parameter                                                                      |
+| ----------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-t-1"></a> `T` _extends_ `string` \| `null` \| `undefined` |
 
 ####### Parameters
 
@@ -3253,9 +3253,9 @@ Designed for performance using a single pass and lookup table.
 
 ##### Type Parameters
 
-| Type Parameter                                  |
-| ----------------------------------------------- |
-| `T` _extends_ `string` \| `null` \| `undefined` |
+| Type Parameter                                                                          |
+| --------------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-__typet"></a> `T` _extends_ `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -3473,7 +3473,7 @@ Truncates a string to a specified length, optionally adding a suffix.
 | --------- | -------- | ------------- | --------------------------------------------------------------------- |
 | `str`     | `string` | `undefined`   | The string to truncate                                                |
 | `length`  | `number` | `undefined`   | Maximum length of the resulting string (including suffix if provided) |
-| `suffix`  | `string` | `'...'`       | Optional suffix to add to truncated string (default: '...')           |
+| `suffix?` | `string` | `'...'`       | Optional suffix to add to truncated string (default: '...')           |
 
 ##### Returns
 
@@ -3517,9 +3517,9 @@ Converts &amp;, &lt;, &gt;, &quot;, &apos; back to their original characters.
 
 ##### Type Parameters
 
-| Type Parameter                                  |
-| ----------------------------------------------- |
-| `T` _extends_ `string` \| `null` \| `undefined` |
+| Type Parameter                                                                          |
+| --------------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-__typet"></a> `T` _extends_ `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
@@ -3713,9 +3713,9 @@ Substitute all occurrences of a pattern in a string.
 
 ##### Type Parameters
 
-| Type Parameter                                  |
-| ----------------------------------------------- |
-| `T` _extends_ `string` \| `null` \| `undefined` |
+| Type Parameter                                                                    |
+| --------------------------------------------------------------------------------- |
+| <a id="api-type-parameter-t"></a> `T` _extends_ `string` \| `null` \| `undefined` |
 
 ##### Parameters
 
