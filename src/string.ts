@@ -64,6 +64,7 @@ export class StringUtils {
    * @returns snake_case string
    */
   static camelToSnake(str: string): string {
+    // eslint-disable-next-line unicorn/prefer-ternary
     if (!str) return str;
     return (
       str
@@ -82,6 +83,7 @@ export class StringUtils {
    * @returns camelCase string
    */
   static snakeToCamel(str: string): string {
+    // eslint-disable-next-line unicorn/prefer-ternary
     if (!str) return str;
     return (
       str
@@ -222,7 +224,7 @@ export class StringUtils {
     if (lower.endsWith('o')) {
       // Words that form plural by adding 'es' when ending with o
       const oEsExceptions = new Set(['echo', 'hero', 'potato', 'tomato', 'torpedo']);
-      return oEsExceptions.has(lower) ? StringUtils.applyWordCasing(word, lower + 'es') : StringUtils.applyWordCasing(word, lower + 's');
+      return StringUtils.applyWordCasing(word, `${lower}${oEsExceptions.has(lower) ? 'es' : 's'}`);
     }
 
     // Default: just add 's'

@@ -1,8 +1,4 @@
 {
   "cSpell.words": ["apos", "Medikoo", "nvmrc", "preversion", "quot", "Replacer", "Replacers", "typeof"],
-  "editor.tabSize": 2,
-  "eslint.options": {
-    "flags": ["v10_config_lookup_from_file"]
-  },
-  "eslint.useFlatConfig": true
+  "editor.tabSize": 2
 }

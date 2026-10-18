@@ -4,7 +4,7 @@
   "description": "Miscellaneous utilities",
   "scripts": {
     "format:all": "prettier --write --ignore-unknown .",
-    "pretest": "eslint .",
+    "pretest": "eslint . && npm run compile && es-check",
     "test": "c8 mocha",
     "compile": "shx rm -rf dist && tsc",
     "prepare": "husky && npm run compile && es-check",
@@ -19,7 +19,7 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "devDependencies": {
-    "@handy-common-utils/dev-dependencies-mocha": "^1.12.1",
+    "@handy-common-utils/dev-dependencies-mocha": "^1.12.5",
     "@semantic-release/git": "^11.0.1",
     "@semantic-release/npm": "^13.2.0",
     "@types/lodash": "^4.17.25",

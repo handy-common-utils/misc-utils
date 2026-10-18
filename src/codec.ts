@@ -122,6 +122,7 @@ export function generateRandomStringQuickly(len: number): string {
  * @returns escaped string that can be used inside of RegExp, or an empty string if the input is null or undefined
  */
 export function escapeForRegExp(text: string | undefined | null): string {
+  // eslint-disable-next-line unicorn/prefer-ternary
   if (text == null) {
     return '';
   }
