@@ -1,6 +1,3 @@
-/* eslint-disable unicorn/prefer-node-protocol, unicorn/prefer-string-replace-all, unicorn/prefer-string-raw */
-import * as crypto from 'crypto';
-
 /**
  * Make a "normal" (BASE64) string URL/path safe.
  * @param base64Input A (BASE64) string which could be null or undefined.
@@ -84,6 +81,22 @@ export function shortBase64UrlFromUInt32<T extends number | undefined | null>(ui
   return urlSafe(shortBase64FromUInt32(ui32), replacements);
 }
 
+function fillRandomUint32Array(length: number): Uint32Array {
+  const values = new Uint32Array(length);
+
+  if (typeof globalThis !== 'undefined' && typeof globalThis.crypto?.getRandomValues === 'function') {
+    globalThis.crypto.getRandomValues(values);
+    return values;
+  }
+
+  // Optional fallback for older Node versions only
+  // const { randomFillSync } = require('node:crypto');
+  // randomFillSync(values);
+  // return values;
+
+  throw new Error('Secure random generation is not available in this environment.');
+}
+
 /**
  * Generate a strong (using crypto.randomFillSync(...)) random string that is URL/path safe.
  * In the generated string, approximately every 6 characters represent randomly generated 32 bits.
@@ -93,8 +106,8 @@ export function shortBase64UrlFromUInt32<T extends number | undefined | null>(ui
  */
 export function generateRandomString(len: number): string {
   // 32 bits => 6 characters
-  const numbers = new Uint32Array(Math.ceil((len + 1) / 6));
-  crypto.randomFillSync(numbers);
+  const numbers = fillRandomUint32Array(Math.ceil((len + 1) / 6));
+
   const strings: string[] = Array.from(numbers, (i) => shortBase64UrlFromUInt32(i));
   return strings.join('').slice(0, len);
 }
