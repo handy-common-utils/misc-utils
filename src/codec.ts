@@ -9,9 +9,9 @@ export function urlSafe<T extends string | undefined | null>(base64Input: T, rep
   return base64Input == null
     ? base64Input
     : (base64Input
-        .replace(/\//g, () => replacements.charAt(0))
-        .replace(/\+/g, () => replacements.charAt(1))
-        .replace(/=/g, () => replacements.charAt(2)) as T);
+        .replaceAll('/', () => replacements.charAt(0))
+        .replaceAll('+', () => replacements.charAt(1))
+        .replaceAll('=', () => replacements.charAt(2)) as T);
 }
 
 /**
@@ -85,6 +85,7 @@ function fillRandomUint32Array(length: number): Uint32Array {
   const values = new Uint32Array(length);
 
   if (typeof globalThis !== 'undefined' && typeof globalThis.crypto?.getRandomValues === 'function') {
+    // eslint-disable-next-line unicorn/no-unnecessary-global-this
     globalThis.crypto.getRandomValues(values);
     return values;
   }
@@ -139,7 +140,7 @@ export function escapeForRegExp(text: string | undefined | null): string {
   if (text == null) {
     return '';
   }
-  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  return text.replaceAll(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`); // $& means the whole matched string
 }
 
 /**
@@ -149,5 +150,5 @@ export function escapeForRegExp(text: string | undefined | null): string {
  * @returns escaped replacement string that can be used inside of RegExp replacement parameter
  */
 export function escapeForRegExpReplacement(text: string | undefined | null): string {
-  return text == null ? '' : text.replace(/\$/g, '$$$$');
+  return text == null ? '' : text.replaceAll('$', '$$$$');
 }
